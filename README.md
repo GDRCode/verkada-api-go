@@ -15,7 +15,7 @@ go get github.com/GDRCode/verkada-api-go
 
 Then, import the package for use in your source code
 ```go
-import "github.com/GDRCode/verkada-api-go"
+import "github.com/GDRCode/verkada-api-go/pkg/client"
 ```
 ## Usage/Examples
 
