@@ -25,7 +25,7 @@ New() will attempt to gather an API key from a ".env" file from the program's wo
 
 Initializing a client:
 ```go
-c, err := client.New(*&NewClientOptions{Region: "prod1", AutoPaginate: true})
+c, err := client.New(&NewClientOptions{Region: "prod1", AutoPaginate: true})
 //if no .env file
 c.Key = "api-key-here"
 ```

@@ -17,6 +17,9 @@ import (
 	"github.com/GDRCode/verkada-api-go/pkg/client/auth"
 )
 
+// A Client contains the overarching information needed to make API calls
+// API requests are made via an underlying http.Client
+// {Product}Client fields are used to organize which methods apply to which products
 type Client struct {
 	httpClient     *http.Client
 	Key            string
@@ -70,6 +73,9 @@ type ClientOptions struct {
 	AutoPaginate bool
 }
 
+// New returns a Client and any errors relating to configuration options
+// Region (and therefore base URL for requests) is set at Client creation and cannot be changed
+// Auto-pagination can be enabled so that paginated responses are combined into one response
 func New(options *ClientOptions) (*Client, error) {
 	auth.GetEnvFromFile()
 	envKey := os.Getenv("API_KEY")
@@ -105,22 +111,30 @@ func New(options *ClientOptions) (*Client, error) {
 	return c, nil
 }
 
+// Helper function to one-line a bool to *bool conversion
+// Required because a nullable boolean value is needed to identify disincluded boolean parameters in options structs
 func Bool(b bool) *bool {
 	return &b
 }
 
-func String(s string) *string {
-	return &s
-}
-
+// Helper function to one-line a Int64 to *Int64 conversion
+// Required because a nullable number value is needed to identify disincluded boolean parameters in options structs
+// *Int64 is used for all whole-number values since the Go encoding/json package decodes JSON numbers as Int64
 func Int64(i int64) *int64 {
 	return &i
 }
 
+// Helper function to one-line a Int64 to *Int64 conversion
+// Required because a nullable number value is needed to identify disincluded boolean parameters in options structs
+// *Int64 is used for all whole-number values since the Go encoding/json package decodes JSON numbers as Int64
 func Float64(f float64) *float64 {
 	return &f
 }
 
+// Used by all methods that don't require file upload or download
+// Handles auth token refresh automatically based on the Client's API key
+// Exported so custom requests can be made
+// Can also be used in case new endpoints are not reflected in the package
 func (c *Client) MakeVerkadaRequest(method string, url string, params any, body any, target any, retry int) error {
 	b, err := json.Marshal(body)
 	if err != nil {
