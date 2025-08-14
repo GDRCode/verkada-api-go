@@ -45,3 +45,7 @@ res2, err2 := client.Access.GetAllAccessUsers()
 
 res3, err3 := client.Core.CreateUser(*CreateUserOptions{})
 ```
+
+## Maintenance, Bug Fixes, and Feature Requests
+
+The client package implements all Verkada public API methods as of August 2025. Tracking API updates and bug fixes done on a best effort basis.

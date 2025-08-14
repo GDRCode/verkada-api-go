@@ -65,13 +65,18 @@ type VXClient struct {
 	client *Client
 }
 
-func New(region string, autoPaginate bool) (*Client, error) {
+type ClientOptions struct {
+	Region       string
+	AutoPaginate bool
+}
+
+func New(options *ClientOptions) (*Client, error) {
 	auth.GetEnvFromFile()
 	envKey := os.Getenv("API_KEY")
 	c := &Client{
 		httpClient:   &http.Client{},
 		Key:          envKey,
-		AutoPaginate: autoPaginate,
+		AutoPaginate: options.AutoPaginate,
 	}
 	c.Helix = &HelixClient{client: c}
 	c.Camera = &CameraClient{client: c}
@@ -81,7 +86,7 @@ func New(region string, autoPaginate bool) (*Client, error) {
 	c.Access = &AccessClient{client: c}
 	c.ClassicAlarms = &ClassicAlarmsClient{client: c}
 	c.VX = &VXClient{client: c}
-	switch region {
+	switch options.Region {
 	case "prod1":
 		c.baseURL = "https://api.verkada.com"
 	case "prod2":
@@ -89,7 +94,7 @@ func New(region string, autoPaginate bool) (*Client, error) {
 	case "au":
 		c.baseURL = "https://api.au.verkada.com"
 	default:
-		return nil, fmt.Errorf("error: invalid region/shard, must be \"prod1\", \"prod2\", or \"au\" - received %s", region)
+		return nil, fmt.Errorf("error: invalid region/shard, must be \"prod1\", \"prod2\", or \"au\" - received %s", options.Region)
 	}
 	tokenResponse, err := auth.GetAuthToken(envKey, c.baseURL)
 	if err != nil {
