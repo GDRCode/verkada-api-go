@@ -1,9 +1,7 @@
 
 # Verkada API Go Client
 
-This module implements a Go wrapper for Verkada's public API endpoints. Methods across the different product lines are provided as well as structs for query parameters, body parameters, and responses.
-
-This is an The public API documentation can be found here: https://apidocs.verkada.com/reference/introduction
+This module implements a Go wrapper for Verkada's public API endpoints. Methods across the different product lines are provided as well as structs for query parameters, body parameters, and responses. The public API documentation can be found here: https://apidocs.verkada.com/reference/introduction
 
 Usage of Verkada's public API depends on a properly scoped API key generated within the Command platform.
 
