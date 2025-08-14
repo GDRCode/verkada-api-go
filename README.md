@@ -36,14 +36,16 @@ API_KEY=api-key-here
 
 ## Using the API
 
-Methods are organized on a per-product basis using the client's struct fields. Structs for query and body options used in method calls to provide type safety. Some input validation is performed based on requirements found in the API documentation, but .
+Methods are organized on a per-product basis using the client's struct fields. Structs for query and body options used in method calls to provide type safety. Some input validation is performed based on requirements found in the API documentation, but "successful" requests from the package are not guaranteed to be valid for the API.
 
 ```go
-res, err := client.Camera.GetCameraDevices(*GetCameraDevicesOptions{})
+res, err := client.Camera.GetCameraDevices(&GetCameraDevicesOptions{})
 
 res2, err2 := client.Access.GetAllAccessUsers()
 
-res3, err3 := client.Core.CreateUser(*CreateUserOptions{})
+res3, err3 := client.Core.CreateUser(&CreateUserOptions{})
+
+res4, err4 := client.Camera.GetLinkToFootage("(camera_id)", &GetLinkToFootageOptions{})
 ```
 
 ## Maintenance, Bug Fixes, and Feature Requests
