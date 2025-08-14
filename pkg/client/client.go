@@ -123,7 +123,6 @@ func Float64(f float64) *float64 {
 
 func (c *Client) MakeVerkadaRequest(method string, url string, params any, body any, target any, retry int) error {
 	b, err := json.Marshal(body)
-	fmt.Printf("%v", string(b))
 	if err != nil {
 		return fmt.Errorf("failed to parse body params via JSON marshal: %+v", body)
 	}

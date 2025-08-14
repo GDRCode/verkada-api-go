@@ -9,7 +9,7 @@ Usage of Verkada's public API depends on a properly scoped API key generated wit
 
 Download the latest version of this package using the 'go get' command:
 
-```go
+```bash
 go get github.com/GDRCode/verkada-api-go
 ```
 
@@ -25,7 +25,7 @@ New() will attempt to gather an API key from a ".env" file from the program's wo
 
 Initializing a client:
 ```go
-c, err := client.New("prod1", true)
+c, err := client.New(*&NewClientOptions{Region: "prod1", AutoPaginate: true})
 //if no .env file
 c.Key = "api-key-here"
 ```
