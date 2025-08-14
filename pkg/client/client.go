@@ -93,7 +93,7 @@ func New(region string, autoPaginate bool) (*Client, error) {
 	}
 	tokenResponse, err := auth.GetAuthToken(envKey, c.baseURL)
 	if err != nil {
-		return nil, err
+		return c, err
 	} else {
 		c.TokenContainer = tokenResponse
 	}
