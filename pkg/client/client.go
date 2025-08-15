@@ -17,9 +17,10 @@ import (
 	"github.com/GDRCode/verkada-api-go/pkg/client/auth"
 )
 
-// A Client contains the overarching information needed to make API calls
-// API requests are made via an underlying http.Client
-// {Product}Client fields are used to organize which methods apply to which products
+// A Client contains the overarching information needed to make API calls.
+// All API requests are made via an underlying http.Client.
+// {Product}Client fields are used to organize which methods apply to which products.
+// The API Key is used to obtain a TokenContainer for a short-lived auth token and its expiration.
 type Client struct {
 	httpClient     *http.Client
 	Key            string
@@ -68,14 +69,16 @@ type VXClient struct {
 	client *Client
 }
 
+// Potential options for initiating a new Client.
+// Made into a type struct to allow for future non-breaking option additions.
 type ClientOptions struct {
 	Region       string
 	AutoPaginate bool
 }
 
-// New returns a Client and any errors relating to configuration options
-// Region (and therefore base URL for requests) is set at Client creation and cannot be changed
-// Auto-pagination can be enabled so that paginated responses are combined into one response
+// New returns a Client and any errors relating to configuration options.
+// Region (and therefore base URL for requests) is set at Client creation and cannot be changed.
+// Auto-pagination can be enabled so that paginated responses are combined into one response.
 func New(options *ClientOptions) (*Client, error) {
 	auth.GetEnvFromFile()
 	envKey := os.Getenv("API_KEY")
@@ -111,30 +114,30 @@ func New(options *ClientOptions) (*Client, error) {
 	return c, nil
 }
 
-// Helper function to one-line a bool to *bool conversion
-// Required because a nullable boolean value is needed to identify disincluded boolean parameters in options structs
+// Helper function to one-line a bool to *bool conversion.
+// Required because a nullable boolean value is needed to identify disincluded boolean parameters in options structs.
 func Bool(b bool) *bool {
 	return &b
 }
 
-// Helper function to one-line a Int64 to *Int64 conversion
-// Required because a nullable number value is needed to identify disincluded boolean parameters in options structs
-// *Int64 is used for all whole-number values since the Go encoding/json package decodes JSON numbers as Int64
+// Helper function to one-line a Int64 to *Int64 conversion.
+// Required because a nullable number value is needed to identify disincluded boolean parameters in options structs.
+// *Int64 is used for all whole-number values since the Go encoding/json package decodes JSON numbers as Int64.
 func Int64(i int64) *int64 {
 	return &i
 }
 
-// Helper function to one-line a Int64 to *Int64 conversion
-// Required because a nullable number value is needed to identify disincluded boolean parameters in options structs
-// *Int64 is used for all whole-number values since the Go encoding/json package decodes JSON numbers as Int64
+// Helper function to one-line a Int64 to *Int64 conversion.
+// Required because a nullable number value is needed to identify disincluded boolean parameters in options structs.
+// *Int64 is used for all whole-number values since the Go encoding/json package decodes JSON numbers as Int64.
 func Float64(f float64) *float64 {
 	return &f
 }
 
-// Used by all methods that don't require file upload or download
-// Handles auth token refresh automatically based on the Client's API key
-// Exported so custom requests can be made
-// Can also be used in case new endpoints are not reflected in the package
+// Used by all methods that don't require file upload or download.
+// Handles auth token refresh automatically based on the Client's API key.
+//
+// Exported so custom requests can be made and can also be used in case new endpoints are not reflected in the package.
 func (c *Client) MakeVerkadaRequest(method string, url string, params any, body any, target any, retry int) error {
 	b, err := json.Marshal(body)
 	if err != nil {
@@ -180,6 +183,10 @@ func (c *Client) MakeVerkadaRequest(method string, url string, params any, body 
 	return nil
 }
 
+// Used by all methods that require file upload (typically csv or pictures).
+// Handles auth token refresh automatically based on the Client's API key.
+//
+// Exported so custom requests can be made and can also be used in case new endpoints are not reflected in the package.
 func (c *Client) MakeVerkadaRequestWithFile(method string, url string, params any, filename string, filetype string, target any, retry int) error {
 	boundary := "WebKitFormBoundaryPublicAPIClient"
 	var b strings.Builder
@@ -242,6 +249,10 @@ func (c *Client) MakeVerkadaRequestWithFile(method string, url string, params an
 	return nil
 }
 
+// Used by all methods that require file download (typically csv or pictures).
+// Handles auth token refresh automatically based on the Client's API key.
+//
+// Exported so custom requests can be made and can also be used in case new endpoints are not reflected in the package.
 func (c *Client) MakeVerkadaRequestForFile(method string, url string, params any, filename string, retry int) error {
 	req, _ := http.NewRequest(method, url, nil)
 	if time.Now().After(c.TokenContainer.Expires) {
@@ -281,6 +292,16 @@ func (c *Client) MakeVerkadaRequestForFile(method string, url string, params any
 	return nil
 }
 
+// Take any options struct and assemble query parameter string.
+// Nil/zero values are treated differently per type.
+//
+// Strings: Included if not empty
+//
+// *Bool, *Int64, *Float64: Included if not nil (includes zero and non-zero)
+//
+// Slices and Arrays: Comma-delimited list of values if not empty
+//
+// Structs: assembleQueryParams is called recursively and added to the overall result
 func assembleQueryParams(params any) string {
 	if params == nil {
 		return ""

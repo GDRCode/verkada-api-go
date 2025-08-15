@@ -1,3 +1,5 @@
+// This package is used internally for auth-related requests.
+// Functions are exported in case auth tokens or streaming tokens are needed separately.
 package auth
 
 import (
@@ -12,11 +14,14 @@ import (
 	"time"
 )
 
+// Contains the most recent short-lived auth token and its expiration time.
+// All client package methods check this time and request a new token if needed.
 type TokenContainer struct {
 	Token   string `json:"token"`
 	Expires time.Time
 }
 
+// Get a short-lived auth token using the Client's key.
 func GetAuthToken(key string, baseURL string) (TokenContainer, error) {
 	req, _ := http.NewRequest("POST", baseURL+"/token", nil)
 	req.Header.Add("accept", "application/json")
@@ -39,6 +44,10 @@ func GetAuthToken(key string, baseURL string) (TokenContainer, error) {
 	return ret, nil
 }
 
+// Similar to the normal auth token, but specifically for the Streaming API.
+// Internally used to return the response body as a *bytes.Buffer to be parsed into its response struct.
+//
+// Does attempt to parse just the jwt string and return it if needed externally
 func GetStreamingToken(key string, baseURL string) (*bytes.Buffer, string, error) {
 	req, _ := http.NewRequest("GET", baseURL+"/cameras/v1/footage/token", nil)
 	req.Header.Add("accept", "application/json")
@@ -63,6 +72,10 @@ func GetStreamingToken(key string, baseURL string) (*bytes.Buffer, string, error
 	return &buf, rec.Jwt, nil
 }
 
+// Parse the ".env" file in the current working directory.
+// File should be formatted as one key:value pair per line, e.g. API_KEY:key_value_here
+//
+// Used internally to retrieve API key if supplied (must have key "API_KEY" to be recognized)
 func GetEnvFromFile() error {
 	file, err := os.Open(".env")
 	if err != nil {
