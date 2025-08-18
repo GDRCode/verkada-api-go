@@ -197,6 +197,10 @@ type GetStreamingTokenResponse struct {
 	Permission        []string `json:"permission"`
 }
 
+type StreamFootageResponse struct {
+	Streaming_link string `json:"streaming_link"`
+}
+
 type DeletePOIResponse struct {
 	Created   int    `json:"created"`
 	Label     string `json:"label"`
