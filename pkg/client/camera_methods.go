@@ -1,8 +1,11 @@
 package client
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"io"
+	"os"
 	"strings"
 
 	"github.com/GDRCode/verkada-api-go/pkg/client/auth"
@@ -784,21 +787,30 @@ func (c *CameraClient) UpdatePOI(person_id string, label string) (*UpdatePOIResp
 }
 
 // Creates a Person of Interest for an organization using a specified base64 encoded string of face image and label.
-// File must be a .png or .jpg
+// File must be a .png or .jpg/.jpeg.
 //
 // [Update a Person of Interest]
 //
 // [Update a Person of Interest]: https://apidocs.verkada.com/reference/patchpersonofinterestviewv1
-func (c *CameraClient) CreatePOI(base64_image string, label string) (*CreatePOIResponse, error) {
+func (c *CameraClient) CreatePOI(filename string, label string) (*CreatePOIResponse, error) {
+	file, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+	buf, err := io.ReadAll(file)
+	if err != nil {
+		return nil, fmt.Errorf("failure to read file %s into bytes buffer", filename)
+	}
 	body := struct {
 		Base64_image string `json:"base64_image"`
 		Label        string `json:"label"`
 	}{
-		Base64_image: base64_image,
+		Base64_image: base64.StdEncoding.EncodeToString(buf),
 		Label:        label,
 	}
 	var ret CreatePOIResponse
 	url := c.client.baseURL + "/cameras/v1/people/person_of_interest"
-	err := c.client.MakeVerkadaRequest("POST", url, nil, body, &ret, 0)
+	err = c.client.MakeVerkadaRequest("POST", url, nil, body, &ret, 0)
 	return &ret, err
 }
