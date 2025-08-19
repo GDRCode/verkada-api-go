@@ -74,9 +74,9 @@ func (c *CameraClient) GetAlerts(options *GetAlertsOptions) (*GetAlertsResponse,
 
 // Returns all occupancy trends data for a particular dashboard over a specified time range.
 //
-// [Get Dashboard Occupancy Trend Data]
+// [Verkada API Docs - Get Dashboard Occupancy Trend Data]
 //
-// [Get Dashboard Occupancy Trend Data]: https://apidocs.verkada.com/reference/getdashboardoccupancytrendsview
+// [Verkada API Docs - Get Dashboard Occupancy Trend Data]: https://apidocs.verkada.com/reference/getdashboardoccupancytrendsview
 func (c *CameraClient) GetDashboardOTData(dashboard_id string, options *GetDashboardOTDataOptions) (*GetDashboardOTDataResponse, error) {
 	if options == nil {
 		options = &GetDashboardOTDataOptions{}
@@ -104,9 +104,9 @@ func (c *CameraClient) GetDashboardOTData(dashboard_id string, options *GetDashb
 // Returns the max count of people and vehicles within a specified time range.
 // Only supported for Verkada cameras in or after the 2nd generation, e.g. CD42 or CD43, not CD41
 //
-// [Get Max People/Vehicle Counts]
+// [Verkada API Docs - Get Max People/Vehicle Counts]
 //
-// [Get Max People/Vehicle Counts]: https://apidocs.verkada.com/reference/getmaxobjectcountsviewv1
+// [Verkada API Docs - Get Max People/Vehicle Counts]: https://apidocs.verkada.com/reference/getmaxobjectcountsviewv1
 func (c *CameraClient) GetMaxCounts(camera_id string, options *GetMaxCountsOptions) (*GetMaxCountsResponse, error) {
 	if options == nil {
 		options = &GetMaxCountsOptions{}
@@ -130,9 +130,9 @@ func (c *CameraClient) GetMaxCounts(camera_id string, options *GetMaxCountsOptio
 
 // Returns the count of people and vehicles within a specified time range.
 //
-// [Get People/Vehicle Counts]
+// [Verkada API Docs - Get People/Vehicle Counts]
 //
-// [Get People/Vehicle Counts]: https://apidocs.verkada.com/reference/getobjectcountsviewv1
+// [Verkada API Docs - Get People/Vehicle Counts]: https://apidocs.verkada.com/reference/getobjectcountsviewv1
 func (c *CameraClient) GetObjectCounts(camera_id string, options *GetObjectCountsOptions) (*GetObjectCountsResponse, error) {
 	if options == nil {
 		options = &GetObjectCountsOptions{}
@@ -165,9 +165,9 @@ func (c *CameraClient) GetObjectCounts(camera_id string, options *GetObjectCount
 
 // Sets the MQTT config for a particular camera.
 //
-// [Set Object Position MQTT Config]
+// [Verkada API Docs - Set Object Position MQTT Config]
 //
-// [Set Object Position MQTT Config]: https://apidocs.verkada.com/reference/postoccupancytrendsmqttconfigview
+// [Verkada API Docs - Set Object Position MQTT Config]: https://apidocs.verkada.com/reference/postoccupancytrendsmqttconfigview
 func (c *CameraClient) SetMQTTConfig(broker_cert string, broker_host_port string, camera_id string, body *SetMQTTConfigBody) (*SetMQTTConfigResponse, error) {
 	if body == nil {
 		body = &SetMQTTConfigBody{}
@@ -193,9 +193,9 @@ func (c *CameraClient) SetMQTTConfig(broker_cert string, broker_host_port string
 
 // Returns all occupancy trends data for a particular camera over a specified time range.
 //
-// [Get Occupancy Trend Data]
+// [Verkada API Docs - Get Occupancy Trend Data]
 //
-// [Get Occupancy Trend Data]: https://apidocs.verkada.com/reference/getoccupancytrendsview
+// [Verkada API Docs - Get Occupancy Trend Data]: https://apidocs.verkada.com/reference/getoccupancytrendsview
 func (c *CameraClient) GetOTData(camera_id string, preset_id string, options *GetOTDataOptions) (*GetOTDataResponse, error) {
 	if options == nil {
 		options = &GetOTDataOptions{}
@@ -223,9 +223,9 @@ func (c *CameraClient) GetOTData(camera_id string, preset_id string, options *Ge
 // Returns the timestamps, detected license plate numbers, and images of all license plates seen by a camera.
 // Only works for cameras that are LPR enabled.
 //
-// [Get Seen License Plates]
+// [Verkada API Docs - Get Seen License Plates]
 //
-// [Get Seen License Plates]: https://apidocs.verkada.com/reference/getlprimagesview
+// [Verkada API Docs - Get Seen License Plates]: https://apidocs.verkada.com/reference/getlprimagesview
 func (c *CameraClient) GetSeenPlates(camera_id string, options *GetSeenPlatesOptions) (*GetSeenPlatesResponse, error) {
 	if options == nil {
 		options = &GetSeenPlatesOptions{}
@@ -258,9 +258,9 @@ func (c *CameraClient) GetSeenPlates(camera_id string, options *GetSeenPlatesOpt
 
 // Deletes a license plate from License Plates of Interest using a specified license plate number.
 //
-// [Delete a License Plate of Interest]
+// [Verkada API Docs - Delete a License Plate of Interest]
 //
-// [Delete a License Plate of Interest]: https://apidocs.verkada.com/reference/deletelicenseplateofinterestviewv1
+// [Verkada API Docs - Delete a License Plate of Interest]: https://apidocs.verkada.com/reference/deletelicenseplateofinterestviewv1
 func (c *CameraClient) DeleteLPOI(license_plate string) (*DeleteLPOIResponse, error) {
 	options := &DeleteLPOIOptions{license_plate: license_plate}
 	var ret DeleteLPOIResponse
@@ -271,9 +271,9 @@ func (c *CameraClient) DeleteLPOI(license_plate string) (*DeleteLPOIResponse, er
 
 // Returns creation time, description, and license plate number for all License Plates of Interest for an organization.
 //
-// [Get All License Plates of Interest]
+// [Verkada API Docs - Get All License Plates of Interest]
 //
-// [Get All License Plates of Interest]: https://apidocs.verkada.com/reference/getlicenseplateofinterestviewv1
+// [Verkada API Docs - Get All License Plates of Interest]: https://apidocs.verkada.com/reference/getlicenseplateofinterestviewv1
 func (c *CameraClient) GetAllLPOI(options *GetAllLPOIOptions) (*GetAllLPOIResponse, error) {
 	if options == nil {
 		options = &GetAllLPOIOptions{}
@@ -305,9 +305,9 @@ func (c *CameraClient) GetAllLPOI(options *GetAllLPOIOptions) (*GetAllLPOIRespon
 
 // Updates a license plate description from License Plates of Interest using a specified license plate number.
 //
-// [Update a License of Interest]
+// [Verkada API Docs - Update a License of Interest]
 //
-// [Update a License of Interest]: https://apidocs.verkada.com/reference/patchlicenseplateofinterestviewv1
+// [Verkada API Docs - Update a License of Interest]: https://apidocs.verkada.com/reference/patchlicenseplateofinterestviewv1
 func (c *CameraClient) UpdateLPOI(license_plate string, description string) (*UpdateLPOIResponse, error) {
 	options := &UpdateLPOIOptions{license_plate: license_plate}
 	body := struct {
@@ -323,9 +323,9 @@ func (c *CameraClient) UpdateLPOI(license_plate string, description string) (*Up
 
 // Creates a License Plate of Interest for an organization using a specified description and license plate number.
 //
-// [Create a License Plate of Interest]
+// [Verkada API Docs - Create a License Plate of Interest]
 //
-// [Create a License Plate of Interest]: https://apidocs.verkada.com/reference/postlicenseplateofinterestviewv1
+// [Verkada API Docs - Create a License Plate of Interest]: https://apidocs.verkada.com/reference/postlicenseplateofinterestviewv1
 func (c *CameraClient) CreateLPOI(license_plate string, description string) (*CreateLPOIResponse, error) {
 	body := struct {
 		License_plate string `json:"license_plate"`
@@ -342,9 +342,9 @@ func (c *CameraClient) CreateLPOI(license_plate string, description string) (*Cr
 
 // Delete LPOI listed in a .csv file
 //
-// [Delete License Plates of Interest by CSV]
+// [Verkada API Docs - Delete License Plates of Interest by CSV]
 //
-// [Delete the License Plates of Interest by CSV]: https://apidocs.verkada.com/reference/deletelicenseplateofinterestbulkoperationviewv1
+// [Verkada API Docs - Delete the License Plates of Interest by CSV]: https://apidocs.verkada.com/reference/deletelicenseplateofinterestbulkoperationviewv1
 func (c *CameraClient) DeleteLPOIByCSV(filename string) (*DeleteLPOIByCSVResponse, error) {
 	var ret DeleteLPOIByCSVResponse
 	url := c.client.baseURL + "/cameras/v1/analytics/lpr/license_plate_of_interest/batch"
@@ -354,9 +354,9 @@ func (c *CameraClient) DeleteLPOIByCSV(filename string) (*DeleteLPOIByCSVRespons
 
 // Create LPOI listed in a .csv file
 //
-// [Create License Plates of Interest by CSV]
+// [Verkada API Docs - Create License Plates of Interest by CSV]
 //
-// [Create License Plates of Interest by CSV]: https://apidocs.verkada.com/reference/postlicenseplateofinterestbulkoperationviewv1
+// [Verkada API Docs - Create License Plates of Interest by CSV]: https://apidocs.verkada.com/reference/postlicenseplateofinterestbulkoperationviewv1
 func (c *CameraClient) CreateLPOIByCSV(filename string) (*CreateLPOIByCSVResponse, error) {
 	var ret CreateLPOIByCSVResponse
 	url := c.client.baseURL + "/cameras/v1/analytics/lpr/license_plate_of_interest/batch"
@@ -366,9 +366,9 @@ func (c *CameraClient) CreateLPOIByCSV(filename string) (*CreateLPOIByCSVRespons
 
 // Returns the timestamps for a certain license plate. Only works for cameras that are LPR enabled.
 //
-// [Get Timestamps for a License Plate]
+// [Verkada API Docs - Get Timestamps for a License Plate]
 //
-// [Get Timestamps for a License Plate]: https://apidocs.verkada.com/reference/getlprtimestampsview
+// [Verkada API Docs - Get Timestamps for a License Plate]: https://apidocs.verkada.com/reference/getlprtimestampsview
 func (c *CameraClient) GetLicensePlateTS(camera_id string, license_plate string, options *GetLicensePlateTSOptions) (*GetLicensePlateTSResponse, error) {
 	if options == nil {
 		options = &GetLicensePlateTSOptions{}
@@ -397,9 +397,9 @@ func (c *CameraClient) GetLicensePlateTS(camera_id string, license_plate string,
 
 // Return the software enabled status of the specified camera.
 //
-// [Get Camera Audio Status]
+// [Verkada API Docs - Get Camera Audio Status]
 //
-// [Get Camera Audio Status]: https://apidocs.verkada.com/reference/getcameraaudioviewv1
+// [Verkada API Docs - Get Camera Audio Status]: https://apidocs.verkada.com/reference/getcameraaudioviewv1
 func (c *CameraClient) GetCameraAudioStatus(camera_id string) (*GetCameraAudioStatusResponse, error) {
 	options := &GetCameraAudioStatusOptions{camera_id: camera_id}
 	var ret GetCameraAudioStatusResponse
@@ -410,9 +410,9 @@ func (c *CameraClient) GetCameraAudioStatus(camera_id string) (*GetCameraAudioSt
 
 // Update the software enabled status of the specified camera.
 //
-// [Update Camera Audio Status]
+// [Verkada API Docs - Update Camera Audio Status]
 //
-// [Update Camera Audio Status]: https://apidocs.verkada.com/reference/postcameraaudioviewv1
+// [Verkada API Docs - Update Camera Audio Status]: https://apidocs.verkada.com/reference/postcameraaudioviewv1
 func (c *CameraClient) UpdateCameraAudio(camera_id string, enabled bool) (*UpdateCameraAudioResponse, error) {
 	body := struct {
 		Camera_id string `json:"camera_id"`
@@ -430,9 +430,9 @@ func (c *CameraClient) UpdateCameraAudio(camera_id string, enabled bool) (*Updat
 // Retrieve important information on cloud backup for a camera.
 // Includes enabled status, time to save, time to upload, and upload progress.
 //
-// [Get Cloud Backup Settings]
+// [Verkada API Docs - Get Cloud Backup Settings]
 //
-// [Get Cloud Backup Settings]: https://apidocs.verkada.com/reference/getcloudbackupviewv1
+// [Verkada API Docs - Get Cloud Backup Settings]: https://apidocs.verkada.com/reference/getcloudbackupviewv1
 func (c *CameraClient) GetCBSettings(camera_id string) (*GetCBSettingsResponse, error) {
 	options := &GetCBSettingsOptions{camera_id: camera_id}
 	var ret GetCBSettingsResponse
@@ -444,9 +444,9 @@ func (c *CameraClient) GetCBSettings(camera_id string) (*GetCBSettingsResponse, 
 // Update important information on cloud backup for a camera.
 // Includes enabled status, time to save, and time to upload.
 //
-// [Update Cloud Backup Settings]
+// [Verkada API Docs - Update Cloud Backup Settings]
 //
-// [Update Cloud Backup Settings]: https://apidocs.verkada.com/reference/postcloudbackupviewv1
+// [Verkada API Docs - Update Cloud Backup Settings]: https://apidocs.verkada.com/reference/postcloudbackupviewv1
 func (c *CameraClient) UpdateCBSettings(camera_id string, days_to_preserve string, enabled int, time_to_preserve string, upload_timeslot string, video_quality string, video_to_upload string) (*UpdateCBSettingsResponse, error) {
 	// check formatting on days_to_preserve (7 characters 0/1, 6 delimiters ",")
 	if len(days_to_preserve) != 13 {
@@ -519,9 +519,9 @@ func (c *CameraClient) UpdateCBSettings(camera_id string, days_to_preserve strin
 
 // Returns details of all cameras within the organization.
 //
-// [Get Camera Data]
+// [Verkada API Docs - Get Camera Data]
 //
-// [Get Camera Data]: https://apidocs.verkada.com/reference/getcamerainfoviewv1
+// [Verkada API Docs - Get Camera Data]: https://apidocs.verkada.com/reference/getcamerainfoviewv1
 func (c *CameraClient) GetCameraDevices(options *GetCameraDevicesOptions) (*GetCameraDevicesResponse, error) {
 	if options == nil {
 		options = &GetCameraDevicesOptions{}
@@ -553,9 +553,9 @@ func (c *CameraClient) GetCameraDevices(options *GetCameraDevicesOptions) (*GetC
 
 // Returns a list of of each camera in the organization that supports occupancy trends with its line preset identifiers.
 //
-// [Get Occupancy Trends Cameras]
+// [Verkada API Docs - Get Occupancy Trends Cameras]
 //
-// [Get Occupancy Trends Cameras]: https://apidocs.verkada.com/reference/getoccupancytrendscamerasviewv1
+// [Verkada API Docs - Get Occupancy Trends Cameras]: https://apidocs.verkada.com/reference/getoccupancytrendscamerasviewv1
 func (c *CameraClient) GetOTCameras() (*GetOTCamerasResponse, error) {
 	var ret GetOTCamerasResponse
 	url := c.client.baseURL + "/cameras/v1/occupancy_trend_enabled"
@@ -565,9 +565,9 @@ func (c *CameraClient) GetOTCameras() (*GetOTCamerasResponse, error) {
 
 // Returns link to video footage for a specified camera which will play footage from a specified timestamp.
 //
-// [Get Link to Footage]
+// [Verkada API Docs - Get Link to Footage]
 //
-// [Get Link to Footage]: https://apidocs.verkada.com/reference/gethistoryurlviewv1
+// [Verkada API Docs - Get Link to Footage]: https://apidocs.verkada.com/reference/gethistoryurlviewv1
 func (c *CameraClient) GetLinkToFootage(camera_id string, options *GetLinkToFootageOptions) (*GetLinkToFootageResponse, error) {
 	if options == nil {
 		options = &GetLinkToFootageOptions{}
@@ -581,9 +581,9 @@ func (c *CameraClient) GetLinkToFootage(camera_id string, options *GetLinkToFoot
 
 // Returns a low-resolution or high-resolution thumbnail from a specified camera at or near a specified time.
 //
-// [Get Thumbnail Image]
+// [Verkada API Docs - Get Thumbnail Image]
 //
-// [Get Thumbnail Image]: https://apidocs.verkada.com/reference/getthumbnailimageviewv1
+// [Verkada API Docs - Get Thumbnail Image]: https://apidocs.verkada.com/reference/getthumbnailimageviewv1
 func (c *CameraClient) GetThumbnailImage(camera_id string, options *GetThumbnailImageOptions, filename string) error {
 	if options == nil {
 		options = &GetThumbnailImageOptions{}
@@ -612,9 +612,9 @@ func (c *CameraClient) GetThumbnailImage(camera_id string, options *GetThumbnail
 
 // Returns the latest thumbnail from a specified camera in either low resolution or high resolution.
 //
-// [Get Latest Thumbnail Image]
+// [Verkada API Docs - Get Latest Thumbnail Image]
 //
-// [Get Latest Thumbnail Image]: https://apidocs.verkada.com/reference/getthumbnaillatestviewv1
+// [Verkada API Docs - Get Latest Thumbnail Image]: https://apidocs.verkada.com/reference/getthumbnaillatestviewv1
 func (c *CameraClient) GetLatestThumbnailImage(camera_id string, options *GetLatestThumbnailImageOptions, filename string) error {
 	if options == nil {
 		options = &GetLatestThumbnailImageOptions{}
@@ -643,9 +643,9 @@ func (c *CameraClient) GetLatestThumbnailImage(camera_id string, options *GetLat
 
 // Returns a link to thumbnail image from a specified camera at a specified time.
 //
-// [Get Thumbnail Link]
+// [Verkada API Docs - Get Thumbnail Link]
 //
-// [Get Thumbnail Link]: https://apidocs.verkada.com/reference/getthumbnaillinkviewv1
+// [Verkada API Docs - Get Thumbnail Link]: https://apidocs.verkada.com/reference/getthumbnaillinkviewv1
 func (c *CameraClient) GetThumbnailLink(camera_id string, options *GetThumbnailLinkOptions) (*GetThumbnailLinkResponse, error) {
 	if options == nil {
 		options = &GetThumbnailLinkOptions{}
@@ -660,9 +660,9 @@ func (c *CameraClient) GetThumbnailLink(camera_id string, options *GetThumbnailL
 // It returns a JWT (JSON Web Token) which provides access to the streaming endpoint for 30 minutes.
 // This is a prerequisite to stream live or historical footage.
 //
-// [Get Streaming Token]
+// [Verkada API Docs - Get Streaming Token]
 //
-// [Get Streaming Token]: https://apidocs.verkada.com/reference/getfootagetokenviewv1
+// [Verkada API Docs - Get Streaming Token]: https://apidocs.verkada.com/reference/getfootagetokenviewv1
 func (c *CameraClient) GetStreamingToken() (*GetStreamingTokenResponse, error) {
 	var ret GetStreamingTokenResponse
 	buf, jwt, err := auth.GetStreamingToken(c.client.Key, c.client.baseURL)
@@ -684,9 +684,9 @@ func (c *CameraClient) GetStreamingToken() (*GetStreamingTokenResponse, error) {
 //   - If a file is desired, ensure the filename ends with ".m3u8"
 //   - If no file is desired, input an empty string for filename.
 //
-// [Stream Footage]
+// [Verkada API Docs - Stream Footage]
 //
-// [Stream Footage]: https://apidocs.verkada.com/reference/getfootagestreamviewv1
+// [Verkada API Docs - Stream Footage]: https://apidocs.verkada.com/reference/getfootagestreamviewv1
 func (c *CameraClient) StreamFootage(org_id string, camera_id string, jwt string, options *GetFootageOptions, filename string) (*StreamFootageResponse, error) {
 	if options == nil {
 		options = &GetFootageOptions{}
@@ -724,9 +724,9 @@ func (c *CameraClient) StreamFootage(org_id string, camera_id string, jwt string
 
 // Deletes a Person of Interest from an organization using a specified person ID.
 //
-// [Delete a Person of Interest]
+// [Verkada API Docs - Delete a Person of Interest]
 //
-// [Delete a Person of Interest]: https://apidocs.verkada.com/reference/deletepersonofinterestviewv1
+// [Verkada API Docs - Delete a Person of Interest]: https://apidocs.verkada.com/reference/deletepersonofinterestviewv1
 func (c *CameraClient) DeletePOI(person_id string, options *DeletePOIOptions) (*DeletePOIResponse, error) {
 	if options == nil {
 		options = &DeletePOIOptions{}
@@ -740,9 +740,9 @@ func (c *CameraClient) DeletePOI(person_id string, options *DeletePOIOptions) (*
 
 // Returns the time of creation, label, last time seen, and person ID for each Person of Interest for an organization.
 //
-// [Get All Person of Interest]
+// [Verkada API Docs - Get All Person of Interest]
 //
-// [Get All Person of Interest]: https://apidocs.verkada.com/reference/getpersonofinterestviewv1
+// [Verkada API Docs - Get All Person of Interest]: https://apidocs.verkada.com/reference/getpersonofinterestviewv1
 func (c *CameraClient) GetAllPOI(options *GetAllPOIOptions) (*GetAllPOIResponse, error) {
 	if options == nil {
 		options = &GetAllPOIOptions{}
@@ -770,9 +770,9 @@ func (c *CameraClient) GetAllPOI(options *GetAllPOIOptions) (*GetAllPOIResponse,
 
 // Updates a label of Person of Interest for an organization using a specified person ID.
 //
-// [Update a Person of Interest]
+// [Verkada API Docs - Update a Person of Interest]
 //
-// [Update a Person of Interest]: https://apidocs.verkada.com/reference/patchpersonofinterestviewv1
+// [Verkada API Docs - Update a Person of Interest]: https://apidocs.verkada.com/reference/patchpersonofinterestviewv1
 func (c *CameraClient) UpdatePOI(person_id string, label string) (*UpdatePOIResponse, error) {
 	options := UpdatePOIOptions{person_id: person_id}
 	body := struct {
@@ -789,9 +789,9 @@ func (c *CameraClient) UpdatePOI(person_id string, label string) (*UpdatePOIResp
 // Creates a Person of Interest for an organization using a specified base64 encoded string of face image and label.
 // File must be a .png or .jpg/.jpeg.
 //
-// [Update a Person of Interest]
+// [Verkada API Docs - Update a Person of Interest]
 //
-// [Update a Person of Interest]: https://apidocs.verkada.com/reference/patchpersonofinterestviewv1
+// [Verkada API Docs - Update a Person of Interest]: https://apidocs.verkada.com/reference/patchpersonofinterestviewv1
 func (c *CameraClient) CreatePOI(filename string, label string) (*CreatePOIResponse, error) {
 	file, err := os.Open(filename)
 	if err != nil {

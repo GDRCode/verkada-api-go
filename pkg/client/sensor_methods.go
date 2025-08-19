@@ -2,6 +2,11 @@ package client
 
 import "fmt"
 
+// Returns all alerts for all (or subset of) sensors in an org over a specified time range.
+//
+// [Verkada API Docs - Get Sensor Alerts]
+//
+// [Verkada API Docs - Get Sensor Alerts]: https://apidocs.verkada.com/reference/getsensoralertsviewv1
 func (c *SensorClient) GetSensorAlerts(device_ids []string, options *GetSensorAlertsOptions) (*GetSensorAlertsResponse, error) {
 	if options == nil {
 		options = &GetSensorAlertsOptions{}
@@ -58,6 +63,11 @@ func (c *SensorClient) GetSensorAlerts(device_ids []string, options *GetSensorAl
 	return &ret, err
 }
 
+// Returns all sensor readings for a particular sensor over a specified time range.
+//
+// [Verkada API Docs - Get Sensor Data]
+//
+// [Verkada API Docs - Get Sensor Data]: https://apidocs.verkada.com/reference/getsensordataviewv1
 func (c *SensorClient) GetSensorData(device_id string, options *GetSensorDataOptions) (*GetSensorDataResponse, error) {
 	if options == nil {
 		options = &GetSensorDataOptions{}

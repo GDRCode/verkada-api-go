@@ -2,6 +2,11 @@ package client
 
 import "fmt"
 
+// Deletes all deny list entries, including the CSV, POI entries, and photos from the specified site.
+//
+// [Verkada API Docs - Delete a Guest Deny List]
+//
+// [Verkada API Docs - Delete a Guest Deny List]: https://apidocs.verkada.com/reference/deletedenylistview
 func (c *GuestClient) DeleteDenyList(site_id string) (*DeleteDenyListResponse, error) {
 	options := &DeleteDenyListOptions{site_id: site_id}
 	var ret DeleteDenyListResponse
@@ -10,6 +15,12 @@ func (c *GuestClient) DeleteDenyList(site_id string) (*DeleteDenyListResponse, e
 	return &ret, err
 }
 
+// Uploads a deny list in csv format to the specified site.
+// Will overwrite any existing site deny list.
+//
+// [Verkada API Docs - Post Guest Deny List]
+//
+// [Verkada API Docs - Post Guest Deny List]: https://apidocs.verkada.com/reference/postdenylistview
 func (c *GuestClient) PostDenyList(site_id string, uploadFilename string) (*PostDenyListResponse, error) {
 	options := &PostDenyListOptions{site_id: site_id}
 	var ret PostDenyListResponse
@@ -18,6 +29,11 @@ func (c *GuestClient) PostDenyList(site_id string, uploadFilename string) (*Post
 	return &ret, err
 }
 
+// Returns a list of Guest sites in an organization.
+//
+// [Verkada API Docs - Get Guest Sites]
+//
+// [Verkada API Docs - Get Guest Sites]: https://apidocs.verkada.com/reference/getguestsiteview
 func (c *GuestClient) GetGuestSites() (*GetGuestSitesResponse, error) {
 	var ret GetGuestSitesResponse
 	url := c.client.baseURL + "/guest/v1/sites"
@@ -25,6 +41,12 @@ func (c *GuestClient) GetGuestSites() (*GetGuestSitesResponse, error) {
 	return &ret, err
 }
 
+// Returns a list of visits in a site.
+// Maximum timeframe is one day (86,400 second difference between start_time and end_time).
+//
+// [Verkada API Docs - Get Guest Visits]
+//
+// [Verkada API Docs - Get Guest Visits]: https://apidocs.verkada.com/reference/getvisitview
 func (c *GuestClient) GetGuestVisits(site_id string, start_time *int64, end_time *int64, options *GetGuestVisitsOptions) (*GetGuestVisitsResponse, error) {
 	if options == nil {
 		options = &GetGuestVisitsOptions{}

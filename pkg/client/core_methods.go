@@ -2,6 +2,11 @@ package client
 
 import "fmt"
 
+// Returns audit logs for an organization within a specified time range.
+//
+// [Verkada API Docs - Verkada API Docs - Get Audit Logs]
+//
+// [Verkada API Docs - Verkada API Docs - Get Audit Logs]: https://apidocs.verkada.com/reference/getauditlogsviewv1
 func (c *CoreClient) GetAuditLogs(options *GetAuditLogsOptions) (*GetAuditLogsResponse, error) {
 	if options == nil {
 		options = &GetAuditLogsOptions{}
@@ -31,6 +36,11 @@ func (c *CoreClient) GetAuditLogs(options *GetAuditLogsOptions) (*GetAuditLogsRe
 	return &ret, err
 }
 
+// Deletes a user for an organization based on either provided user ID or an external ID set during creation.
+//
+// [Verkada API Docs - Verkada API Docs - Delete User]
+//
+// [Verkada API Docs - Verkada API Docs - Delete User]: https://apidocs.verkada.com/reference/deleteuserviewv1
 func (c *CoreClient) DeleteUser(options *DeleteUserOptions) (*DeleteUserResponse, error) {
 	if options == nil {
 		options = &DeleteUserOptions{}
@@ -45,6 +55,11 @@ func (c *CoreClient) DeleteUser(options *DeleteUserOptions) (*DeleteUserResponse
 	return &ret, err
 }
 
+// Returns a user for an organization based on either provided user ID or an external ID set during creation.
+//
+// [Verkada API Docs - Get User]
+//
+// [Verkada API Docs - Get User]: https://apidocs.verkada.com/reference/getuserviewv1
 func (c *CoreClient) GetUser(options *GetUserOptions) (*GetUserResponse, error) {
 	if options == nil {
 		options = &GetUserOptions{}
@@ -59,6 +74,17 @@ func (c *CoreClient) GetUser(options *GetUserOptions) (*GetUserResponse, error) 
 	return &ret, err
 }
 
+// Creates a user for in an organization. External ID required.
+// Otherwise, the newly created user will contain a user ID which can be used for identification.
+//
+// Requires at least one of:
+//   - First name
+//   - Last name
+//   - Email
+//
+// [Verkada API Docs - Create User]
+//
+// [Verkada API Docs - Create User]: https://apidocs.verkada.com/reference/postuserviewv1
 func (c *CoreClient) CreateUser(body *CreateUserBody) (*CreateUserResponse, error) {
 	var ret CreateUserResponse
 	url := c.client.baseURL + "/core/v1/user"
@@ -66,6 +92,11 @@ func (c *CoreClient) CreateUser(body *CreateUserBody) (*CreateUserResponse, erro
 	return &ret, err
 }
 
+// Updates a user's metadata for an organization based on either provided user ID or an external ID set during creation.
+//
+// [Verkada API Docs - Update User]
+//
+// [Verkada API Docs - Update User]: https://apidocs.verkada.com/reference/putuserviewv1
 func (c *CoreClient) UpdateUser(options *UpdateUserOptions, body *UpdateUserBody) (*UpdateUserResponse, error) {
 	if options == nil {
 		options = &UpdateUserOptions{}

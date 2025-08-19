@@ -5,6 +5,11 @@ import (
 	"strings"
 )
 
+// Retrieves a list of all access groups in a given organization.
+//
+// [Verkada API Docs - Get All Access Groups]
+//
+// [Verkada API Docs - Get All Access Groups]: https://apidocs.verkada.com/reference/getaccessgroupsviewv1
 func (c *AccessClient) GetAllAccessGroups() (*GetAllAccessGroupsResponse, error) {
 	var ret GetAllAccessGroupsResponse
 	url := c.client.baseURL + "/access/v1/access_groups"
@@ -12,6 +17,11 @@ func (c *AccessClient) GetAllAccessGroups() (*GetAllAccessGroupsResponse, error)
 	return &ret, err
 }
 
+// Delete an access group with the given group identifier within the given organization.
+//
+// [Verkada API Docs - Delete Access Group]
+//
+// [Verkada API Docs - Delete Access Group]: https://apidocs.verkada.com/reference/deleteaccessgroupviewv1
 func (c *AccessClient) DeleteAccessGroups(group_id string) (*DeleteAccessGroupResponse, error) {
 	options := &DeleteAccessGroupOptions{group_id: group_id}
 	var ret DeleteAccessGroupResponse
@@ -20,6 +30,11 @@ func (c *AccessClient) DeleteAccessGroups(group_id string) (*DeleteAccessGroupRe
 	return &ret, err
 }
 
+// Retrieves an access group specified by its Verkada-defined unique identifier (Group ID).
+//
+// [Verkada API Docs - Get Access Group]
+//
+// [Verkada API Docs - Get Access Group]: https://apidocs.verkada.com/reference/getaccessgroupviewv1
 func (c *AccessClient) GetAccessGroup(group_id string) (*AccessGroup, error) {
 	options := &GetAccessGroupOptions{group_id: group_id}
 	var ret AccessGroup
@@ -28,6 +43,12 @@ func (c *AccessClient) GetAccessGroup(group_id string) (*AccessGroup, error) {
 	return &ret, err
 }
 
+// Create an access group within the given organization using the given name.
+// The name of the access group must be unique within the organization.
+//
+// [Verkada API Docs - Create Access Group]
+//
+// [Verkada API Docs - Create Access Group]: https://apidocs.verkada.com/reference/postaccessgroupviewv1
 func (c *AccessClient) CreateAccessGroup(name string) (*AccessGroup, error) {
 	body := &CreateAccessGroupBody{Name: name}
 	var ret AccessGroup
@@ -36,6 +57,11 @@ func (c *AccessClient) CreateAccessGroup(name string) (*AccessGroup, error) {
 	return &ret, err
 }
 
+// Remove an access user to an access group with the Verkada defined group ID and the user defined either by their User ID or their External ID.
+//
+// [Verkada API Docs - Remove User From Access Group]
+//
+// [Verkada API Docs - Remove User From Access Group]: https://apidocs.verkada.com/reference/deleteaccessgroupuserviewv1
 func (c *AccessClient) RemoveUserFromAccessGroup(group_id string, options *RemoveUserFromAccessGroupOptions) (*RemoveUserFromAccessGroupResponse, error) {
 	if options == nil {
 		options = &RemoveUserFromAccessGroupOptions{}
@@ -51,6 +77,11 @@ func (c *AccessClient) RemoveUserFromAccessGroup(group_id string, options *Remov
 	return &ret, err
 }
 
+// Add an access user to an access group with the Verkada defined group ID and either the user defined External ID or the Verkada defined user ID.
+//
+// [Verkada API Docs - Add User to Access Group]
+//
+// [Verkada API Docs - Add User tp Access Group]: https://apidocs.verkada.com/reference/putaccessgroupuserviewv1
 func (c *AccessClient) AddUserToAccessGroup(group_id string, body *AddUserToAccessGroupBody) (*AddUserToAccessGroupResponse, error) {
 	options := &AddUserToAccessGroupOptions{group_id: group_id}
 	if body == nil {
@@ -66,6 +97,11 @@ func (c *AccessClient) AddUserToAccessGroup(group_id string, body *AddUserToAcce
 	return &ret, err
 }
 
+// This returns a list of All Access User Objects for all access members in an organization.
+//
+// [Verkada API Docs - Get All Access Users]
+//
+// [Verkada API Docs - Get All Access Users]: https://apidocs.verkada.com/reference/getaccessmembersviewv1
 func (c *AccessClient) GetAllAccessUsers() (*GetAllAccessUsersResponse, error) {
 	var ret GetAllAccessUsersResponse
 	url := c.client.baseURL + "/access/v1/access_users"
@@ -73,6 +109,11 @@ func (c *AccessClient) GetAllAccessUsers() (*GetAllAccessUsersResponse, error) {
 	return &ret, err
 }
 
+// Given the Verkada created User Id, user defined External Id, email address, or employee ID, retrieve the Access Object Information for the specified user.
+//
+// [Verkada API Docs - Get Access Information Object]
+//
+// [Verkada API Docs - Get Access Information Object]: https://apidocs.verkada.com/reference/getaccessuserviewv1
 func (c *AccessClient) GetAccessInformationObject(options *GetAccessInformationObjectOptions) (*AccessInformationObject, error) {
 	if options == nil {
 		options = &GetAccessInformationObjectOptions{}
@@ -92,6 +133,11 @@ func (c *AccessClient) GetAccessInformationObject(options *GetAccessInformationO
 	return &ret, err
 }
 
+// Given the user defined external ID or Verkada defined user ID (but not both), activate bluetooth unlock capability for a user.
+//
+// [Verkada API Docs - Activate BLE for Access User]
+//
+// [Verkada API Docs - Activate BLE for Access User]: https://apidocs.verkada.com/reference/putactivateblemethodviewv1
 func (c *AccessClient) ActivateUserBLE(options *ActivateUserBLEOptions) (*AccessInformationObject, error) {
 	if options == nil {
 		options = &ActivateUserBLEOptions{}
@@ -111,6 +157,11 @@ func (c *AccessClient) ActivateUserBLE(options *ActivateUserBLEOptions) (*Access
 	return &ret, err
 }
 
+// Given the user defined external ID or Verkada defined user ID (but not both), deactivate bluetooth unlock capability for a user.
+//
+// [Verkada API Docs - Deactivate BLE for Access User]
+//
+// [Verkada API Docs - Deactivate BLE for Access User]: https://apidocs.verkada.com/reference/putdeactivateblemethodviewv1
 func (c *AccessClient) DeactivateUserBLE(options *DeactivateUserBLEOptions) (*AccessInformationObject, error) {
 	if options == nil {
 		options = &DeactivateUserBLEOptions{}
@@ -130,6 +181,12 @@ func (c *AccessClient) DeactivateUserBLE(options *DeactivateUserBLEOptions) (*Ac
 	return &ret, err
 }
 
+// Given the user defined external ID or Verkada defined user ID (but not both), set the end date for an access users credentials to become invalid.
+// After this time, all methods of access will be revoked.
+//
+// [Verkada API Docs - Set End Date for User]
+//
+// [Verkada API Docs - Set End Date for User]: https://apidocs.verkada.com/reference/putaccessenddateviewv1
 func (c *AccessClient) SetUserEndDate(end_date string, options *SetUserEndDateOptions) (*AccessInformationObject, error) {
 	body := struct {
 		End_date string `json:"end_date"`
@@ -154,6 +211,11 @@ func (c *AccessClient) SetUserEndDate(end_date string, options *SetUserEndDateOp
 	return &ret, err
 }
 
+// Given the user defined external ID or Verkada defined user ID (but not both), remove the entry code of a user.
+//
+// [Verkada API Docs - Remove Entry Code for User]
+//
+// [Verkada API Docs - Remove Entry Code for User]: https://apidocs.verkada.com/reference/deleteaccessuserpinviewv1
 func (c *AccessClient) RemoveUserEntryCode(options *RemoveUserEntryCodeOptions) (*RemoveUserEntryCodeResponse, error) {
 	if options == nil {
 		options = &RemoveUserEntryCodeOptions{}
@@ -173,6 +235,11 @@ func (c *AccessClient) RemoveUserEntryCode(options *RemoveUserEntryCodeOptions) 
 	return &ret, err
 }
 
+// Given the user defined external ID or Verkada defined user ID (but not both), set the entry code for a user.
+//
+// [Verkada API Docs - Set Entry Code for User]
+//
+// [Verkada API Docs - Set Entry Code for User]: https://apidocs.verkada.com/reference/putaccessuserpinviewv1
 func (c *AccessClient) SetUserEntryCode(entry_code string, options *SetUserEntryCodeOptions) (*AccessInformationObject, error) {
 	body := struct {
 		Entry_code string `json:"entry_code"`
@@ -197,6 +264,11 @@ func (c *AccessClient) SetUserEntryCode(entry_code string, options *SetUserEntry
 	return &ret, err
 }
 
+// Given the user defined external ID or Verkada defined user ID (but not both), send out a Pass App invite.
+//
+// [Verkada API Docs - Send Pass App Invite for User]
+//
+// [Verkada API Docs - Send Pass App Invite for User]: https://apidocs.verkada.com/reference/postsendpassappinviteviewv1
 func (c *AccessClient) SendPassInvite(options *SendPassInviteOptions) (*AccessInformationObject, error) {
 	if options == nil {
 		options = &SendPassInviteOptions{}
@@ -216,6 +288,11 @@ func (c *AccessClient) SendPassInvite(options *SendPassInviteOptions) (*AccessIn
 	return &ret, err
 }
 
+// Delete a profile photo for the specified user.
+//
+// [Verkada API Docs - Delete Profile Photo]
+//
+// [Verkada API Docs - Delete Profile Photo]: https://apidocs.verkada.com/reference/deleteprofilephotoviewv1
 func (c *AccessClient) DeleteProfilePhoto(options *DeleteProfilePhotoOptions) (*DeleteProfilePhotoResponse, error) {
 	if options == nil {
 		options = &DeleteProfilePhotoOptions{}
@@ -230,6 +307,11 @@ func (c *AccessClient) DeleteProfilePhoto(options *DeleteProfilePhotoOptions) (*
 	return &ret, err
 }
 
+// Retrieve a profile photo for the specified user.
+//
+// [Verkada API Docs - Get Profile Photo]
+//
+// [Verkada API Docs - Get Profile Photo]: https://apidocs.verkada.com/reference/getprofilephotoviewv1
 func (c *AccessClient) GetProfilePhoto(options *GetProfilePhotoOptions, filename string) error {
 	if options == nil {
 		options = &GetProfilePhotoOptions{}
@@ -250,6 +332,11 @@ func (c *AccessClient) GetProfilePhoto(options *GetProfilePhotoOptions, filename
 	return err
 }
 
+// Upload a profile photo for the specified user.
+//
+// [Verkada API Docs - Upload Profile Photo]
+//
+// [Verkada API Docs - Upload Profile Photo]: https://apidocs.verkada.com/reference/putprofilephotoviewv1
 func (c *AccessClient) UploadProfilePhoto(options *UploadProfilePhotoOptions, filename string) error {
 	if options == nil {
 		options = &UploadProfilePhotoOptions{}
@@ -268,6 +355,11 @@ func (c *AccessClient) UploadProfilePhoto(options *UploadProfilePhotoOptions, fi
 	return err
 }
 
+// Given the user defined external ID or Verkada defined user ID (but not both), activate remote unlock capability for a user.
+//
+// [Verkada API Docs - Activate Remote Unlock for User]
+//
+// [Verkada API Docs - Activate Remote Unlock for User]: https://apidocs.verkada.com/reference/putactivateremoteunlockviewv1
 func (c *AccessClient) ActivateUserRemoteUnlock(options *ActivateUserRemoteUnlockOptions) (*AccessInformationObject, error) {
 	if options == nil {
 		options = &ActivateUserRemoteUnlockOptions{}
@@ -287,6 +379,11 @@ func (c *AccessClient) ActivateUserRemoteUnlock(options *ActivateUserRemoteUnloc
 	return &ret, err
 }
 
+// Given the user defined external ID or Verkada defined user ID (but not both), deactivate remote unlock capability for a user.
+//
+// [Verkada API Docs - Deactivate Remote Unlock for User]
+//
+// [Verkada API Docs - Deactivate Remote Unlock for User]: https://apidocs.verkada.com/reference/putdeactivateremoteunlockviewv1
 func (c *AccessClient) DeactivateUserRemoteUnlock(options *DeactivateUserRemoteUnlockOptions) (*AccessInformationObject, error) {
 	if options == nil {
 		options = &DeactivateUserRemoteUnlockOptions{}
@@ -306,6 +403,12 @@ func (c *AccessClient) DeactivateUserRemoteUnlock(options *DeactivateUserRemoteU
 	return &ret, err
 }
 
+// Given the user defined external ID or Verkada defined user ID (but not both), set the start date for an access users credentials to become valid.
+// Before this time, all methods of access specified for this access user will invalid.
+//
+// [Verkada API Docs - Set Start Date for User]
+//
+// [Verkada API Docs - Set Start Date for User]: https://apidocs.verkada.com/reference/putaccessstartdateviewv1
 func (c *AccessClient) SetStartDate(start_date string, options *SetStartDateOptions) (*AccessInformationObject, error) {
 	body := struct {
 		Start_date string `json:"start_date"`
@@ -330,6 +433,11 @@ func (c *AccessClient) SetStartDate(start_date string, options *SetStartDateOpti
 	return &ret, err
 }
 
+// Deletes an access card of a specified access user given their user_id or external_id, the org_id, and the card_id.
+//
+// [Verkada API Docs - Delete Access Card]
+//
+// [Verkada API Docs - Delete Access Card]: https://apidocs.verkada.com/reference/deleteaccesscardviewv1
 func (c *AccessClient) DeleteAccessCard(card_id string, options *DeleteAccessCardOptions) (*DeleteAccessCardResponse, error) {
 	if options == nil {
 		options = &DeleteAccessCardOptions{}
@@ -345,6 +453,15 @@ func (c *AccessClient) DeleteAccessCard(card_id string, options *DeleteAccessCar
 	return &ret, err
 }
 
+// Create and add an access card for a specified user_id or external_id and org_id.
+// All cards require one of:
+//   - card_number
+//   - card_number_hex
+//   - card_number_base36.
+//
+// [Verkada API Docs - Delete Access Card]
+//
+// [Verkada API Docs - Delete Access Card]: https://apidocs.verkada.com/reference/deleteaccesscardviewv1
 func (c *AccessClient) AddAccessCard(format string, options *AddAccessCardOptions, body *AddAccessCardBody) (*Card, error) {
 	if options == nil {
 		options = &AddAccessCardOptions{}
@@ -451,6 +568,11 @@ func (c *AccessClient) AddAccessCard(format string, options *AddAccessCardOption
 	return &ret, err
 }
 
+// Given the card ID and Verkada defined user ID or user defined external ID, activate a specific access card for a user.
+//
+// [Verkada API Docs - Activate Access Card]
+//
+// [Verkada API Docs - Activate Access Card]: https://apidocs.verkada.com/reference/putaccesscardactivateviewv1
 func (c *AccessClient) ActivateAccessCard(card_id string, options *ActivateAccessCardOptions) (*Card, error) {
 	if options == nil {
 		options = &ActivateAccessCardOptions{}
@@ -466,6 +588,11 @@ func (c *AccessClient) ActivateAccessCard(card_id string, options *ActivateAcces
 	return &ret, err
 }
 
+// Given the card ID and Verkada defined user ID or user defined external ID, deactivate a specific access card for a user.
+//
+// [Verkada API Docs - Deactivate Access Card]
+//
+// [Verkada API Docs - Deactivate Access Card]: https://apidocs.verkada.com/reference/putaccesscarddeactivateviewv1
 func (c *AccessClient) DeactivateAccessCard(card_id string, options *DeactivateAccessCardOptions) (*Card, error) {
 	if options == nil {
 		options = &DeactivateAccessCardOptions{}
@@ -481,6 +608,11 @@ func (c *AccessClient) DeactivateAccessCard(card_id string, options *DeactivateA
 	return &ret, err
 }
 
+// Deletes a license plate credential from a specified user by providing the user_id or the external_id, the org_id, and the license_plate_number.
+//
+// [Verkada API Docs - Delete License Plate from User]
+//
+// [Verkada API Docs - Delete License Plate from User]: https://apidocs.verkada.com/reference/deletelicenseplateviewv1
 func (c *AccessClient) DeleteUserLicensePlate(license_plate_number string, options *DeleteUserLicensePlateOptions) (*DeleteUserLicensePlateResponse, error) {
 	if options == nil {
 		options = &DeleteUserLicensePlateOptions{}
@@ -496,6 +628,12 @@ func (c *AccessClient) DeleteUserLicensePlate(license_plate_number string, optio
 	return &ret, err
 }
 
+// Add a license plate credential to a user given a specified user_id or external_id and org_id.
+// The plate number must be a string of 6 alphanumeric values.
+//
+// [Verkada API Docs - Add License Plate from User]
+//
+// [Verkada API Docs - Add License Plate from User]: https://apidocs.verkada.com/reference/postlicenseplateviewv1
 func (c *AccessClient) AddUserLicensePlate(license_plate_number string, options *AddUserLicensePlateOptions, body *AddUserLicensePlatedBody) (*LicensePlate, error) {
 	if options == nil {
 		options = &AddUserLicensePlateOptions{}
@@ -519,7 +657,12 @@ func (c *AccessClient) AddUserLicensePlate(license_plate_number string, options 
 	return &ret, err
 }
 
-func (c *AccessClient) ActivateLicensePlated(license_plate_number string, options *ActivateLicensePlateOptions) (*LicensePlate, error) {
+// Given the Verkada defined user ID (OR user defined external ID) and Licence Plate Number, activate a users Licence Plate Credential.
+//
+// [Verkada API Docs - Activate License Plate]
+//
+// [Verkada API Docs - Activate License Plate]: https://apidocs.verkada.com/reference/putlicenseplateactivateviewv1
+func (c *AccessClient) ActivateLicensePlate(license_plate_number string, options *ActivateLicensePlateOptions) (*LicensePlate, error) {
 	if options == nil {
 		options = &ActivateLicensePlateOptions{}
 	}
@@ -534,7 +677,12 @@ func (c *AccessClient) ActivateLicensePlated(license_plate_number string, option
 	return &ret, err
 }
 
-func (c *AccessClient) DeactivateLicensePlated(license_plate_number string, options *DeactivateLicensePlateOptions) (*LicensePlate, error) {
+// Given the Verkada defined user ID (OR user defined external ID) and Licence Plate Number, deactivate a users Licence Plate Credential.
+//
+// [Verkada API Docs - Deactivate License Plate]
+//
+// [Verkada API Docs - Deactivate License Plate]: https://apidocs.verkada.com/reference/putlicenseplatedeactivateviewv1
+func (c *AccessClient) DeactivateLicensePlate(license_plate_number string, options *DeactivateLicensePlateOptions) (*LicensePlate, error) {
 	if options == nil {
 		options = &DeactivateLicensePlateOptions{}
 	}
@@ -549,6 +697,11 @@ func (c *AccessClient) DeactivateLicensePlated(license_plate_number string, opti
 	return &ret, err
 }
 
+// Deletes an MFA code credential from a specified user by providing the user_id or external_id, the org_id, and the mfa_code.
+//
+// [Verkada API Docs - Delete MFA Code from User]
+//
+// [Verkada API Docs - Delete MFA Code from User]: https://apidocs.verkada.com/reference/deletemfacodeviewv1
 func (c *AccessClient) DeleteMFACode(code string, options *DeleteMFACodeOptions) (*DeleteMFACodeResponse, error) {
 	if options == nil {
 		options = &DeleteMFACodeOptions{}
@@ -564,6 +717,11 @@ func (c *AccessClient) DeleteMFACode(code string, options *DeleteMFACodeOptions)
 	return &ret, err
 }
 
+// Add an MFA code credential to a user given a specified user_id or external_id and org_id.
+//
+// [Verkada API Docs - Add MFA Code to User]
+//
+// [Verkada API Docs - Add MFA Code to User]: https://apidocs.verkada.com/reference/postmfacodeviewv1
 func (c *AccessClient) AddMFACode(code string, options *AddMFACodeOptions) (*AddMFACodeResponse, error) {
 	if options == nil {
 		options = &AddMFACodeOptions{}
@@ -583,6 +741,14 @@ func (c *AccessClient) AddMFACode(code string, options *AddMFACodeOptions) (*Add
 	return &ret, err
 }
 
+// Retrieves a list of all Access Levels that the API Token is authorized to access.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites listed in sites for Access Levels that you want to retrieve.
+// "Manage via API" must also be enabled for all doors listed in doors that you want to retrieve.
+//
+// [Verkada API Docs - Get All Available Access Levels]
+//
+// [Verkada API Docs - Get All Available Access Levels]: https://apidocs.verkada.com/reference/getaccesslevelview
 func (c *AccessClient) GetAllAccessLevels() (*GetAllAccessLevelsResponse, error) {
 	var ret GetAllAccessLevelsResponse
 	url := c.client.baseURL + "/access/v1/door/access_level"
@@ -590,6 +756,14 @@ func (c *AccessClient) GetAllAccessLevels() (*GetAllAccessLevelsResponse, error)
 	return &ret, err
 }
 
+// Create a new Access Level.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites listed in sites for the Access Level.
+// "Manage via API" must also be enabled for all doors listed in doors.
+//
+// [Verkada API Docs - Create Access Level]
+//
+// [Verkada API Docs - Create Access Level]: https://apidocs.verkada.com/reference/postaccesslevelview
 func (c *AccessClient) CreateAccessLevel(access_groups []string, access_schedule_events []AccessScheduleEvent, doors []string, name string, sites []string) (*AccessLevel, error) {
 	body := AccessLevel{
 		Access_groups:          access_groups,
@@ -604,6 +778,14 @@ func (c *AccessClient) CreateAccessLevel(access_groups []string, access_schedule
 	return &ret, err
 }
 
+// Delete an Access Level having the specified access_level_id.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites listed in sites for the Access Level.
+// "Manage via API" must also be enabled for all doors listed in doors.
+//
+// [Verkada API Docs - Delete Access Level]
+//
+// [Verkada API Docs - Delete Access Level]: https://apidocs.verkada.com/reference/deleteaccessleveldetailview
 func (c *AccessClient) DeleteAccessLevel(access_level_id string) (*DeleteAccessLevelResponse, error) {
 	var ret DeleteAccessLevelResponse
 	url := c.client.baseURL + "/access/v1/door/access_level/" + access_level_id
@@ -611,6 +793,14 @@ func (c *AccessClient) DeleteAccessLevel(access_level_id string) (*DeleteAccessL
 	return &ret, err
 }
 
+// Retrieves an Access Level having the specified access_level_id.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites listed in sites for the Access Level.
+// "Manage via API" must also be enabled for all doors listed in doors.
+//
+// [Verkada API Docs - Get Access Level]
+//
+// [Verkada API Docs - Get Access Level]: https://apidocs.verkada.com/reference/getaccessleveldetailview
 func (c *AccessClient) GetAccessLevel(access_level_id string) (*AccessLevel, error) {
 	var ret AccessLevel
 	url := c.client.baseURL + "/access/v1/door/access_level/" + access_level_id
@@ -618,6 +808,14 @@ func (c *AccessClient) GetAccessLevel(access_level_id string) (*AccessLevel, err
 	return &ret, err
 }
 
+// Updates an Access Level having the specified access_level_id.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites listed in sites for the Access Level.
+// "Manage via API" must also be enabled for all doors listed in doors.
+//
+// [Verkada API Docs - Update Access Level]
+//
+// [Verkada API Docs - Update Access Level]: https://apidocs.verkada.com/reference/putaccessleveldetailview
 func (c *AccessClient) UpdateAccessLevel(access_level_id string, access_groups []string, access_schedule_events []AccessScheduleEvent, doors []string, name string, sites []string) (*AccessLevel, error) {
 	body := AccessLevel{
 		Access_groups:          access_groups,
@@ -632,6 +830,14 @@ func (c *AccessClient) UpdateAccessLevel(access_level_id string, access_groups [
 	return &ret, err
 }
 
+// Add a new Access Schedule Event to an Access Level having the specified access_level_id.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites listed in sites for the Access Level.
+// "Manage via API" must also be enabled for all doors listed in doors.
+//
+// [Verkada API Docs - Add Access Schedule Event to Access Level]
+//
+// [Verkada API Docs - Add Access Schedule Event to Access Level]: https://apidocs.verkada.com/reference/postaccesslevelscheduleview
 func (c *AccessClient) AddAccessScheduleEvent(access_level_id string, end_time string, start_time string, weekday string) (*AccessScheduleEvent, error) {
 	body := AccessScheduleEvent{
 		Door_status: "access_granted",
@@ -658,6 +864,14 @@ func (c *AccessClient) AddAccessScheduleEvent(access_level_id string, end_time s
 	return &ret, err
 }
 
+// Delete an Access Schedule Event having access_schedule_event_id on an Access Level having the specified access_level_id.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites listed in sites for the Access Level.
+// "Manage via API" must also be enabled for all doors listed in doors.
+//
+// [Verkada API Docs - Delete Access Schedule Event on Access Level]
+//
+// [Verkada API Docs - Delete Access Schedule Event on Access Level]: https://apidocs.verkada.com/reference/deleteaccesslevelscheduleview
 func (c *AccessClient) DeleteAccessScheduleEvent(access_level_id string, event_id string) (*DeleteAccessScheduleEventResponse, error) {
 	var ret DeleteAccessScheduleEventResponse
 	url := c.client.baseURL + "/access/v1/door/access_level/" + access_level_id + "/access_schedule_event/" + event_id
@@ -665,6 +879,14 @@ func (c *AccessClient) DeleteAccessScheduleEvent(access_level_id string, event_i
 	return &ret, err
 }
 
+// Retrieve an Access Schedule Event having access_schedule_event_id on an Access Level having the specified access_level_id.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites listed in sites for the Access Level.
+// "Manage via API" must also be enabled for all doors listed in doors.
+//
+// [Verkada API Docs - Get Access Schedule Event Details]
+//
+// [Verkada API Docs - Get Access Schedule Event Details]: https://apidocs.verkada.com/reference/getaccesslevelscheduleview
 func (c *AccessClient) GetAccessScheduleEvent(access_level_id string, event_id string) (*AccessScheduleEvent, error) {
 	var ret AccessScheduleEvent
 	url := c.client.baseURL + "/access/v1/door/access_level/" + access_level_id + "/access_schedule_event/" + event_id
@@ -672,6 +894,14 @@ func (c *AccessClient) GetAccessScheduleEvent(access_level_id string, event_id s
 	return &ret, err
 }
 
+//	Update an Access Schedule Event having access_schedule_event_id on an Access Level having the specified access_level_id.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites listed in sites for the Access Level.
+// "Manage via API" must also be enabled for all doors listed in doors.
+//
+// [Verkada API Docs - Update Access Schedule Event on Access Level]
+//
+// [Verkada API Docs - Update Access Schedule Event on Access Level]: https://apidocs.verkada.com/reference/putaccesslevelscheduleview
 func (c *AccessClient) UpdateAccessScheduleEvent(access_level_id string, event_id string, end_time string, start_time string, weekday string) (*AccessScheduleEvent, error) {
 	body := AccessScheduleEvent{
 		Door_status: "access_granted",
@@ -698,6 +928,11 @@ func (c *AccessClient) UpdateAccessScheduleEvent(access_level_id string, event_i
 	return &ret, err
 }
 
+// Sends a request to unlock a door with door_id irrespective of any user's door access privileges.
+//
+// [Verkada API Docs - Unlock Door as Admin]
+//
+// [Verkada API Docs - Unlock Door as Admin]: https://apidocs.verkada.com/reference/postaccessadminapiunlockviewv1
 func (c *AccessClient) AdminUnlockDoor(door_id string) (*AdminUnlockDoorResponse, error) {
 	body := struct {
 		Door_id string `json:"door_id"`
@@ -710,6 +945,12 @@ func (c *AccessClient) AdminUnlockDoor(door_id string) (*AdminUnlockDoorResponse
 	return &ret, err
 }
 
+// Sends a request to unlock a door with door_id as the user with the specified user_id or external_id.
+// The unlock request will only be granted if the user with the specified user_id has door access permissions for that door_id through an Access Level in Verkada Command.
+//
+// [Verkada API Docs - Unlock Door as User]
+//
+// [Verkada API Docs - Unlock Door as User]: https://apidocs.verkada.com/reference/postaccessuserapiunlockviewv1
 func (c *AccessClient) UserUnlockDoor(door_id string, options *UserUnlockDoorOptions) (*UserUnlockDoorResponse, error) {
 	body := struct {
 		Door_id     string `json:"door_id"`
@@ -730,6 +971,13 @@ func (c *AccessClient) UserUnlockDoor(door_id string, options *UserUnlockDoorOpt
 	return &ret, err
 }
 
+// Retrieves a list of all doors in the organization.
+// The response can optionally be filtered to doors within sites with the requested site_ids or to the specific doors represented by the specified door_ids.
+// Only one of site_ids or door_ids can be used to filter the response for a single request (not both).
+//
+// [Verkada API Docs - Get Doors]
+//
+// [Verkada API Docs - Get Doors]: https://apidocs.verkada.com/reference/getaccessdoorinformationviewv1
 func (c *AccessClient) GetDoors(options *GetDoorsOptions) (*GetDoorsResponse, error) {
 	if options == nil {
 		options = &GetDoorsOptions{}
@@ -744,6 +992,15 @@ func (c *AccessClient) GetDoors(options *GetDoorsOptions) (*GetDoorsResponse, er
 	return &ret, err
 }
 
+// Retrieves a list of all Door Exception Calendars that the API Token is authorized to access.
+// The response can optionally be filtered to include Door Exception Calendars that were last updated after a provided date and time.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites including doors listed in doors for Door Exception Calendars that you want to retrieve.
+// "Manage via API" must also be enabled for all doors listed in doors that you want to retrieve.
+//
+// [Verkada API Docs - Get All Available Door Exception Calendars]
+//
+// [Verkada API Docs - Get All Available Door Exception Calendars]: https://apidocs.verkada.com/reference/getaccessdoorexceptioncalendarsviewv1
 func (c *AccessClient) GetAllDoorExceptionCalendars(options *GetAllDoorExceptionCalendarsOptions) (*GetAllDoorExceptionCalendarsResponse, error) {
 	if options == nil {
 		options = &GetAllDoorExceptionCalendarsOptions{}
@@ -754,6 +1011,14 @@ func (c *AccessClient) GetAllDoorExceptionCalendars(options *GetAllDoorException
 	return &ret, err
 }
 
+// Create a new Door Exception Calendar.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites including doors listed in doors for the Door Exception Calendar.
+// Manage via API must also be enabled for all doors listed in doors.
+//
+// [Verkada API Docs - Create Door Exception Calendar]
+//
+// [Verkada API Docs - Create Door Exception Calendar]: https://apidocs.verkada.com/reference/postaccessdoorexceptioncalendarsviewv1
 func (c *AccessClient) CreateDoorExceptionCalendar(name string, body *CreateDoorExceptionCalendarBody) (*DoorExceptionCalendar, error) {
 	fullBody := struct {
 		Name       string          `json:"name"`
@@ -775,6 +1040,14 @@ func (c *AccessClient) CreateDoorExceptionCalendar(name string, body *CreateDoor
 	return &ret, err
 }
 
+// Delete a Door Exception Calendar having the specified calendar_id.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites including doors listed in doors for the Door Exception Calendar.
+// Manage via API must also be enabled for all doors listed in doors.
+//
+// [Verkada API Docs - Delete Door Exception Calendar]
+//
+// [Verkada API Docs - Delete Door Exception Calendar]: https://apidocs.verkada.com/reference/deleteaccessdoorexceptioncalendarviewv1
 func (c *AccessClient) DeleteDoorExceptionCalendar(calendar_id string) (*DeleteDoorExceptionCalendarResponse, error) {
 	var ret DeleteDoorExceptionCalendarResponse
 	url := c.client.baseURL + "/access/v1/door/exception_calendar/" + calendar_id
@@ -782,6 +1055,14 @@ func (c *AccessClient) DeleteDoorExceptionCalendar(calendar_id string) (*DeleteD
 	return &ret, err
 }
 
+// Retrieve a Door Exception Calendar having the specified calendar_id.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites including doors listed in doors for the Door Exception Calendar.
+// Manage via API must also be enabled for all doors listed in doors.
+//
+// [Verkada API Docs - Get Door Exception Calendar]
+//
+// [Verkada API Docs - Get Door Exception Calendar]: https://apidocs.verkada.com/reference/getaccessdoorexceptioncalendarviewv1
 func (c *AccessClient) GetDoorExceptionCalendar(calendar_id string) (*DoorExceptionCalendar, error) {
 	var ret DoorExceptionCalendar
 	url := c.client.baseURL + "/access/v1/door/exception_calendar/" + calendar_id
@@ -789,6 +1070,14 @@ func (c *AccessClient) GetDoorExceptionCalendar(calendar_id string) (*DoorExcept
 	return &ret, err
 }
 
+// Update a Door Exception Calendar having the specified calendar_id.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites including doors listed in doors for the Door Exception Calendar.
+// Manage via API must also be enabled for all doors listed in doors.
+//
+// [Verkada API Docs - Update Door Exception Calendar]
+//
+// [Verkada API Docs - Update Door Exception Calendar]: https://apidocs.verkada.com/reference/putaccessdoorexceptioncalendarviewv1
 func (c *AccessClient) UpdateDoorExceptionCalendar(calendar_id string, name string, body *UpdateDoorExceptionCalendarBody) (*DoorExceptionCalendar, error) {
 	fullBody := struct {
 		Name       string          `json:"name"`
@@ -810,6 +1099,14 @@ func (c *AccessClient) UpdateDoorExceptionCalendar(calendar_id string, name stri
 	return &ret, err
 }
 
+// Add a new Exception to a Door Exception Calendar having the specified calendar_id.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites including doors listed in doors for the Door Exception Calendar.
+// Manage via API must also be enabled for all doors listed in doors.
+//
+// [Verkada API Docs - Add Exception to Door Exception Calendar]
+//
+// [Verkada API Docs - Add Exception to Door Exception Calendar]: https://apidocs.verkada.com/reference/postaccessdoorexceptionsviewv1
 func (c *AccessClient) AddExceptionToCalendar(calendar_id string, date string, start_time, end_time string, body *AddExceptionToCalendarBody) (*DoorException, error) {
 	fullBody := DoorException{
 		All_day_default:           body.All_day_default,
@@ -832,6 +1129,14 @@ func (c *AccessClient) AddExceptionToCalendar(calendar_id string, date string, s
 	return &ret, err
 }
 
+// Delete an Exception having the specified exception_id on a Door Exception Calendar having the specified calendar_id.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites including doors listed in doors for the Door Exception Calendar.
+// Manage via API must also be enabled for all doors listed in doors.
+//
+// [Verkada API Docs - Delete Exception on Door Exception Calendar]
+//
+// [Verkada API Docs - Delete Exception on Door Exception Calendar]: https://apidocs.verkada.com/reference/deleteaccessdoorexceptionviewv1
 func (c *AccessClient) DeleteExceptionFromCalendar(calendar_id string, exception_id string) (*DeleteExceptionFromCalendarResponse, error) {
 	var ret DeleteExceptionFromCalendarResponse
 	url := c.client.baseURL + "/access/v1/door/exception_calendar/" + calendar_id + "/exception/" + exception_id
@@ -839,6 +1144,14 @@ func (c *AccessClient) DeleteExceptionFromCalendar(calendar_id string, exception
 	return &ret, err
 }
 
+// Retrieve an Exception having the specified exception_id on a Door Exception Calendar having the specified calendar_id.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites including doors listed in doors for the Door Exception Calendar.
+// Manage via API must also be enabled for all doors listed in doors.
+//
+// [Verkada API Docs - Get Exception on Door Exception Calendar]
+//
+// [Verkada API Docs - Get Exception on Door Exception Calendar]: https://apidocs.verkada.com/reference/getaccessdoorexceptionviewv1
 func (c *AccessClient) GetExceptionFromCalendar(calendar_id string, exception_id string) (*DoorException, error) {
 	var ret DoorException
 	url := c.client.baseURL + "/access/v1/door/exception_calendar/" + calendar_id + "/exception/" + exception_id
@@ -846,6 +1159,14 @@ func (c *AccessClient) GetExceptionFromCalendar(calendar_id string, exception_id
 	return &ret, err
 }
 
+// Update an Exception having the specified exception_id on a Door Exception Calendar having the specified calendar_id.
+//
+// To use this API, you need an API Key having permission "Door Access Management" for all sites including doors listed in doors for the Door Exception Calendar.
+// Manage via API must also be enabled for all doors listed in doors.
+//
+// [Verkada API Docs - Update Exception on Door Exception Calendar]
+//
+// [Verkada API Docs - Update Exception on Door Exception Calendar]: https://apidocs.verkada.com/reference/putaccessdoorexceptionviewv1
 func (c *AccessClient) UpdateExceptionOnCalendar(calendar_id string, exception_id string, date string, start_time, end_time string, body *AddExceptionToCalendarBody) (*DoorException, error) {
 	fullBody := DoorException{
 		All_day_default:           body.All_day_default,
@@ -868,6 +1189,11 @@ func (c *AccessClient) UpdateExceptionOnCalendar(calendar_id string, exception_i
 	return &ret, err
 }
 
+// Returns events for an organization within a specified time range.
+//
+// [Verkada API Docs - Get Access Events]
+//
+// [Verkada API Docs - Get Access Events]: https://apidocs.verkada.com/reference/geteventsviewv1
 func (c *AccessClient) GetAccessEvents(options *GetAccessEventsOptions) (*GetAccessEventsResponse, error) {
 	if options == nil {
 		options = &GetAccessEventsOptions{}
@@ -966,6 +1292,13 @@ func (c *AccessClient) GetAccessEvents(options *GetAccessEventsOptions) (*GetAcc
 	return &ret, err
 }
 
+// Lists all access scenarios for the organization.
+//
+// To use this API, you need an API Key with "Read" permission for "Access Scenario Management" endpoints or an API Key with "Read" permission for "Access Control" endpoints.
+//
+// [Verkada API Docs - Get All Access Scenarios]
+//
+// [Verkada API Docs - Get All Access Scenarios]: https://apidocs.verkada.com/reference/getaccessscenariolistviewv1
 func (c *AccessClient) GetAllAccessScenarios(options *GetAllAccessScenariosOptions) (*GetAllAccessScenariosResponse, error) {
 	if options == nil {
 		options = &GetAllAccessScenariosOptions{}
@@ -976,6 +1309,14 @@ func (c *AccessClient) GetAllAccessScenarios(options *GetAllAccessScenariosOptio
 	return &ret, err
 }
 
+// Activates a scenario with the given scenario_id.
+//
+// To use this API, you need an API Key having "Read/Write" permission for "Access Control" endpoints.
+// "Manage via API" must also be enabled for scenarios in your organization.
+//
+// [Verkada API Docs - Activate Access Scenario]
+//
+// [Verkada API Docs - Activate Access Scenario]: https://apidocs.verkada.com/reference/postaccessscenarioactivateviewv1
 func (c *AccessClient) ActivateAccessScenario(scenario_id string) (*ActivateAccessScenarioResponse, error) {
 	var ret ActivateAccessScenarioResponse
 	url := c.client.baseURL + "/access/v1/scenarios/" + scenario_id + "/activate"
@@ -983,6 +1324,14 @@ func (c *AccessClient) ActivateAccessScenario(scenario_id string) (*ActivateAcce
 	return &ret, err
 }
 
+// Releases a scenario with the given scenario_id.
+//
+// To use this API, you need an API Key having "Read/Write" permission for "Access Control" endpoints.
+// "Manage via API" must also be enabled for scenarios in your organization.
+//
+// [Verkada API Docs - Release Access Scenario]
+//
+// [Verkada API Docs - Release Access Scenario]: https://apidocs.verkada.com/reference/postaccessscenarioreleaseviewv1
 func (c *AccessClient) DeactivateAccessScenario(scenario_id string) (*DeactivateAccessScenarioResponse, error) {
 	var ret DeactivateAccessScenarioResponse
 	url := c.client.baseURL + "/access/v1/scenarios/" + scenario_id + "/deactivate"
@@ -990,6 +1339,7 @@ func (c *AccessClient) DeactivateAccessScenario(scenario_id string) (*Deactivate
 	return &ret, err
 }
 
+// Internally used for validation certain rules when creating/updating DoorException objects
 func validateDoorException(exception DoorException) (bool, error) {
 	// valdiating all_day_default rules
 	if exception.All_day_default {
