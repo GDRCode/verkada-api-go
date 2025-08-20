@@ -153,16 +153,35 @@ func (c *HelixClient) GetHelixEventTypes(options *GetHelixEventTypesOptions) (*G
 // This is especially useful if a user needs to add an additional attribute key to the existing Event Type or change the name of the Event Type.
 // To successfully update an Event Type, users will need to input the Event Type UID as well as the new attribute keys or Event Type name that is being updated.
 //
-// Note: Refer to the CreatHelixEventType documenation for how to build the event_schema struct
+// If either event_schema or name are left empty, that aspect will not be affected.
+// Importantly, if event_schema is not empty, only the included keys and data types will be in the updated Helix Event Type.
+//
+// The event_schema is a map with strings for both keys and values.
+//
+// Each key will be the field name for a Helix event type attributes.
+// The corresponding value must be a string representing the desired data type for that field:
+// "string", "integer", "float", or "boolean"
 //
 // [Verkada API Docs - Update a Helix Event Type]
 //
 // [Verkada API Docs - Update a Helix Event Type]: https://apidocs.verkada.com/reference/patchvideotaggingeventtypeviewv1
-func (c *HelixClient) UpdateHelixEventType(event_type_uid string, event_schema any, name string) (*UpdateHelixEventTypeResponse, error) {
+func (c *HelixClient) UpdateHelixEventType(event_type_uid string, event_schema map[string]string, name string) (*UpdateHelixEventTypeResponse, error) {
+	// validate data types in event_schema
+	data_type_validation := map[string]bool{
+		"string":  true,
+		"integer": true,
+		"float":   true,
+		"boolean": true,
+	}
+	for key, value := range event_schema {
+		if ok := data_type_validation[value]; !ok {
+			return nil, fmt.Errorf("could not validate field type - received key: %s and value: %s", key, value)
+		}
+	}
 	options := &UpdateHelixEventTypeOptions{event_type_uid: event_type_uid}
 	fullBody := struct {
-		Event_schema any    `json:"event_schema"`
-		Name         string `json:"name"`
+		Event_schema map[string]string `json:"event_schema"`
+		Name         string            `json:"name"`
 	}{
 		Event_schema: event_schema,
 		Name:         name,
@@ -174,21 +193,31 @@ func (c *HelixClient) UpdateHelixEventType(event_type_uid string, event_schema a
 }
 
 // This method can be used to generate an Event Type by defining the Event Type schema.
-// The event_schema should be a struct of key-value pairs.
+// The event_schema is a map with strings for both keys and values.
 //
-// The keys will be the field name for future Helix event uploads of this type.
-// It MUST use the `json:"{desired_field_name}"` tag to properly encode for the reuquest.
-//
-// The value should be a string representing the desired data type for that field:
+// Each key will be the field name for a Helix event type attributes.
+// The corresponding value must be a string representing the desired data type for that field:
 // "string", "integer", "float", or "boolean"
 //
 // [Verkada API Docs - Create a Helix Event Type]
 //
 // [Verkada API Docs - Create a Helix Event Type]: https://apidocs.verkada.com/reference/postvideotaggingeventtypeviewv1
-func (c *HelixClient) CreateHelixEventType(event_schema any, name string) (*CreateHelixEventTypeResponse, error) {
+func (c *HelixClient) CreateHelixEventType(event_schema map[string]string, name string) (*CreateHelixEventTypeResponse, error) {
+	// validate data types in event_schema
+	data_type_validation := map[string]bool{
+		"string":  true,
+		"integer": true,
+		"float":   true,
+		"boolean": true,
+	}
+	for key, value := range event_schema {
+		if ok := data_type_validation[value]; !ok {
+			return nil, fmt.Errorf("could not validate field type - received key: %s and value: %s", key, value)
+		}
+	}
 	fullBody := struct {
-		Event_schema any    `json:"event_schema"`
-		Name         string `json:"name"`
+		Event_schema map[string]string `json:"event_schema"`
+		Name         string            `json:"name"`
 	}{
 		Event_schema: event_schema,
 		Name:         name,
