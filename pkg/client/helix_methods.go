@@ -9,7 +9,7 @@ import "fmt"
 //
 // [Verkada API Docs - Delete a Helix Event]: https://apidocs.verkada.com/reference/deletevideotaggingeventviewv1
 func (c *HelixClient) DeleteHelixEvent(camera_id string, time_ms int64, event_type_uid string) (*DeleteHelixEventResponse, error) {
-	options := &DeleteHelixEventOptions{camera_id: camera_id, time_ms: time_ms, event_type_uid: event_type_uid}
+	options := &DeleteHelixEventOptions{camera_id: camera_id, time_ms: Int64(time_ms), event_type_uid: event_type_uid}
 	var ret DeleteHelixEventResponse
 	url := c.client.baseURL + "/cameras/v1/video_tagging/event"
 	err := c.client.MakeVerkadaRequest("DELETE", url, *options, nil, &ret, 0)
@@ -24,7 +24,7 @@ func (c *HelixClient) DeleteHelixEvent(camera_id string, time_ms int64, event_ty
 //
 // [Verkada API Docs - Get a Helix Event]: https://apidocs.verkada.com/reference/getvideotaggingeventviewv1
 func (c *HelixClient) GetHelixEvent(camera_id string, time_ms int64, event_type_uid string) (*GetHelixEventResponse, error) {
-	options := &GetHelixEventOptions{camera_id: camera_id, time_ms: time_ms, event_type_uid: event_type_uid}
+	options := &GetHelixEventOptions{camera_id: camera_id, time_ms: Int64(time_ms), event_type_uid: event_type_uid}
 	var ret GetHelixEventResponse
 	url := c.client.baseURL + "/cameras/v1/video_tagging/event"
 	err := c.client.MakeVerkadaRequest("GET", url, *options, nil, &ret, 0)
@@ -39,10 +39,21 @@ func (c *HelixClient) GetHelixEvent(camera_id string, time_ms int64, event_type_
 //
 // [Verkada API Docs - Update a Helix Event]: https://apidocs.verkada.com/reference/patchvideotaggingeventviewv1
 func (c *HelixClient) UpdateHelixEvent(camera_id string, time_ms int64, event_type_uid string, body *UpdateHelixEventBody) (*UpdateHelixEventResponse, error) {
-	options := &UpdateHelixEventOptions{camera_id: camera_id, time_ms: time_ms, event_type_uid: event_type_uid}
+	attributes := make(map[string]any, len(body.Attributes))
+	for _, item := range body.Attributes {
+		attributes[item.Key] = item.Value
+	}
+	fullBody := struct {
+		Attributes any  `json:"attributes,omitempty"`
+		Flagged    bool `json:"flagged,omitempty"`
+	}{
+		Attributes: attributes,
+		Flagged:    body.Flagged,
+	}
+	options := &UpdateHelixEventOptions{camera_id: camera_id, time_ms: Int64(time_ms), event_type_uid: event_type_uid}
 	var ret UpdateHelixEventResponse
 	url := c.client.baseURL + "/cameras/v1/video_tagging/event"
-	err := c.client.MakeVerkadaRequest("PATCH", url, *options, body, &ret, 0)
+	err := c.client.MakeVerkadaRequest("PATCH", url, *options, fullBody, &ret, 0)
 	return &ret, err
 }
 
@@ -50,7 +61,6 @@ func (c *HelixClient) UpdateHelixEvent(camera_id string, time_ms int64, event_ty
 // Users will be able to specify the attribute values for each attribute key that was previously defined in the Event Type creation process.
 // To successfully create a Helix Event, users will need to input the associated Camera ID, Event Type UID, and the exact event epoch timestamp in milliseconds.
 //
-// Note: The attributes struct MUST use the `json:"{desired_field_name}"` tag to properly encode for the reuquest.
 // Users are not required to provide an attribute value for all of the attribute keys tied to that specific Event Type.
 // If an attribute value is not available or does not exist, users can simply disregard the attribute altogether when making the POST request.
 //
@@ -58,6 +68,10 @@ func (c *HelixClient) UpdateHelixEvent(camera_id string, time_ms int64, event_ty
 //
 // [Verkada API Docs - Create a Helix Event]: https://apidocs.verkada.com/reference/postvideotaggingeventviewv1
 func (c *HelixClient) CreateHelixEvent(camera_id string, time_ms int64, event_type_uid string, body *CreateHelixEventBody) (*CreateHelixEventResponse, error) {
+	attributes := make(map[string]any, len(body.Attributes))
+	for _, item := range body.Attributes {
+		attributes[item.Key] = item.Value
+	}
 	fullBody := struct {
 		Attributes     any    `json:"attributes,omitempty"`
 		Camera_id      string `json:"camera_id"`
@@ -65,7 +79,7 @@ func (c *HelixClient) CreateHelixEvent(camera_id string, time_ms int64, event_ty
 		Flagged        bool   `json:"flagged,omitempty"`
 		Time_ms        int64  `json:"time_ms"`
 	}{
-		Attributes:     body.Attributes,
+		Attributes:     attributes,
 		Camera_id:      camera_id,
 		Event_type_uid: event_type_uid,
 		Flagged:        body.Flagged,

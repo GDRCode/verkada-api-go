@@ -2,30 +2,35 @@ package client
 
 type DeleteHelixEventOptions struct {
 	camera_id      string `name:"camera_id"`
-	time_ms        int64  `name:"time_ms"`
+	time_ms        *int64 `name:"time_ms"`
 	event_type_uid string `name:"event_type_uid"`
 }
 
 type GetHelixEventOptions struct {
 	camera_id      string `name:"camera_id"`
-	time_ms        int64  `name:"time_ms"`
+	time_ms        *int64 `name:"time_ms"`
 	event_type_uid string `name:"event_type_uid"`
 }
 
 type UpdateHelixEventOptions struct {
 	camera_id      string `name:"camera_id"`
-	time_ms        int64  `name:"time_ms"`
+	time_ms        *int64 `name:"time_ms"`
 	event_type_uid string `name:"event_type_uid"`
 }
 
 type UpdateHelixEventBody struct {
-	Attributes any  `json:"attributes"`
+	Attributes []HelixAttributeObject
 	Flagged    bool `json:"flagged"`
 }
 
 type CreateHelixEventBody struct {
-	Attributes any
+	Attributes []HelixAttributeObject
 	Flagged    bool
+}
+
+type HelixAttributeObject struct {
+	Key   string
+	Value any
 }
 
 type SearchHelixEventBody struct {
