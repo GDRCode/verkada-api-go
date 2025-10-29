@@ -63,6 +63,43 @@ type GetOTDataResponse struct {
 	Type           string  `json:"type"`
 }
 
+type GetDashboardWidgetTrendDataResponse struct {
+	Dashboard_id   string `json:"dashboard_id"`
+	Dashboard_name string `json:"dashboard_name"`
+	End_time       string `json:"end_time"`
+	Interval       string `json:"interval"`
+	Start_time     string `json:"start_time"`
+	Widgets        []struct {
+		ConversionData struct {
+			Conversion_rates              any      `json:"conversion_rates"`
+			Helix_cameras_used            []string `json:"helix_cameras_used"`
+			Helix_counts                  any      `json:"helix_counts"`
+			Occupancy_camera_presets_used []any    `json:"occupancy_camera_presets_used"`
+			Occupancy_in                  any      `json:"occupancy_in"`
+		} `json:"conversion_data"`
+		HelixData struct {
+			Cameras_used []string `json:"cameras_used"`
+			Helix_stats  any      `json:"helix_stats"`
+		} `json:"helix_data"`
+		OccupancyData struct {
+			Camera_presets_used []any `json:"camera_presets_used"`
+			In_counts           any   `json:"in_counts"`
+			Net_occupancy       any   `json:"net_occupancy"`
+			Out_counts          any   `json:"out_counts"`
+		} `json:"occupancy_data"`
+		QueueData struct {
+			Avg_queue_length    any   `json:"avg_queue_length"`
+			Avg_wait_time       any   `json:"avg_wait_time"`
+			Camera_presets_used []any `json:"camera_presets_used"`
+			Max_queue_length    any   `json:"max_queue_length"`
+			Max_wait_time       any   `json:"max_wait_time"`
+		} `json:"queue_data"`
+		Widget_id   string `json:"widget_id"`
+		Widget_name string `json:"widget_name"`
+		Widget_type string `json:"widget_type"`
+	} `json:"widgets"`
+}
+
 type GetSeenPlatesResponse struct {
 	Camera_id  string `json:"camera_id"`
 	Detections []struct {
@@ -144,7 +181,7 @@ type GetCameraDevicesResponse struct {
 		Camera_id                string  `json:"camera_id"`
 		Cloud_retention          int     `json:"cloud_retention"`
 		Date_added               int     `json:"date_added"`
-		Device_retention         any     `json:"device_retention"`
+		Device_retention         int     `json:"device_retention"`
 		Firmware                 string  `json:"firmware"`
 		Firmware_update_schedule string  `json:"firmware_update_schedule"`
 		Last_online              int     `json:"last_online"`

@@ -45,6 +45,15 @@ type GetOTDataOptions struct {
 	preset_id  string `name:"preset_id"`
 }
 
+type GetDashboardWidgetTrendDataOptions struct {
+	End_time     string   `json:"end_time,omitempty"`
+	Interval     string   `json:"interval,omitempty"`
+	Site_ids     []string `json:"site_ids,omitempty"`
+	Start_time   string   `json:"start_time,omitempty"`
+	Widget_ids   []string `json:"widget_ids,omitempty"`
+	Widget_types []string `json:"widget_types,omitempty"`
+}
+
 type GetSeenPlatesOptions struct {
 	camera_id     string `name:"camera_id"`
 	License_plate string `name:"license_plate"`

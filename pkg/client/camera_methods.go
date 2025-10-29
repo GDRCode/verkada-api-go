@@ -211,12 +211,47 @@ func (c *CameraClient) GetOTData(camera_id string, preset_id string, options *Ge
 		"1_day":      true,
 		"30_days":    true,
 	}
-	if options.Interval != "" && !intervalValidation[options.Interval] {
+	if !intervalValidation[options.Interval] {
 		return nil, fmt.Errorf("could not validate interval parameter: %s", options.Interval)
 	}
 	var ret GetOTDataResponse
 	url := c.client.baseURL + "/cameras/v1/analytics/occupancy_trends"
 	err := c.client.MakeVerkadaRequest("GET", url, *options, nil, &ret, 0)
+	return &ret, err
+}
+
+// Returns all data for a particular dashboard's widgets over a specified time range.
+//
+// [Verkada API Docs - Get Dashboard Widget Trend Data]
+//
+// [Verkada API Docs - Get Dashboard Widget Trend Data]: https://apidocs.verkada.com/reference/postdashboardwidgettrendsview-1
+func (c *CameraClient) GetDashBoardWidgetTrendData(dashboard_id string, body *GetDashboardWidgetTrendDataOptions) (*GetDashboardWidgetTrendDataResponse, error) {
+	if body == nil {
+		body = &GetDashboardWidgetTrendDataOptions{}
+	}
+	intervalValidation := map[string]bool{
+		"":      true,
+		"PT15M": true,
+		"PT1H":  true,
+		"PT1D":  true,
+	}
+	if !intervalValidation[body.Interval] {
+		return nil, fmt.Errorf("could not validate interval parameter: %s", body.Interval)
+	}
+	widgetValidation := map[string]bool{
+		"occupancy":  true,
+		"helix":      true,
+		"conversion": true,
+		"queue":      true,
+	}
+	for _, widget_type := range body.Widget_types {
+		if !widgetValidation[widget_type] {
+			return nil, fmt.Errorf("parameter widget_types should only contain \"occupancy\", \"helix\", \"conversion\", and/or \"queue\" - received %s", widget_type)
+		}
+	}
+	var ret GetDashboardWidgetTrendDataResponse
+	url := c.client.baseURL + "/v2/analytics/operational_dashboard/" + dashboard_id + "/widget_trends/query"
+	err := c.client.MakeVerkadaRequest("POST", url, nil, *body, &ret, 0)
 	return &ret, err
 }
 

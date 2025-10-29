@@ -81,7 +81,7 @@ func (c *AccessClient) RemoveUserFromAccessGroup(group_id string, options *Remov
 //
 // [Verkada API Docs - Add User to Access Group]
 //
-// [Verkada API Docs - Add User tp Access Group]: https://apidocs.verkada.com/reference/putaccessgroupuserviewv1
+// [Verkada API Docs - Add User to Access Group]: https://apidocs.verkada.com/reference/putaccessgroupuserviewv1
 func (c *AccessClient) AddUserToAccessGroup(group_id string, body *AddUserToAccessGroupBody) (*AddUserToAccessGroupResponse, error) {
 	options := &AddUserToAccessGroupOptions{group_id: group_id}
 	if body == nil {

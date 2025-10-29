@@ -178,7 +178,7 @@ func (c *Client) MakeVerkadaRequest(method string, url string, params any, body 
 	decode.DisallowUnknownFields()
 	err = decode.Decode(target)
 	if err != nil {
-		return errors.New(err.Error() + ", response: " + buf.String())
+		return errors.New(err.Error() + ", status: " + res.Status + ", response: " + buf.String())
 	}
 	return nil
 }
@@ -244,7 +244,7 @@ func (c *Client) MakeVerkadaRequestWithFile(method string, url string, params an
 	decode.DisallowUnknownFields()
 	err = decode.Decode(target)
 	if err != nil {
-		return errors.New(err.Error() + ", response: " + buf.String())
+		return errors.New(err.Error() + ", status: " + res.Status + ", response: " + buf.String())
 	}
 	return nil
 }
