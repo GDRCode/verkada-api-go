@@ -251,6 +251,6 @@ type GetAllPOIResponse struct {
 type POIProfile struct {
 	Created   int    `json:"created"`
 	Label     string `json:"label"`
-	Last_een  int    `json:"last_seen"`
+	Last_seen int    `json:"last_seen"`
 	Person_id string `json:"person_id"`
 }
