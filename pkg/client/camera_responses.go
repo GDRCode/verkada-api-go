@@ -71,33 +71,38 @@ type GetDashboardWidgetTrendDataResponse struct {
 	Start_time     string `json:"start_time"`
 	Widgets        []struct {
 		ConversionData struct {
-			Conversion_rates              any      `json:"conversion_rates"`
-			Helix_cameras_used            []string `json:"helix_cameras_used"`
-			Helix_counts                  any      `json:"helix_counts"`
-			Occupancy_camera_presets_used []any    `json:"occupancy_camera_presets_used"`
-			Occupancy_in                  any      `json:"occupancy_in"`
+			Conversion_rates              map[string]float32 `json:"conversion_rates"`
+			Helix_cameras_used            []string           `json:"helix_cameras_used"`
+			Helix_counts                  map[string]float32 `json:"helix_counts"`
+			Occupancy_camera_presets_used []CameraPreset     `json:"occupancy_camera_presets_used"`
+			Occupancy_in                  map[string]float32 `json:"occupancy_in"`
 		} `json:"conversion_data"`
 		HelixData struct {
 			Cameras_used []string `json:"cameras_used"`
 			Helix_stats  any      `json:"helix_stats"`
 		} `json:"helix_data"`
 		OccupancyData struct {
-			Camera_presets_used []any `json:"camera_presets_used"`
-			In_counts           any   `json:"in_counts"`
-			Net_occupancy       any   `json:"net_occupancy"`
-			Out_counts          any   `json:"out_counts"`
+			Camera_presets_used []CameraPreset     `json:"camera_presets_used"`
+			In_counts           map[string]float32 `json:"in_counts"`
+			Net_occupancy       map[string]float32 `json:"net_occupancy"`
+			Out_counts          map[string]float32 `json:"out_counts"`
 		} `json:"occupancy_data"`
 		QueueData struct {
-			Avg_queue_length    any   `json:"avg_queue_length"`
-			Avg_wait_time       any   `json:"avg_wait_time"`
-			Camera_presets_used []any `json:"camera_presets_used"`
-			Max_queue_length    any   `json:"max_queue_length"`
-			Max_wait_time       any   `json:"max_wait_time"`
+			Avg_queue_length    map[string]float32 `json:"avg_queue_length"`
+			Avg_wait_time       map[string]float32 `json:"avg_wait_time"`
+			Camera_presets_used []CameraPreset     `json:"camera_presets_used"`
+			Max_queue_length    map[string]float32 `json:"max_queue_length"`
+			Max_wait_time       map[string]float32 `json:"max_wait_time"`
 		} `json:"queue_data"`
 		Widget_id   string `json:"widget_id"`
 		Widget_name string `json:"widget_name"`
 		Widget_type string `json:"widget_type"`
 	} `json:"widgets"`
+}
+
+type CameraPreset struct {
+	CameraId string `json:"cameraId"`
+	PresetId string `json:"presetId"`
 }
 
 type GetSeenPlatesResponse struct {
@@ -238,31 +243,12 @@ type StreamFootageResponse struct {
 	Streaming_link string `json:"streaming_link"`
 }
 
-type DeletePOIResponse struct {
-	Created   int    `json:"created"`
-	Label     string `json:"label"`
-	Last_seen int    `json:"last_seen"`
-	Person_id string `json:"person_id"`
-}
-
 type GetAllPOIResponse struct {
-	Next_token          string `json:"next_token"`
-	Persons_of_interest []struct {
-		Created   int    `json:"created"`
-		Label     string `json:"label"`
-		Last_seen int    `json:"last_seen"`
-		Person_id string `json:"person_id"`
-	} `json:"persons_of_interest"`
+	Next_token          string       `json:"next_token"`
+	Persons_of_interest []POIProfile `json:"persons_of_interest"`
 }
 
-type UpdatePOIResponse struct {
-	Created   int    `json:"created"`
-	Label     string `json:"label"`
-	Last_een  int    `json:"last_seen"`
-	Person_id string `json:"person_id"`
-}
-
-type CreatePOIResponse struct {
+type POIProfile struct {
 	Created   int    `json:"created"`
 	Label     string `json:"label"`
 	Last_een  int    `json:"last_seen"`

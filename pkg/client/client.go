@@ -82,6 +82,9 @@ type ClientOptions struct {
 func New(options *ClientOptions) (*Client, error) {
 	auth.GetEnvFromFile()
 	envKey := os.Getenv("API_KEY")
+	if envKey == "" {
+		return nil, fmt.Errorf("error: no environment variable \"API_KEY\", either set in a .env file for auth.GetEnvFromFile() or set directly using os.SetEnv()")
+	}
 	c := &Client{
 		httpClient:   &http.Client{},
 		Key:          envKey,

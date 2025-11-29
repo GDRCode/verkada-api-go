@@ -762,12 +762,12 @@ func (c *CameraClient) StreamFootage(org_id string, camera_id string, jwt string
 // [Verkada API Docs - Delete a Person of Interest]
 //
 // [Verkada API Docs - Delete a Person of Interest]: https://apidocs.verkada.com/reference/deletepersonofinterestviewv1
-func (c *CameraClient) DeletePOI(person_id string, options *DeletePOIOptions) (*DeletePOIResponse, error) {
+func (c *CameraClient) DeletePOI(person_id string, options *DeletePOIOptions) (*POIProfile, error) {
 	if options == nil {
 		options = &DeletePOIOptions{}
 	}
 	options.person_id = person_id
-	var ret DeletePOIResponse
+	var ret POIProfile
 	url := c.client.baseURL + "/cameras/v1/people/person_of_interest"
 	err := c.client.MakeVerkadaRequest("DELETE", url, *options, nil, &ret, 0)
 	return &ret, err
@@ -808,14 +808,14 @@ func (c *CameraClient) GetAllPOI(options *GetAllPOIOptions) (*GetAllPOIResponse,
 // [Verkada API Docs - Update a Person of Interest]
 //
 // [Verkada API Docs - Update a Person of Interest]: https://apidocs.verkada.com/reference/patchpersonofinterestviewv1
-func (c *CameraClient) UpdatePOI(person_id string, label string) (*UpdatePOIResponse, error) {
+func (c *CameraClient) UpdatePOI(person_id string, label string) (*POIProfile, error) {
 	options := UpdatePOIOptions{person_id: person_id}
 	body := struct {
 		Label string `json:"label"`
 	}{
 		Label: label,
 	}
-	var ret UpdatePOIResponse
+	var ret POIProfile
 	url := c.client.baseURL + "/cameras/v1/people/person_of_interest"
 	err := c.client.MakeVerkadaRequest("PATCH", url, options, body, &ret, 0)
 	return &ret, err
@@ -827,7 +827,7 @@ func (c *CameraClient) UpdatePOI(person_id string, label string) (*UpdatePOIResp
 // [Verkada API Docs - Update a Person of Interest]
 //
 // [Verkada API Docs - Update a Person of Interest]: https://apidocs.verkada.com/reference/patchpersonofinterestviewv1
-func (c *CameraClient) CreatePOI(filename string, label string) (*CreatePOIResponse, error) {
+func (c *CameraClient) CreatePOI(filename string, label string) (*POIProfile, error) {
 	file, err := os.Open(filename)
 	if err != nil {
 		return nil, err
@@ -844,7 +844,7 @@ func (c *CameraClient) CreatePOI(filename string, label string) (*CreatePOIRespo
 		Base64_image: base64.StdEncoding.EncodeToString(buf),
 		Label:        label,
 	}
-	var ret CreatePOIResponse
+	var ret POIProfile
 	url := c.client.baseURL + "/cameras/v1/people/person_of_interest"
 	err = c.client.MakeVerkadaRequest("POST", url, nil, body, &ret, 0)
 	return &ret, err
