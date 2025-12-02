@@ -71,9 +71,13 @@ type VXClient struct {
 
 // Potential options for initiating a new Client.
 // Made into a type struct to allow for future non-breaking option additions.
+//
+// It is recommended to use a .env file for auth.GetEnvFromFile() or os.Setenv() for the API key.
+// The field here is provided in case environment variables are not provided.
 type ClientOptions struct {
 	Region       string
 	AutoPaginate bool
+	APIKey       string
 }
 
 // New returns a Client and any errors relating to configuration options.
@@ -83,7 +87,11 @@ func New(options *ClientOptions) (*Client, error) {
 	auth.GetEnvFromFile()
 	envKey := os.Getenv("API_KEY")
 	if envKey == "" {
-		return nil, fmt.Errorf("error: no environment variable \"API_KEY\", either set in a .env file for auth.GetEnvFromFile() or set directly using os.SetEnv()")
+		if options.APIKey != "" {
+			envKey = options.APIKey
+		} else {
+			return nil, fmt.Errorf("error: no environment variable \"API_KEY\", either set in a .env file for auth.GetEnvFromFile() or set directly using os.SetEnv()")
+		}
 	}
 	c := &Client{
 		httpClient:   &http.Client{},

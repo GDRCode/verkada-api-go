@@ -31,7 +31,7 @@ func GetAuthToken(key string, baseURL string) (TokenContainer, error) {
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return TokenContainer{}, fmt.Errorf("%s - could not retrieve auth token from .env API key, status: %s", err.Error(), resp.Status)
+		return TokenContainer{}, fmt.Errorf("%s - could not retrieve auth token from API key, status: %s", err.Error(), resp.Status)
 	}
 
 	defer resp.Body.Close()
