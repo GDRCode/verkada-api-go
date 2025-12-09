@@ -40,6 +40,30 @@ type GetGuestVisitsResponse struct {
 	} `json:"visits"`
 }
 
+type GetGuestTypesResponse struct {
+	Cursor string `json:"cursor"`
+	Items  []struct {
+		Enabled_for_invites bool   `json:"enabled_for_invites"`
+		Guest_type_id       string `json:"guest_type_id"`
+		Name                string `json:"name"`
+	} `json:"items"`
+}
+
+type GetHostsResponse struct {
+	Cursor string `json:"cursor"`
+	Items  []struct {
+		Email                  string `json:"email"`
+		First_name             string `json:"first_name"`
+		Full_name              string `json:"full_name"`
+		Has_delegate           bool   `json:"has_delegate"`
+		Host_id                string `json:"host_id"`
+		Last_name              string `json:"last_name"`
+		Original_first_name    string `json:"original_first_name"`
+		Phone_number           string `json:"phone_number"`
+		Requires_host_approval bool   `json:"requires_host_approval"`
+	}
+}
+
 type guestInfo struct {
 	Created      int    `json:"created"`
 	Email        string `json:"email"`

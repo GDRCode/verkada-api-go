@@ -19,3 +19,16 @@ type GetGuestVisitsOptions struct {
 	Page_token string `name:"page_token"`
 	Page_size  *int64 `name:"page_size"`
 }
+
+type GetGuestTypesOptions struct {
+	site_id string `name:"site_id"`
+	Cursor  string `name:"cursor"`
+	Limit   *int64 `name:"limit"`
+}
+
+type GetHostsOptions struct {
+	site_id string `name:"site_id"`
+	Email   string `name:"email"`
+	Cursor  string `name:"cursor"`
+	Limit   *int64 `name:"limit"`
+}

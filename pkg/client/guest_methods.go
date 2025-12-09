@@ -80,3 +80,35 @@ func (c *GuestClient) GetGuestVisits(site_id string, start_time *int64, end_time
 	}
 	return &ret, err
 }
+
+// Returns a list of Guest types applied to a site.
+//
+// [Verkada API Docs - Get Guest Types]
+//
+// [Verkada API Docs - Get Guest Types]: https://apidocs.verkada.com/reference/getguesttypeviewv2
+func (c *GuestClient) GetGuestTypes(site_id string, options *GetGuestTypesOptions) (*GetGuestTypesResponse, error) {
+	if options == nil {
+		options = &GetGuestTypesOptions{}
+	}
+	options.site_id = site_id
+	var ret GetGuestTypesResponse
+	url := c.client.baseURL + "/v2/guest/guest_types"
+	err := c.client.MakeVerkadaRequest("GET", url, options, nil, &ret, 0)
+	return &ret, err
+}
+
+// Returns a list of hosts in a site.
+//
+// [Verkada API Docs - Get Hosts]
+//
+// [Verkada API Docs - Get Hosts]: https://apidocs.verkada.com/reference/gethostviewv2
+func (c *GuestClient) GetHosts(site_id string, options *GetHostsOptions) (*GetHostsResponse, error) {
+	if options == nil {
+		options = &GetHostsOptions{}
+	}
+	options.site_id = site_id
+	var ret GetHostsResponse
+	url := c.client.baseURL + "/v2/guest/hosts"
+	err := c.client.MakeVerkadaRequest("GET", url, options, nil, &ret, 0)
+	return &ret, err
+}
