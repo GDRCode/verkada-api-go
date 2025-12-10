@@ -133,16 +133,21 @@ func Bool(b bool) *bool {
 
 // Helper function to one-line a Int64 to *Int64 conversion.
 // Required because a nullable number value is needed to identify disincluded boolean parameters in options structs.
-// *Int64 is used for all whole-number values since the Go encoding/json package decodes JSON numbers as Int64.
 func Int64(i int64) *int64 {
 	return &i
 }
 
 // Helper function to one-line a Int64 to *Int64 conversion.
 // Required because a nullable number value is needed to identify disincluded boolean parameters in options structs.
-// *Int64 is used for all whole-number values since the Go encoding/json package decodes JSON numbers as Int64.
 func Float64(f float64) *float64 {
 	return &f
+}
+
+// Helper function to one-line get a pointer to any literal.
+// Required because a nullable number value is needed to distinguish 0 values from unincluded values.
+// Individual functions for bool, int64, and float64 are retained.
+func Ptr[T any](v T) *T {
+	return &v
 }
 
 // Used by all methods that don't require file upload or download.
