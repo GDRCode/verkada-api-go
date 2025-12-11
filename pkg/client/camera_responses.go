@@ -71,11 +71,11 @@ type GetDashboardWidgetTrendDataResponse struct {
 	Start_time     string `json:"start_time"`
 	Widgets        []struct {
 		ConversionData struct {
-			Conversion_rates              map[string]float32 `json:"conversion_rates"`
+			Conversion_rates              map[string]float64 `json:"conversion_rates"`
 			Helix_cameras_used            []string           `json:"helix_cameras_used"`
-			Helix_counts                  map[string]float32 `json:"helix_counts"`
+			Helix_counts                  map[string]float64 `json:"helix_counts"`
 			Occupancy_camera_presets_used []CameraPreset     `json:"occupancy_camera_presets_used"`
-			Occupancy_in                  map[string]float32 `json:"occupancy_in"`
+			Occupancy_in                  map[string]float64 `json:"occupancy_in"`
 		} `json:"conversion_data"`
 		HelixData struct {
 			Cameras_used []string `json:"cameras_used"`
@@ -83,16 +83,16 @@ type GetDashboardWidgetTrendDataResponse struct {
 		} `json:"helix_data"`
 		OccupancyData struct {
 			Camera_presets_used []CameraPreset     `json:"camera_presets_used"`
-			In_counts           map[string]float32 `json:"in_counts"`
-			Net_occupancy       map[string]float32 `json:"net_occupancy"`
-			Out_counts          map[string]float32 `json:"out_counts"`
+			In_counts           map[string]float64 `json:"in_counts"`
+			Net_occupancy       map[string]float64 `json:"net_occupancy"`
+			Out_counts          map[string]float64 `json:"out_counts"`
 		} `json:"occupancy_data"`
 		QueueData struct {
-			Avg_queue_length    map[string]float32 `json:"avg_queue_length"`
-			Avg_wait_time       map[string]float32 `json:"avg_wait_time"`
+			Avg_queue_length    map[string]float64 `json:"avg_queue_length"`
+			Avg_wait_time       map[string]float64 `json:"avg_wait_time"`
 			Camera_presets_used []CameraPreset     `json:"camera_presets_used"`
-			Max_queue_length    map[string]float32 `json:"max_queue_length"`
-			Max_wait_time       map[string]float32 `json:"max_wait_time"`
+			Max_queue_length    map[string]float64 `json:"max_queue_length"`
+			Max_wait_time       map[string]float64 `json:"max_wait_time"`
 		} `json:"queue_data"`
 		Widget_id   string `json:"widget_id"`
 		Widget_name string `json:"widget_name"`

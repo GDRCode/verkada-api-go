@@ -1,35 +1,35 @@
 package client
 
 type GetAlertsOptions struct {
-	Start_time        *int64   `name:"start_time"`
-	End_time          *int64   `name:"end_time"`
+	Start_time        *int     `name:"start_time"`
+	End_time          *int     `name:"end_time"`
 	Include_image_url *bool    `name:"include_image_url"`
 	Page_token        string   `name:"page_token"`
-	Page_size         *int64   `name:"page_size"`
+	Page_size         *int     `name:"page_size"`
 	Notification_type []string `name:"notification_type"`
 }
 
 type GetDashboardOTDataOptions struct {
 	dashboard_id string `name:"dashboard_id"`
-	Start_time   *int64 `name:"start_time"`
-	End_time     *int64 `name:"end_time"`
+	Start_time   *int   `name:"start_time"`
+	End_time     *int   `name:"end_time"`
 	Interval     string `name:"interval"`
 }
 
 type GetMaxCountsOptions struct {
 	camera_id    string `name:"camera_id"`
-	Start_time   *int64 `name:"start_time"`
-	End_time     *int64 `name:"end_time"`
+	Start_time   *int   `name:"start_time"`
+	End_time     *int   `name:"end_time"`
 	Search_zones [][]int64
 	search_zones string `name:"search#zones"`
 }
 
 type GetObjectCountsOptions struct {
 	camera_id  string `name:"camera_id"`
-	Start_time *int64 `name:"start_time"`
-	End_time   *int64 `name:"end_time"`
+	Start_time *int   `name:"start_time"`
+	End_time   *int   `name:"end_time"`
 	Page_token string `name:"page_token"`
-	Page_size  *int64 `name:"page_size"`
+	Page_size  *int   `name:"page_size"`
 }
 
 type SetMQTTConfigBody struct {
@@ -39,8 +39,8 @@ type SetMQTTConfigBody struct {
 
 type GetOTDataOptions struct {
 	camera_id  string `name:"camera_id"`
-	Start_time *int64 `name:"start_time"`
-	End_time   *int64 `name:"end_time"`
+	Start_time *int   `name:"start_time"`
+	End_time   *int   `name:"end_time"`
 	Interval   string `name:"interval"`
 	preset_id  string `name:"preset_id"`
 }
@@ -57,10 +57,10 @@ type GetDashboardWidgetTrendDataOptions struct {
 type GetSeenPlatesOptions struct {
 	camera_id     string `name:"camera_id"`
 	License_plate string `name:"license_plate"`
-	Start_time    *int64 `name:"start_time"`
-	End_time      *int64 `name:"end_time"`
-	Page_token    *int64 `name:"page_token"`
-	Page_size     *int64 `name:"page_size"`
+	Start_time    *int   `name:"start_time"`
+	End_time      *int   `name:"end_time"`
+	Page_token    *int   `name:"page_token"`
+	Page_size     *int   `name:"page_size"`
 }
 
 type DeleteLPOIOptions struct {
@@ -68,7 +68,7 @@ type DeleteLPOIOptions struct {
 }
 
 type GetAllLPOIOptions struct {
-	Page_size  *int64 `name:"page_size"`
+	Page_size  *int   `name:"page_size"`
 	Page_token string `name:"page_token"`
 }
 
@@ -79,10 +79,10 @@ type UpdateLPOIOptions struct {
 type GetLicensePlateTSOptions struct {
 	camera_id     string `name:"camera_id"`
 	license_plate string `name:"license_plate"`
-	Start_time    *int64 `name:"start_time"`
-	End_time      *int64 `name:"end_time"`
-	Page_token    *int64 `name:"page_token"`
-	Page_size     *int64 `name:"page_size"`
+	Start_time    *int   `name:"start_time"`
+	End_time      *int   `name:"end_time"`
+	Page_token    *int   `name:"page_token"`
+	Page_size     *int   `name:"page_size"`
 }
 
 type GetCameraAudioStatusOptions struct {
@@ -95,7 +95,7 @@ type GetCBSettingsOptions struct {
 
 type GetCameraDevicesOptions struct {
 	Page_token string `name:"page_token"`
-	Page_size  *int64 `name:"page_size"`
+	Page_size  *int   `name:"page_size"`
 }
 
 type GetLinkToFootageOptions struct {
@@ -116,15 +116,15 @@ type GetLatestThumbnailImageOptions struct {
 
 type GetThumbnailLinkOptions struct {
 	camera_id string `name:"camera_id"`
-	Timestamp *int64 `name:"timestamp"`
-	Expiry    *int64 `name:"expiry"`
+	Timestamp *int   `name:"timestamp"`
+	Expiry    *int   `name:"expiry"`
 }
 
 type GetFootageOptions struct {
 	org_id     string `name:"org_id"`
 	camera_id  string `name:"camera_id"`
-	Start_time *int64 `name:"start_time"`
-	End_time   *int64 `name:"end_time"`
+	Start_time *int   `name:"start_time"`
+	End_time   *int   `name:"end_time"`
 	Resolution string `name:"resolution"`
 	jwt        string `name:"jwt"`
 }
@@ -134,7 +134,7 @@ type DeletePOIOptions struct {
 }
 
 type GetAllPOIOptions struct {
-	Page_size  *int64 `name:"page_size"`
+	Page_size  *int   `name:"page_size"`
 	Page_token string `name:"page_token"`
 }
 

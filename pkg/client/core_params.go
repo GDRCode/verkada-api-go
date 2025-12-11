@@ -1,11 +1,11 @@
 package client
 
 type GetAuditLogsOptions struct {
-	Start_time              *int64 `name:"start_time"`
-	End_time                *int64 `name:"end_time"`
+	Start_time              *int   `name:"start_time"`
+	End_time                *int   `name:"end_time"`
 	Use_processed_timestamp *bool  `name:"use_processed_timestamp"`
 	Page_token              string `name:"page_token"`
-	Page_size               *int64 `name:"page_size"`
+	Page_size               *int   `name:"page_size"`
 }
 
 type DeleteUserOptions struct {

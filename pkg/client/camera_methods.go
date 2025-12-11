@@ -279,7 +279,7 @@ func (c *CameraClient) GetSeenPlates(camera_id string, options *GetSeenPlatesOpt
 	if c.client.AutoPaginate {
 		for ret.Next_page_token != 0 {
 			var nextRet GetSeenPlatesResponse
-			options.Page_token = Int64(int64(ret.Next_page_token))
+			options.Page_token = Ptr(ret.Next_page_token)
 			err = c.client.MakeVerkadaRequest("GET", url, *options, nil, &nextRet, 0)
 			if err != nil {
 				return &ret, err
@@ -418,7 +418,7 @@ func (c *CameraClient) GetLicensePlateTS(camera_id string, license_plate string,
 	if c.client.AutoPaginate {
 		for ret.Next_page_token != 0 {
 			var nextRet GetLicensePlateTSResponse
-			options.Page_token = Int64(int64(ret.Next_page_token))
+			options.Page_token = Ptr(ret.Next_page_token)
 			err = c.client.MakeVerkadaRequest("GET", url, *options, nil, &nextRet, 0)
 			if err != nil {
 				return &ret, err

@@ -128,7 +128,7 @@ type RecurrenceRule struct {
 	Count          int      `json:"count"`
 	Excluded_Dates []string `json:"excluded_dates"`
 	Frequency      string   `json:"frequency"`
-	Interval       *int64   `json:"interval"`
+	Interval       *int     `json:"interval"`
 	Until          string   `json:"until"`
 }
 

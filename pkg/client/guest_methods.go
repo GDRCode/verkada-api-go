@@ -47,7 +47,7 @@ func (c *GuestClient) GetGuestSites() (*GetGuestSitesResponse, error) {
 // [Verkada API Docs - Get Guest Visits]
 //
 // [Verkada API Docs - Get Guest Visits]: https://apidocs.verkada.com/reference/getvisitview
-func (c *GuestClient) GetGuestVisits(site_id string, start_time *int64, end_time *int64, options *GetGuestVisitsOptions) (*GetGuestVisitsResponse, error) {
+func (c *GuestClient) GetGuestVisits(site_id string, start_time *int, end_time *int, options *GetGuestVisitsOptions) (*GetGuestVisitsResponse, error) {
 	if options == nil {
 		options = &GetGuestVisitsOptions{}
 	}

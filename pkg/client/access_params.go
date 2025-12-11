@@ -196,7 +196,7 @@ type GetDoorsOptions struct {
 }
 
 type GetAllDoorExceptionCalendarsOptions struct {
-	Last_updated_after *int64 `name:"last_updated_after"`
+	Last_updated_after *int `name:"last_updated_after"`
 }
 
 type CreateDoorExceptionCalendarBody struct {
@@ -220,10 +220,10 @@ type AddExceptionToCalendarBody struct {
 }
 
 type GetAccessEventsOptions struct {
-	Start_time *int64   `name:"start_time"`
-	End_time   *int64   `name:"end_time"`
+	Start_time *int     `name:"start_time"`
+	End_time   *int     `name:"end_time"`
 	Page_token string   `name:"page_token"`
-	Page_size  *int64   `name:"page_size"`
+	Page_size  *int     `name:"page_size"`
 	Event_type []string `name:"event_type"`
 	Site_id    string   `name:"site_id"`
 	Device_id  string   `name:"device_id"`

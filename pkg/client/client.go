@@ -126,25 +126,25 @@ func New(options *ClientOptions) (*Client, error) {
 }
 
 // Helper function to one-line a bool to *bool conversion.
-// Required because a nullable boolean value is needed to identify disincluded boolean parameters in options structs.
+// Required because a nullable value is needed to identify disincluded parameters in options structs.
 func Bool(b bool) *bool {
 	return &b
 }
 
 // Helper function to one-line a Int64 to *Int64 conversion.
-// Required because a nullable number value is needed to identify disincluded boolean parameters in options structs.
-func Int64(i int64) *int64 {
+// Required because a nullable value is needed to identify disincluded parameters in options structs.
+func Int(i int) *int {
 	return &i
 }
 
 // Helper function to one-line a Int64 to *Int64 conversion.
-// Required because a nullable number value is needed to identify disincluded boolean parameters in options structs.
+// Required because a nullable value is needed to identify disincluded parameters in options structs.
 func Float64(f float64) *float64 {
 	return &f
 }
 
 // Helper function to one-line get a pointer to any literal.
-// Required because a nullable number value is needed to distinguish 0 values from unincluded values.
+// Required because a nullable value is needed to identify disincluded parameters in options structs.
 // Individual functions for bool, int64, and float64 are retained.
 func Ptr[T any](v T) *T {
 	return &v
