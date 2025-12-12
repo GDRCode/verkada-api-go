@@ -9,7 +9,7 @@ import "fmt"
 //
 // [Verkada API Docs - Delete a Helix Event]: https://apidocs.verkada.com/reference/deletevideotaggingeventviewv1
 func (c *HelixClient) DeleteHelixEvent(camera_id string, time_ms int64, event_type_uid string) (*DeleteHelixEventResponse, error) {
-	options := &DeleteHelixEventOptions{camera_id: camera_id, time_ms: Int64(time_ms), event_type_uid: event_type_uid}
+	options := &DeleteHelixEventOptions{camera_id: camera_id, time_ms: Ptr(time_ms), event_type_uid: event_type_uid}
 	var ret DeleteHelixEventResponse
 	url := c.client.baseURL + "/cameras/v1/video_tagging/event"
 	err := c.client.MakeVerkadaRequest("DELETE", url, *options, nil, &ret, 0)
@@ -24,7 +24,7 @@ func (c *HelixClient) DeleteHelixEvent(camera_id string, time_ms int64, event_ty
 //
 // [Verkada API Docs - Get a Helix Event]: https://apidocs.verkada.com/reference/getvideotaggingeventviewv1
 func (c *HelixClient) GetHelixEvent(camera_id string, time_ms int64, event_type_uid string) (*GetHelixEventResponse, error) {
-	options := &GetHelixEventOptions{camera_id: camera_id, time_ms: Int64(time_ms), event_type_uid: event_type_uid}
+	options := &GetHelixEventOptions{camera_id: camera_id, time_ms: Ptr(time_ms), event_type_uid: event_type_uid}
 	var ret GetHelixEventResponse
 	url := c.client.baseURL + "/cameras/v1/video_tagging/event"
 	err := c.client.MakeVerkadaRequest("GET", url, *options, nil, &ret, 0)
@@ -50,7 +50,7 @@ func (c *HelixClient) UpdateHelixEvent(camera_id string, time_ms int64, event_ty
 		Attributes: attributes,
 		Flagged:    body.Flagged,
 	}
-	options := &UpdateHelixEventOptions{camera_id: camera_id, time_ms: Int64(time_ms), event_type_uid: event_type_uid}
+	options := &UpdateHelixEventOptions{camera_id: camera_id, time_ms: Ptr(time_ms), event_type_uid: event_type_uid}
 	var ret UpdateHelixEventResponse
 	url := c.client.baseURL + "/cameras/v1/video_tagging/event"
 	err := c.client.MakeVerkadaRequest("PATCH", url, *options, fullBody, &ret, 0)
