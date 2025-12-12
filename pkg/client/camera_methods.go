@@ -206,10 +206,7 @@ func (c *CameraClient) GetOTData(camera_id string, preset_id string, options *Ge
 		"":           true,
 		"15_minutes": true,
 		"1_hour":     true,
-		"6_hours":    true,
-		"12_hours":   true,
 		"1_day":      true,
-		"30_days":    true,
 	}
 	if !intervalValidation[options.Interval] {
 		return nil, fmt.Errorf("could not validate interval parameter: %s", options.Interval)
