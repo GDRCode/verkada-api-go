@@ -408,7 +408,7 @@ func (c *CameraClient) GetLicensePlateTS(camera_id string, license_plate string,
 	options.camera_id, options.license_plate = camera_id, license_plate
 	var ret GetLicensePlateTSResponse
 	url := c.client.baseURL + "/cameras/v1/analytics/lpr/timestamps"
-	err := c.client.MakeVerkadaRequest("GET", url, options, nil, &ret, 0)
+	err := c.client.MakeVerkadaRequest("GET", url, *options, nil, &ret, 0)
 	if err != nil {
 		return nil, err
 	}
@@ -564,7 +564,7 @@ func (c *CameraClient) GetCameraDevices(options *GetCameraDevicesOptions) (*GetC
 	}
 	var ret GetCameraDevicesResponse
 	url := c.client.baseURL + "/cameras/v1/devices"
-	err := c.client.MakeVerkadaRequest("GET", url, options, nil, &ret, 0)
+	err := c.client.MakeVerkadaRequest("GET", url, *options, nil, &ret, 0)
 	if err != nil {
 		return nil, err
 	}
@@ -685,7 +685,7 @@ func (c *CameraClient) GetThumbnailLink(camera_id string, options *GetThumbnailL
 	options.camera_id = camera_id
 	var ret GetThumbnailLinkResponse
 	url := c.client.baseURL + "/cameras/v1/footage/thumbnails/link"
-	err := c.client.MakeVerkadaRequest("GET", url, options, nil, &ret, 0)
+	err := c.client.MakeVerkadaRequest("GET", url, *options, nil, &ret, 0)
 	return &ret, err
 }
 
@@ -806,7 +806,7 @@ func (c *CameraClient) GetAllPOI(options *GetAllPOIOptions) (*GetAllPOIResponse,
 //
 // [Verkada API Docs - Update a Person of Interest]: https://apidocs.verkada.com/reference/patchpersonofinterestviewv1
 func (c *CameraClient) UpdatePOI(person_id string, label string) (*POIProfile, error) {
-	options := UpdatePOIOptions{person_id: person_id}
+	options := &UpdatePOIOptions{person_id: person_id}
 	body := struct {
 		Label string `json:"label"`
 	}{
@@ -814,7 +814,7 @@ func (c *CameraClient) UpdatePOI(person_id string, label string) (*POIProfile, e
 	}
 	var ret POIProfile
 	url := c.client.baseURL + "/cameras/v1/people/person_of_interest"
-	err := c.client.MakeVerkadaRequest("PATCH", url, options, body, &ret, 0)
+	err := c.client.MakeVerkadaRequest("PATCH", url, *options, body, &ret, 0)
 	return &ret, err
 }
 

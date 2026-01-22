@@ -93,7 +93,7 @@ func (c *GuestClient) GetGuestTypes(site_id string, options *GetGuestTypesOption
 	options.site_id = site_id
 	var ret GetGuestTypesResponse
 	url := c.client.baseURL + "/v2/guest/guest_types"
-	err := c.client.MakeVerkadaRequest("GET", url, options, nil, &ret, 0)
+	err := c.client.MakeVerkadaRequest("GET", url, *options, nil, &ret, 0)
 	return &ret, err
 }
 
@@ -109,6 +109,6 @@ func (c *GuestClient) GetHosts(site_id string, options *GetHostsOptions) (*GetHo
 	options.site_id = site_id
 	var ret GetHostsResponse
 	url := c.client.baseURL + "/v2/guest/hosts"
-	err := c.client.MakeVerkadaRequest("GET", url, options, nil, &ret, 0)
+	err := c.client.MakeVerkadaRequest("GET", url, *options, nil, &ret, 0)
 	return &ret, err
 }
