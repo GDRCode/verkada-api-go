@@ -187,6 +187,10 @@ func (c *Client) MakeVerkadaRequest(method string, url string, params any, body 
 		c.MakeVerkadaRequest(method, url, params, body, target, retry+1)
 	}
 
+	if res.StatusCode < 200 || res.StatusCode >= 300 {
+		return fmt.Errorf("request unsuccessful - %s", res.Status)
+	}
+
 	defer res.Body.Close()
 	var buf bytes.Buffer
 	tee := io.TeeReader(res.Body, &buf)
@@ -253,6 +257,10 @@ func (c *Client) MakeVerkadaRequestWithFile(method string, url string, params an
 		c.MakeVerkadaRequestWithFile(method, url, params, filename, filetype, target, retry+1)
 	}
 
+	if res.StatusCode < 200 || res.StatusCode >= 300 {
+		return fmt.Errorf("request unsuccessful - %s", res.Status)
+	}
+
 	defer res.Body.Close()
 	var buf bytes.Buffer
 	tee := io.TeeReader(res.Body, &buf)
@@ -293,6 +301,10 @@ func (c *Client) MakeVerkadaRequestForFile(method string, url string, params any
 		retryPeriod := 50 * math.Pow(2, float64(retry))
 		time.Sleep(time.Millisecond * 50 * time.Duration(retryPeriod))
 		c.MakeVerkadaRequestForFile(method, url, params, filename, retry+1)
+	}
+
+	if res.StatusCode < 200 || res.StatusCode >= 300 {
+		return fmt.Errorf("request unsuccessful - %s", res.Status)
 	}
 
 	defer res.Body.Close()
