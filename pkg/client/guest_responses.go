@@ -1,5 +1,101 @@
 package client
 
+type GetGuestEventsResponse struct {
+	Cursor string `json:"cursor"`
+	Items  []struct {
+		End_time       string `json:"end_time"`
+		Event_name     string `json:"event_name"`
+		Event_part_id  string `json:"event_part_id"`
+		Guest_event_id string `json:"guest_event_id"`
+		Is_multipart   bool   `json:"is_multipart"`
+		Start_time     string `json:"start_time"`
+	} `json:"items"`
+}
+
+type CreateGuestEventResponse struct {
+	GuestEventDetails
+}
+
+type DeleteGuestEventResponse struct {
+}
+
+type GetGuestEventByIdResponse struct {
+	GuestEventDetails
+}
+
+type GuestEventDetails struct {
+	End_time          string      `json:"end_time"`
+	Event_address     string      `json:"event_address"`
+	Event_description string      `json:"event_description"`
+	Event_name        string      `json:"event_name"`
+	Event_parts       []EventPart `json:"event_parts"`
+	Event_source      string      `json:"event_source"`
+	Guest_event_id    string      `json:"guest_event_id"`
+	Guest_type_id     string      `json:"guest_type_id"`
+	Host_id           string      `json:"host_id"`
+	Invitees          []Invitee   `json:"invitees"`
+	Rsvp_link         string      `json:"rsvp_link"`
+	Site_id           string      `json:"site_id"`
+	Start_time        string      `jsonL:"start_time"`
+	Status            string      `json:"status"`
+	Walk_in_enabled   bool        `json:"walk_in_enabled"`
+}
+
+type Invitee struct {
+	Guest_email        string `json:"guest_email"`
+	Guest_full_name    string `json:"guest_full_name"`
+	Guest_phone_number string `json:"guest_phone_number"`
+	Invited_guest_id   string `json:"invited_guest_id"`
+	Notes              string `json:"notes"`
+	Registered_time    string `json:"registered_time"`
+	Visit_id           string `json:"visit_id"`
+}
+
+type EventPart struct {
+	End_time      string `json:"end_time"`
+	Event_part_id string `json:"event_part_id"`
+	Start_time    string `json:"start_time"`
+}
+
+type GetApprovedListsResponse struct {
+	Cursor string         `json:"cursor"`
+	Items  []ApprovedList `json:"items"`
+}
+
+type ApprovedList struct {
+	Approved_list_id string `json:"approved_list_id"`
+	Name             string `json:"name"`
+	Site_id          string `json:"site_id"`
+}
+
+type AddToApprovedListsResponse struct {
+	Count int `json:"count"`
+}
+
+type RemoveFromApprovedListsResponse struct {
+	Count int `json:"count"`
+}
+
+type GetApprovedListMembersResponse struct {
+	Cursor string               `json:"cursor"`
+	People []ApprovedListMember `json:"people"`
+}
+
+type ApprovedListMember struct {
+	Address              string `json:"address"`
+	Date_of_birth        string `json:"date_of_birth"`
+	Email                string `json:"email"`
+	Expiration_timestamp string `json:"expiration_timestamp"`
+	External_id          string `json:"external_id"`
+	Full_name            string `json:"full_name"`
+	Person_id            string `json:"person_id"`
+	Phone_number         string `json:"phone_number"`
+}
+
+type ResetApprovedListResponse struct {
+	Count int `json:"count"`
+}
+
 type DeleteDenyListResponse struct {
 }
 
