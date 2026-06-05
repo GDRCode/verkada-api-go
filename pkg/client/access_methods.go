@@ -351,7 +351,7 @@ func (c *AccessClient) UploadProfilePhoto(options *UploadProfilePhotoOptions, fi
 	}
 	var ret CreateProfilePhotoResponse
 	url := c.client.baseURL + "/access/v1/access_users/user/profile_photo"
-	err := c.client.MakeVerkadaRequestWithFile("PUT", url, *options, filename, "image/jpeg", &ret, 0)
+	err := c.client.MakeVerkadaRequestWithFile("PUT", url, *options, nil, filename, &ret, 0)
 	return err
 }
 
@@ -738,6 +738,148 @@ func (c *AccessClient) AddMFACode(code string, options *AddMFACodeOptions) (*Add
 	var ret AddMFACodeResponse
 	url := c.client.baseURL + "/access/v1/credentials/mfa_code"
 	err := c.client.MakeVerkadaRequest("POST", url, *options, body, &ret, 0)
+	return &ret, err
+}
+
+//	Disable face unlock for an external user. This will delete their face credential and disable the face unlock access method.
+//
+// [Verkada API Docs - Disable Face Unlock]
+//
+// [Verkada API Docs - Disable Face Unlock]: https://apidocs.verkada.com/reference/deletefaceunlockdisableexternaluserviewv2
+func (c *AccessClient) DisableFaceUnlockExternal(external_id string) (*DisableFaceUnlockExternalResponse, error) {
+	var ret DisableFaceUnlockExternalResponse
+	url := c.client.baseURL + "/v2/access/external_users/" + external_id + "/face_unlock"
+	err := c.client.MakeVerkadaRequest("DELETE", url, nil, nil, &ret, 0)
+	return &ret, err
+}
+
+// Enable face unlock for a user by using their existing profile photo. This will create a face credential from the user's profile photo.
+// If the user already has a face credential and overwrite is False, the request will fail.
+// The profile photo must meet quality requirements for face recognition.
+//
+// [Verkada API Docs - Enable Face Unlock with Profile Photo]
+//
+// [Verkada API Docs - Enable Face Unlock with Profile Photo]: https://apidocs.verkada.com/reference/postfaceunlockcopyuserphotoexternaluserviewv2
+func (c *AccessClient) EnableFaceUnlockProfilePhotoExternal(external_id string, body *EnableFaceUnlockExternalProfilePhotoBody) (*EnableFaceUnlockExternalProfilePhotoResponse, error) {
+	if body == nil {
+		body = &EnableFaceUnlockExternalProfilePhotoBody{}
+	}
+	var ret EnableFaceUnlockExternalProfilePhotoResponse
+	url := c.client.baseURL + "/v2/access/external_users/" + external_id + "/face_unlock/copy_user_photo"
+	err := c.client.MakeVerkadaRequest("POST", url, nil, body, &ret, 0)
+	return &ret, err
+}
+
+// Enable face unlock for a user by sending them an invitation to enroll their face via mobile device. An email will be sent to the user with a link to complete the enrollment process.
+// If the user already has a face credential and overwrite is False, the request will fail. When overwrite is True, the invitation is sent and the user can upload a new photo which will replace the existing credential.
+//
+// [Verkada API Docs - Enable Face Unlock with Mobile Enrollment Invitation]
+//
+// [Verkada API Docs - Enable Face Unlock with Mobile Enrollment Invitation]: https://apidocs.verkada.com/reference/postfaceunlockinviteexternaluserviewv2
+func (c *AccessClient) EnableFaceUnlockMobileInviteExternal(external_id string, body *EnableFaceUnlockExternalMobileInviteBody) (*EnableFaceUnlockExternalMobileInviteResponse, error) {
+	if body == nil {
+		body = &EnableFaceUnlockExternalMobileInviteBody{}
+	}
+	// Invite method must be one of the following:
+	invite_validation := map[string]bool{
+		"email": true,
+		"sms":   true,
+	}
+	for _, method := range body.Invitation_methods {
+		if ok := invite_validation[method]; !ok {
+			return nil, fmt.Errorf("Could not validate invite method: %s", method)
+		}
+	}
+	var ret EnableFaceUnlockExternalMobileInviteResponse
+	url := c.client.baseURL + "/v2/access/external_users/" + external_id + "/face_unlock/invite"
+	err := c.client.MakeVerkadaRequest("POST", url, nil, body, &ret, 0)
+	return &ret, err
+}
+
+// Enable face unlock for a user by uploading a new photo. The photo must be provided as a multipart/form-data file.
+// If the user already has a face credential and overwrite is False, the request will fail. The uploaded photo must meet quality requirements for face recognition.
+//
+// [Verkada API Docs - Enable Face Unlock with Uploaded Photo]
+//
+// [Verkada API Docs - Enable Face Unlock with Uploaded Photo]: https://apidocs.verkada.com/reference/postfaceunlockuploadphotoexternaluserviewv2
+func (c *AccessClient) EnableFaceUnlockUploadPhotoExternal(external_id string, filename string, body *EnableFaceUnlockExternalUploadPhotoBody) (*EnableFaceUnlockExternalUploadPhotoResponse, error) {
+	if body == nil {
+		body = &EnableFaceUnlockExternalUploadPhotoBody{}
+	}
+	var ret EnableFaceUnlockExternalUploadPhotoResponse
+	url := c.client.baseURL + "/v2/access/external_users/" + external_id + "/face_unlock/upload_photo"
+	err := c.client.MakeVerkadaRequestWithFile("POST", url, nil, *body, filename, &ret, 0)
+	return &ret, err
+}
+
+//	Disable face unlock for an internal user. This will delete their face credential and disable the face unlock access method.
+//
+// [Verkada API Docs - Disable Face Unlock]
+//
+// [Verkada API Docs - Disable Face Unlock]: https://apidocs.verkada.com/reference/deletefaceunlockdisableuserviewv2
+func (c *AccessClient) DisableFaceUnlockInternal(user_id string) (*DisableFaceUnlockInternalResponse, error) {
+	var ret DisableFaceUnlockInternalResponse
+	url := c.client.baseURL + "/v2/access/users/" + user_id + "/face_unlock"
+	err := c.client.MakeVerkadaRequest("DELETE", url, nil, nil, &ret, 0)
+	return &ret, err
+}
+
+// Enable face unlock for a user by using their existing profile photo. This will create a face credential from the user's profile photo.
+// If the user already has a face credential and overwrite is False, the request will fail.
+// The profile photo must meet quality requirements for face recognition.
+//
+// [Verkada API Docs - Enable Face Unlock with Profile Photo]
+//
+// [Verkada API Docs - Enable Face Unlock with Profile Photo]: https://apidocs.verkada.com/reference/postfaceunlockcopyuserphotouserviewv2
+func (c *AccessClient) EnableFaceUnlockProfilePhotoInternal(user_id string, body *EnableFaceUnlockInternalProfilePhotoBody) (*EnableFaceUnlockInternalProfilePhotoResponse, error) {
+	if body == nil {
+		body = &EnableFaceUnlockInternalProfilePhotoBody{}
+	}
+	var ret EnableFaceUnlockInternalProfilePhotoResponse
+	url := c.client.baseURL + "/v2/access/users/" + user_id + "/face_unlock/copy_user_photo"
+	err := c.client.MakeVerkadaRequest("POST", url, nil, body, &ret, 0)
+	return &ret, err
+}
+
+// Enable face unlock for a user by sending them an invitation to enroll their face via mobile device. An email will be sent to the user with a link to complete the enrollment process.
+// If the user already has a face credential and overwrite is False, the request will fail. When overwrite is True, the invitation is sent and the user can upload a new photo which will replace the existing credential.
+//
+// [Verkada API Docs - Enable Face Unlock with Mobile Enrollment Invitation]
+//
+// [Verkada API Docs - Enable Face Unlock with Mobile Enrollment Invitation]: https://apidocs.verkada.com/reference/postfaceunlockinviteuserviewv2
+func (c *AccessClient) EnableFaceUnlockMobileInviteInternal(user_id string, body *EnableFaceUnlockInternalMobileInviteBody) (*EnableFaceUnlockInternalMobileInviteResponse, error) {
+	if body == nil {
+		body = &EnableFaceUnlockInternalMobileInviteBody{}
+	}
+	// Invite method must be one of the following:
+	invite_validation := map[string]bool{
+		"email": true,
+		"sms":   true,
+	}
+	for _, method := range body.Invitation_methods {
+		if ok := invite_validation[method]; !ok {
+			return nil, fmt.Errorf("Could not validate invite method: %s", method)
+		}
+	}
+	var ret EnableFaceUnlockInternalMobileInviteResponse
+	url := c.client.baseURL + "/v2/access/users/" + user_id + "/face_unlock/invite"
+	err := c.client.MakeVerkadaRequest("POST", url, nil, body, &ret, 0)
+	return &ret, err
+}
+
+// Enable face unlock for a user by uploading a new photo. The photo must be provided as a multipart/form-data file.
+// If the user already has a face credential and overwrite is False, the request will fail. The uploaded photo must meet quality requirements for face recognition.
+//
+// [Verkada API Docs - Enable Face Unlock with Uploaded Photo]
+//
+// [Verkada API Docs - Enable Face Unlock with Uploaded Photo]: https://apidocs.verkada.com/reference/postfaceunlockuploadphotoexternaluserviewv2
+func (c *AccessClient) EnableFaceUnlockUploadPhotoInternal(user_id string, filename string, body *EnableFaceUnlockInternalUploadPhotoBody) (*EnableFaceUnlockInternalUploadPhotoResponse, error) {
+	if body == nil {
+		body = &EnableFaceUnlockInternalUploadPhotoBody{}
+	}
+	var ret EnableFaceUnlockInternalUploadPhotoResponse
+	url := c.client.baseURL + "/v2/access/users/" + user_id + "/face_unlock/upload_photo"
+	err := c.client.MakeVerkadaRequestWithFile("POST", url, nil, *body, filename, &ret, 0)
 	return &ret, err
 }
 

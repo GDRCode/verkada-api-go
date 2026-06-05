@@ -1,6 +1,11 @@
 package client
 
-import "fmt"
+import (
+	"encoding/base64"
+	"fmt"
+	"io"
+	"os"
+)
 
 // Returns a paginated list of Guest events and their event parts for a site within a time range.
 //
@@ -246,11 +251,23 @@ func (c *GuestClient) DeleteDenyList(site_id string) (*DeleteDenyListResponse, e
 // [Verkada API Docs - Post Guest Deny List]
 //
 // [Verkada API Docs - Post Guest Deny List]: https://apidocs.verkada.com/reference/postdenylistview
-func (c *GuestClient) PostDenyList(site_id string, uploadFilename string) (*PostDenyListResponse, error) {
+func (c *GuestClient) PostDenyList(site_id string, filename string) (*PostDenyListResponse, error) {
 	options := &PostDenyListOptions{site_id: site_id}
+	file, fileErr := os.Open(filename)
+	if fileErr != nil {
+		return nil, fmt.Errorf("failed to open Deny List file: %s", filename)
+	}
+	defer file.Close()
+	fileBytes, ioErr := io.ReadAll(file)
+	if ioErr != nil {
+		return nil, fmt.Errorf("failed to read deny list file: %s", filename)
+	}
+	body := PostDenyListBody{
+		Base64_ascii_deny_list_csv: base64.StdEncoding.EncodeToString(fileBytes),
+	}
 	var ret PostDenyListResponse
 	url := c.client.baseURL + "/guest/v1/deny_list"
-	err := c.client.MakeVerkadaRequestWithFile("POST", url, *options, uploadFilename, "text/csv", &ret, 0)
+	err := c.client.MakeVerkadaRequest("POST", url, *options, body, &ret, 0)
 	return &ret, err
 }
 

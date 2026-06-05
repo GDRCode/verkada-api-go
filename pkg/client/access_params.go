@@ -185,6 +185,32 @@ type AddMFACodeOptions struct {
 	External_id string `name:"external_id"`
 }
 
+type EnableFaceUnlockExternalProfilePhotoBody struct {
+	Overwrite bool `json:"overwrite,omitempty"`
+}
+
+type EnableFaceUnlockExternalMobileInviteBody struct {
+	Invitation_methods []string `json:"invitation_methods,omitempty"`
+	Overwrite          bool     `json:"overwrite,omitempty"`
+}
+
+type EnableFaceUnlockExternalUploadPhotoBody struct {
+	Overwrite bool `json:"overwrite,omitempty"`
+}
+
+type EnableFaceUnlockInternalProfilePhotoBody struct {
+	Overwrite bool `json:"overwrite,omitempty"`
+}
+
+type EnableFaceUnlockInternalMobileInviteBody struct {
+	Invitation_methods []string `json:"invitation_methods,omitempty"`
+	Overwrite          bool     `json:"overwrite,omitempty"`
+}
+
+type EnableFaceUnlockInternalUploadPhotoBody struct {
+	Overwrite bool `json:"overwrite,omitempty"`
+}
+
 type UserUnlockDoorOptions struct {
 	User_id     string `name:"user_id"`
 	External_id string `name:"external_id"`

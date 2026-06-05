@@ -1,13 +1,13 @@
 package client
 
 import (
-	"bufio"
 	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
 	"math"
+	"mime/multipart"
 	"net/http"
 	"os"
 	"reflect"
@@ -207,33 +207,77 @@ func (c *Client) MakeVerkadaRequest(method string, url string, params any, body 
 // Handles auth token refresh automatically based on the Client's API key.
 //
 // Exported so custom requests can be made and can also be used in case new endpoints are not reflected in the package.
-func (c *Client) MakeVerkadaRequestWithFile(method string, url string, params any, filename string, filetype string, target any, retry int) error {
+func (c *Client) MakeVerkadaRequestWithFile(method string, url string, params any, bodyParams any, filename string, target any, retry int) error {
 	boundary := "WebKitFormBoundaryPublicAPIClient"
-	var b strings.Builder
-	fmt.Fprintf(&b, "--%s\r\nContent-Disposition: form-data; name=\"file\"; filename=\"%s\"\r\nContent-Type: %s\r\n\r\n", boundary, filename, filetype)
+	bodyBuf := &bytes.Buffer{}
+	writer := multipart.NewWriter(bodyBuf)
+	writer.SetBoundary(boundary)
+
+	// Add body parameters if necessary
+	if bodyParams != nil {
+		jsonBytes, err := json.Marshal(bodyParams)
+		if err != nil {
+			return fmt.Errorf("failed to marshal body object: %w", err)
+		}
+		var bodyMap map[string]any
+		if err := json.Unmarshal(jsonBytes, &bodyMap); err != nil {
+			return fmt.Errorf("failed to unmarshal body to map: %w", err)
+		}
+		for key, value := range bodyMap {
+			// Handle nested structs or arrays by converting them back to strings
+			var stringVal string
+			switch v := value.(type) {
+			case string:
+				stringVal = v
+			default:
+				stringVal = fmt.Sprintf("%v", v)
+			}
+
+			if err := writer.WriteField(key, stringVal); err != nil {
+				return fmt.Errorf("failed to write field %s: %w", key, err)
+			}
+		}
+	}
+
+	// Add the file with the field name "file"
 	file, err := os.Open(filename)
 	if err != nil {
 		return err
 	}
 	defer file.Close()
-	if filetype == "text/csv" {
-		scanner := bufio.NewScanner(file)
-		for scanner.Scan() {
-			line := scanner.Text()
-			fmt.Fprintf(&b, "%s\r\n", line)
-		}
-	} else {
-		buf, err := io.ReadAll(file)
-		if err != nil {
-			return fmt.Errorf("failure to read file %s into bytes buffer", filename)
-		}
-		fmt.Fprintf(&b, "%s", string(buf))
+	fileWriter, err := writer.CreateFormFile("file", filename)
+	if err != nil {
+		return fmt.Errorf("failed to create form file for %s: %w", filename, err)
 	}
-	fmt.Fprintf(&b, "\r\n--%s--\r\n", boundary)
-	body := strings.NewReader(b.String())
-	req, _ := http.NewRequest(method, url, body)
+	if _, err := io.Copy(fileWriter, file); err != nil {
+		return fmt.Errorf("failed to copy file content for %s: %w", filename, err)
+	}
+
+	if err := writer.Close(); err != nil {
+		return err
+	}
+
+	// var b strings.Builder
+	// fmt.Fprintf(&b, "--%s\r\nContent-Disposition: form-data; name=\"file\"; filename=\"%s\"\r\nContent-Type: %s\r\n\r\n", boundary, filename, filetype)
+	// if filetype == "text/csv" {
+	// 	scanner := bufio.NewScanner(file)
+	// 	for scanner.Scan() {
+	// 		line := scanner.Text()
+	// 		fmt.Fprintf(&b, "%s\r\n", line)
+	// 	}
+	// } else {
+	// 	buf, err := io.ReadAll(file)
+	// 	if err != nil {
+	// 		return fmt.Errorf("failure to read file %s into bytes buffer", filename)
+	// 	}
+	// 	fmt.Fprintf(&b, "%s", string(buf))
+	// }
+	// fmt.Fprintf(&b, "\r\n--%s--\r\n", boundary)
+	// body := strings.NewReader(b.String())
+	req, _ := http.NewRequest(method, url, bodyBuf)
 	req.Header.Add("accept", "application/json")
-	req.Header.Add("content-type", "multipart/form-data; boundary="+boundary)
+	// req.Header.Add("content-type", "multipart/form-data; boundary="+boundary)
+	req.Header.Add("content-type", writer.FormDataContentType())
 	if time.Now().After(c.TokenContainer.Expires) {
 		tokenResponse, err := auth.GetAuthToken(c.Key, c.baseURL)
 		if err != nil {
@@ -254,7 +298,7 @@ func (c *Client) MakeVerkadaRequestWithFile(method string, url string, params an
 	if res.StatusCode == 429 {
 		retryPeriod := 50 * math.Pow(2, float64(retry))
 		time.Sleep(time.Millisecond * 50 * time.Duration(retryPeriod))
-		c.MakeVerkadaRequestWithFile(method, url, params, filename, filetype, target, retry+1)
+		c.MakeVerkadaRequestWithFile(method, url, params, bodyParams, filename, target, retry+1)
 	}
 
 	if res.StatusCode < 200 || res.StatusCode >= 300 {

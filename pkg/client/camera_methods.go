@@ -380,7 +380,7 @@ func (c *CameraClient) CreateLPOI(license_plate string, description string) (*Cr
 func (c *CameraClient) DeleteLPOIByCSV(filename string) (*DeleteLPOIByCSVResponse, error) {
 	var ret DeleteLPOIByCSVResponse
 	url := c.client.baseURL + "/cameras/v1/analytics/lpr/license_plate_of_interest/batch"
-	err := c.client.MakeVerkadaRequestWithFile("DELETE", url, nil, filename, "text/csv", &ret, 0)
+	err := c.client.MakeVerkadaRequestWithFile("DELETE", url, nil, nil, filename, &ret, 0)
 	return &ret, err
 }
 
@@ -392,7 +392,7 @@ func (c *CameraClient) DeleteLPOIByCSV(filename string) (*DeleteLPOIByCSVRespons
 func (c *CameraClient) CreateLPOIByCSV(filename string) (*CreateLPOIByCSVResponse, error) {
 	var ret CreateLPOIByCSVResponse
 	url := c.client.baseURL + "/cameras/v1/analytics/lpr/license_plate_of_interest/batch"
-	err := c.client.MakeVerkadaRequestWithFile("POST", url, nil, filename, "text/csv", &ret, 0)
+	err := c.client.MakeVerkadaRequestWithFile("POST", url, nil, nil, filename, &ret, 0)
 	return &ret, err
 }
 

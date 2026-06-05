@@ -35,6 +35,46 @@ type DeleteUserLicensePlateResponse struct {
 type DeleteMFACodeResponse struct {
 }
 
+type DisableFaceUnlockExternalResponse struct {
+}
+
+type EnableFaceUnlockExternalProfilePhotoResponse struct {
+	Identity_id string `json:"identity_id"`
+	User_id     string `json:"user_id"`
+}
+
+type EnableFaceUnlockExternalMobileInviteResponse struct {
+	Invitations_failed []string `json:"invitations_failed"`
+	Invitations_sent   []string `json:"invitations_sent"`
+	Live_link_id       string   `json:"live_link_id"`
+	User_id            string   `json:"user_id"`
+}
+
+type EnableFaceUnlockExternalUploadPhotoResponse struct {
+	Identity_id string `json:"identity_id"`
+	User_id     string `json:"user_id"`
+}
+
+type DisableFaceUnlockInternalResponse struct {
+}
+
+type EnableFaceUnlockInternalProfilePhotoResponse struct {
+	Identity_id string `json:"identity_id"`
+	User_id     string `json:"user_id"`
+}
+
+type EnableFaceUnlockInternalMobileInviteResponse struct {
+	Invitations_failed []string `json:"invitations_failed"`
+	Invitations_sent   []string `json:"invitations_sent"`
+	Live_link_id       string   `json:"live_link_id"`
+	User_id            string   `json:"user_id"`
+}
+
+type EnableFaceUnlockInternalUploadPhotoResponse struct {
+	Identity_id string `json:"identity_id"`
+	User_id     string `json:"user_id"`
+}
+
 type AddMFACodeResponse struct {
 	Code string `json:"code"`
 }
