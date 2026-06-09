@@ -187,18 +187,21 @@ func (c *Client) MakeVerkadaRequest(method string, url string, params any, body 
 		c.MakeVerkadaRequest(method, url, params, body, target, retry+1)
 	}
 
-	if res.StatusCode < 200 || res.StatusCode >= 300 {
-		return fmt.Errorf("request unsuccessful - %s", res.Status)
+	defer res.Body.Close()
+	buf, err := io.ReadAll(res.Body)
+	if err != nil {
+		return fmt.Errorf("error reading response body - %s", err.Error())
 	}
 
-	defer res.Body.Close()
-	var buf bytes.Buffer
-	tee := io.TeeReader(res.Body, &buf)
-	decode := json.NewDecoder(tee)
+	if res.StatusCode < 200 || res.StatusCode >= 300 {
+		return fmt.Errorf("request unsuccessful - %s, response: %s", res.Status, string(buf))
+	}
+
+	decode := json.NewDecoder(bytes.NewReader(buf))
 	decode.DisallowUnknownFields()
-	err = decode.Decode(target)
-	if err != nil {
-		return errors.New(err.Error() + ", status: " + res.Status + ", response: " + buf.String())
+
+	if err := decode.Decode(target); err != nil {
+		return fmt.Errorf("%s, status: %s, response: %s", err.Error(), res.Status, string(buf))
 	}
 	return nil
 }
@@ -257,26 +260,8 @@ func (c *Client) MakeVerkadaRequestWithFile(method string, url string, params an
 		return err
 	}
 
-	// var b strings.Builder
-	// fmt.Fprintf(&b, "--%s\r\nContent-Disposition: form-data; name=\"file\"; filename=\"%s\"\r\nContent-Type: %s\r\n\r\n", boundary, filename, filetype)
-	// if filetype == "text/csv" {
-	// 	scanner := bufio.NewScanner(file)
-	// 	for scanner.Scan() {
-	// 		line := scanner.Text()
-	// 		fmt.Fprintf(&b, "%s\r\n", line)
-	// 	}
-	// } else {
-	// 	buf, err := io.ReadAll(file)
-	// 	if err != nil {
-	// 		return fmt.Errorf("failure to read file %s into bytes buffer", filename)
-	// 	}
-	// 	fmt.Fprintf(&b, "%s", string(buf))
-	// }
-	// fmt.Fprintf(&b, "\r\n--%s--\r\n", boundary)
-	// body := strings.NewReader(b.String())
 	req, _ := http.NewRequest(method, url, bodyBuf)
 	req.Header.Add("accept", "application/json")
-	// req.Header.Add("content-type", "multipart/form-data; boundary="+boundary)
 	req.Header.Add("content-type", writer.FormDataContentType())
 	if time.Now().After(c.TokenContainer.Expires) {
 		tokenResponse, err := auth.GetAuthToken(c.Key, c.baseURL)
@@ -301,18 +286,21 @@ func (c *Client) MakeVerkadaRequestWithFile(method string, url string, params an
 		c.MakeVerkadaRequestWithFile(method, url, params, bodyParams, filename, target, retry+1)
 	}
 
-	if res.StatusCode < 200 || res.StatusCode >= 300 {
-		return fmt.Errorf("request unsuccessful - %s", res.Status)
+	defer res.Body.Close()
+	buf, err := io.ReadAll(res.Body)
+	if err != nil {
+		return fmt.Errorf("error reading response body - %s", err.Error())
 	}
 
-	defer res.Body.Close()
-	var buf bytes.Buffer
-	tee := io.TeeReader(res.Body, &buf)
-	decode := json.NewDecoder(tee)
+	if res.StatusCode < 200 || res.StatusCode >= 300 {
+		return fmt.Errorf("request unsuccessful - %s, response: %s", res.Status, string(buf))
+	}
+
+	decode := json.NewDecoder(bytes.NewReader(buf))
 	decode.DisallowUnknownFields()
-	err = decode.Decode(target)
-	if err != nil {
-		return errors.New(err.Error() + ", status: " + res.Status + ", response: " + buf.String())
+
+	if err := decode.Decode(target); err != nil {
+		return fmt.Errorf("%s, status: %s, response: %s", err.Error(), res.Status, string(buf))
 	}
 	return nil
 }
