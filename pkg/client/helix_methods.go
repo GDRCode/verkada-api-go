@@ -227,3 +227,36 @@ func (c *HelixClient) CreateHelixEventType(event_schema map[string]string, name 
 	err := c.client.MakeVerkadaRequest("POST", url, nil, fullBody, &ret, 0)
 	return &ret, err
 }
+
+// The Helix batch endpoint lets users create multiple Helix events with a single API request.
+// The service accepts the job and immediately processes events asynchronously in the background.
+// Users should leverage the Helix batch route when creating a high volume of events.
+//
+// [Verkada API Docs - Create Batch Helix Events]
+//
+// [Verkada API Docs - Create Batch Helix Events]: https://apidocs.verkada.com/reference/postvideotaggingeventbatchviewv1
+func (c *HelixClient) BatchCreateHelixEvent(body *BatchCreateHelixEventBody) (*BatchCreateHelixEventResponse, error) {
+	if body == nil {
+		body = &BatchCreateHelixEventBody{}
+	}
+	var ret BatchCreateHelixEventResponse
+	url := c.client.baseURL + "/cameras/v1/video_tagging/event/batch"
+	err := c.client.MakeVerkadaRequest("POST", url, nil, body, &ret, 0)
+	return &ret, err
+}
+
+// The Get Job Status endpoint allows users to query an ongoing or past Helix batch event and check for its status.
+// This allows users to understand whether an asynchronous job has completed, failed, or is still ongoing.
+// A job status of completed does not guarantee 100% success. Check the failed_items count.
+//
+// If failed_items is greater than 0, the response will include a failure_file_url.
+// This URL will provide users with a pre-signed link to a JSON file containing:
+//   - Index: The 0-based position of the item (or event) in the original request.
+//   - Error: The specific reason for the event processing failure.
+//   - Item: The original payload for easy resubmission or editing.
+func (c *HelixClient) GetHelixBatchJobStatus(job_id string) (*GetHelixBatchJobStatusResponse, error) {
+	var ret GetHelixBatchJobStatusResponse
+	url := c.client.baseURL + "/v2/batch/jobs/" + job_id
+	err := c.client.MakeVerkadaRequest("GET", url, nil, nil, &ret, 0)
+	return &ret, err
+}

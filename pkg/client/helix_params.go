@@ -59,3 +59,15 @@ type GetHelixEventTypesOptions struct {
 type UpdateHelixEventTypeOptions struct {
 	event_type_uid string `name:"event_type_uid"`
 }
+
+type BatchCreateHelixEventBody struct {
+	Items []HelixBatchItem `json:"items"`
+}
+
+type HelixBatchItem struct {
+	Attributes     map[string]any `json:"attributes"`
+	Camera_id      string         `json:"camera_id"`
+	Event_type_uid string         `json:"event_type_uid"`
+	Flagged        bool           `json:"flagged,omitempty"`
+	Time_ms        *int           `json:"time_ms"`
+}

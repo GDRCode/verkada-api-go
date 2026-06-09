@@ -50,4 +50,4 @@ res4, err4 := client.Camera.GetLinkToFootage("(camera_id)", &GetLinkToFootageOpt
 
 ## Maintenance, Bug Fixes, and Feature Requests
 
-The client package implements all Verkada public API methods as of August 2025. It is a personal project and is not officially affiliated with, endorsed by, or supported by Verkada Inc. Tracking API updates and bug fixes will be done on a best-efforts basis.
+The client package implements all Verkada public API methods as of June 2025. It is a personal project and is not officially affiliated with, endorsed by, or supported by Verkada Inc. Tracking API updates and bug fixes will be done on a best-efforts basis.
