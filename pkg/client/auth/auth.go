@@ -31,7 +31,7 @@ func GetAuthToken(key string, baseURL string) (TokenContainer, error) {
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return TokenContainer{}, fmt.Errorf("%s - could not retrieve auth token from API key, status: %s", err.Error(), resp.Status)
+		return TokenContainer{}, fmt.Errorf("could not retrieve auth token from API key - %s", err.Error())
 	}
 
 	defer resp.Body.Close()
@@ -55,7 +55,7 @@ func GetStreamingToken(key string, baseURL string) (*bytes.Buffer, string, error
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return nil, "", fmt.Errorf("%v - could not retrieve streaming token from API key, status: %s", err, resp.Status)
+		return nil, "", fmt.Errorf("could not retrieve streaming token from API key - %s", err.Error())
 	}
 
 	defer resp.Body.Close()
@@ -67,7 +67,7 @@ func GetStreamingToken(key string, baseURL string) (*bytes.Buffer, string, error
 	decode := json.NewDecoder(tee)
 	err = decode.Decode(&rec)
 	if err != nil {
-		return nil, "", fmt.Errorf("%v - could not marshal streaming token into receiver struct", err.Error())
+		return nil, "", fmt.Errorf("could not marshal streaming token into receiver struct - %s", err.Error())
 	}
 	return &buf, rec.Jwt, nil
 }
