@@ -746,8 +746,8 @@ func (c *AccessClient) AddMFACode(code string, options *AddMFACodeOptions) (*Add
 // [Verkada API Docs - Disable Face Unlock]
 //
 // [Verkada API Docs - Disable Face Unlock]: https://apidocs.verkada.com/reference/deletefaceunlockdisableexternaluserviewv2
-func (c *AccessClient) DisableFaceUnlockExternal(external_id string) (*DisableFaceUnlockExternalResponse, error) {
-	var ret DisableFaceUnlockExternalResponse
+func (c *AccessClient) disableFaceUnlockExternal(external_id string) (*disableFaceUnlockExternalResponse, error) {
+	var ret disableFaceUnlockExternalResponse
 	url := c.client.baseURL + "/v2/access/external_users/" + external_id + "/face_unlock"
 	err := c.client.MakeVerkadaRequest("DELETE", url, nil, nil, &ret, 0)
 	return &ret, err
@@ -760,11 +760,11 @@ func (c *AccessClient) DisableFaceUnlockExternal(external_id string) (*DisableFa
 // [Verkada API Docs - Enable Face Unlock with Profile Photo]
 //
 // [Verkada API Docs - Enable Face Unlock with Profile Photo]: https://apidocs.verkada.com/reference/postfaceunlockcopyuserphotoexternaluserviewv2
-func (c *AccessClient) EnableFaceUnlockProfilePhotoExternal(external_id string, body *EnableFaceUnlockExternalProfilePhotoBody) (*EnableFaceUnlockExternalProfilePhotoResponse, error) {
+func (c *AccessClient) enableFaceUnlockProfilePhotoExternal(external_id string, body *enableFaceUnlockProfilePhotoExternalBody) (*enableFaceUnlockProfilePhotoExternalResponse, error) {
 	if body == nil {
-		body = &EnableFaceUnlockExternalProfilePhotoBody{}
+		body = &enableFaceUnlockProfilePhotoExternalBody{}
 	}
-	var ret EnableFaceUnlockExternalProfilePhotoResponse
+	var ret enableFaceUnlockProfilePhotoExternalResponse
 	url := c.client.baseURL + "/v2/access/external_users/" + external_id + "/face_unlock/copy_user_photo"
 	err := c.client.MakeVerkadaRequest("POST", url, nil, body, &ret, 0)
 	return &ret, err
@@ -776,9 +776,9 @@ func (c *AccessClient) EnableFaceUnlockProfilePhotoExternal(external_id string, 
 // [Verkada API Docs - Enable Face Unlock with Mobile Enrollment Invitation]
 //
 // [Verkada API Docs - Enable Face Unlock with Mobile Enrollment Invitation]: https://apidocs.verkada.com/reference/postfaceunlockinviteexternaluserviewv2
-func (c *AccessClient) EnableFaceUnlockMobileInviteExternal(external_id string, body *EnableFaceUnlockExternalMobileInviteBody) (*EnableFaceUnlockExternalMobileInviteResponse, error) {
+func (c *AccessClient) EnableFaceUnlockMobileInviteExternal(external_id string, body *enableFaceUnlockMobileInviteExternalBody) (*enableFaceUnlockMobileInviteExternalResponse, error) {
 	if body == nil {
-		body = &EnableFaceUnlockExternalMobileInviteBody{}
+		body = &enableFaceUnlockMobileInviteExternalBody{}
 	}
 	// Invite method must be one of the following:
 	invite_validation := map[string]bool{
@@ -790,7 +790,7 @@ func (c *AccessClient) EnableFaceUnlockMobileInviteExternal(external_id string, 
 			return nil, fmt.Errorf("Could not validate invite method: %s", method)
 		}
 	}
-	var ret EnableFaceUnlockExternalMobileInviteResponse
+	var ret enableFaceUnlockMobileInviteExternalResponse
 	url := c.client.baseURL + "/v2/access/external_users/" + external_id + "/face_unlock/invite"
 	err := c.client.MakeVerkadaRequest("POST", url, nil, body, &ret, 0)
 	return &ret, err
@@ -802,11 +802,11 @@ func (c *AccessClient) EnableFaceUnlockMobileInviteExternal(external_id string, 
 // [Verkada API Docs - Enable Face Unlock with Uploaded Photo]
 //
 // [Verkada API Docs - Enable Face Unlock with Uploaded Photo]: https://apidocs.verkada.com/reference/postfaceunlockuploadphotoexternaluserviewv2
-func (c *AccessClient) EnableFaceUnlockUploadPhotoExternal(external_id string, filename string, body *EnableFaceUnlockExternalUploadPhotoBody) (*EnableFaceUnlockExternalUploadPhotoResponse, error) {
+func (c *AccessClient) EnableFaceUnlockUploadPhotoExternal(external_id string, filename string, body *enableFaceUnlockUploadPhotoExternalBody) (*enableFaceUnlockUploadPhotoExternalResponse, error) {
 	if body == nil {
-		body = &EnableFaceUnlockExternalUploadPhotoBody{}
+		body = &enableFaceUnlockUploadPhotoExternalBody{}
 	}
-	var ret EnableFaceUnlockExternalUploadPhotoResponse
+	var ret enableFaceUnlockUploadPhotoExternalResponse
 	url := c.client.baseURL + "/v2/access/external_users/" + external_id + "/face_unlock/upload_photo"
 	err := c.client.MakeVerkadaRequestWithFile("POST", url, nil, *body, filename, &ret, 0)
 	return &ret, err
@@ -817,8 +817,8 @@ func (c *AccessClient) EnableFaceUnlockUploadPhotoExternal(external_id string, f
 // [Verkada API Docs - Disable Face Unlock]
 //
 // [Verkada API Docs - Disable Face Unlock]: https://apidocs.verkada.com/reference/deletefaceunlockdisableuserviewv2
-func (c *AccessClient) DisableFaceUnlockInternal(user_id string) (*DisableFaceUnlockInternalResponse, error) {
-	var ret DisableFaceUnlockInternalResponse
+func (c *AccessClient) disableFaceUnlockInternal(user_id string) (*disableFaceUnlockInternalResponse, error) {
+	var ret disableFaceUnlockInternalResponse
 	url := c.client.baseURL + "/v2/access/users/" + user_id + "/face_unlock"
 	err := c.client.MakeVerkadaRequest("DELETE", url, nil, nil, &ret, 0)
 	return &ret, err
@@ -831,11 +831,11 @@ func (c *AccessClient) DisableFaceUnlockInternal(user_id string) (*DisableFaceUn
 // [Verkada API Docs - Enable Face Unlock with Profile Photo]
 //
 // [Verkada API Docs - Enable Face Unlock with Profile Photo]: https://apidocs.verkada.com/reference/postfaceunlockcopyuserphotouserviewv2
-func (c *AccessClient) EnableFaceUnlockProfilePhotoInternal(user_id string, body *EnableFaceUnlockInternalProfilePhotoBody) (*EnableFaceUnlockInternalProfilePhotoResponse, error) {
+func (c *AccessClient) enableFaceUnlockProfilePhotoInternal(user_id string, body *enableFaceUnlockProfilePhotoInternalBody) (*enableFaceUnlockProfilePhotoInternalResponse, error) {
 	if body == nil {
-		body = &EnableFaceUnlockInternalProfilePhotoBody{}
+		body = &enableFaceUnlockProfilePhotoInternalBody{}
 	}
-	var ret EnableFaceUnlockInternalProfilePhotoResponse
+	var ret enableFaceUnlockProfilePhotoInternalResponse
 	url := c.client.baseURL + "/v2/access/users/" + user_id + "/face_unlock/copy_user_photo"
 	err := c.client.MakeVerkadaRequest("POST", url, nil, body, &ret, 0)
 	return &ret, err
@@ -847,9 +847,9 @@ func (c *AccessClient) EnableFaceUnlockProfilePhotoInternal(user_id string, body
 // [Verkada API Docs - Enable Face Unlock with Mobile Enrollment Invitation]
 //
 // [Verkada API Docs - Enable Face Unlock with Mobile Enrollment Invitation]: https://apidocs.verkada.com/reference/postfaceunlockinviteuserviewv2
-func (c *AccessClient) EnableFaceUnlockMobileInviteInternal(user_id string, body *EnableFaceUnlockInternalMobileInviteBody) (*EnableFaceUnlockInternalMobileInviteResponse, error) {
+func (c *AccessClient) enableFaceUnlockMobileInviteInternal(user_id string, body *enableFaceUnlockMobileInviteInternalBody) (*enableFaceUnlockMobileInviteInternalResponse, error) {
 	if body == nil {
-		body = &EnableFaceUnlockInternalMobileInviteBody{}
+		body = &enableFaceUnlockMobileInviteInternalBody{}
 	}
 	// Invite method must be one of the following:
 	invite_validation := map[string]bool{
@@ -861,7 +861,7 @@ func (c *AccessClient) EnableFaceUnlockMobileInviteInternal(user_id string, body
 			return nil, fmt.Errorf("Could not validate invite method: %s", method)
 		}
 	}
-	var ret EnableFaceUnlockInternalMobileInviteResponse
+	var ret enableFaceUnlockMobileInviteInternalResponse
 	url := c.client.baseURL + "/v2/access/users/" + user_id + "/face_unlock/invite"
 	err := c.client.MakeVerkadaRequest("POST", url, nil, body, &ret, 0)
 	return &ret, err
@@ -873,14 +873,163 @@ func (c *AccessClient) EnableFaceUnlockMobileInviteInternal(user_id string, body
 // [Verkada API Docs - Enable Face Unlock with Uploaded Photo]
 //
 // [Verkada API Docs - Enable Face Unlock with Uploaded Photo]: https://apidocs.verkada.com/reference/postfaceunlockuploadphotoexternaluserviewv2
-func (c *AccessClient) EnableFaceUnlockUploadPhotoInternal(user_id string, filename string, body *EnableFaceUnlockInternalUploadPhotoBody) (*EnableFaceUnlockInternalUploadPhotoResponse, error) {
+func (c *AccessClient) EnableFaceUnlockUploadPhotoInternal(user_id string, filename string, body *enableFaceUnlockUploadPhotoInternalBody) (*enableFaceUnlockUploadPhotoInternalResponse, error) {
 	if body == nil {
-		body = &EnableFaceUnlockInternalUploadPhotoBody{}
+		body = &enableFaceUnlockUploadPhotoInternalBody{}
 	}
-	var ret EnableFaceUnlockInternalUploadPhotoResponse
+	var ret enableFaceUnlockUploadPhotoInternalResponse
 	url := c.client.baseURL + "/v2/access/users/" + user_id + "/face_unlock/upload_photo"
 	err := c.client.MakeVerkadaRequestWithFile("POST", url, nil, *body, filename, &ret, 0)
 	return &ret, err
+}
+
+// Disable face unlock for a user. This will delete their face credential and disable the face unlock access method.
+//
+// Wraps the separate endpoints for internal and external users and requires exactly one of user_id or external_id.
+//
+// [Verkada API Docs - Disable Face Unlock (External)]
+//
+// [Verkada API Docs - Disable Face Unlock (Internal)]
+//
+// [Verkada API Docs - Disable Face Unlock (External)]: https://apidocs.verkada.com/reference/deletefaceunlockdisableexternaluserviewv2
+// [Verkada API Docs - Disable Face Unlock (Internal)]: https://apidocs.verkada.com/reference/deletefaceunlockdisableuserviewv2
+func (c *AccessClient) DisableFaceUnlock(options *DisableFaceUnlockOptions) (*DisableFaceUnlockResponse, error) {
+	if options == nil || (options.User_id == "") == (options.External_id == "") {
+		return nil, fmt.Errorf("Disabling face unlock requires exactly one of user_id or external_id")
+	}
+	var ret DisableFaceUnlockResponse
+	if options.User_id == "" {
+		if _, err := c.disableFaceUnlockExternal(options.External_id); err != nil {
+			return nil, err
+		} else {
+			return &ret, nil
+		}
+	} else {
+		if _, err := c.disableFaceUnlockInternal(options.User_id); err != nil {
+			return nil, err
+		} else {
+			return &ret, nil
+		}
+	}
+}
+
+// Enable face unlock for a user by using their existing profile photo. This will create a face credential from the user's profile photo.
+// If the user already has a face credential and overwrite is False, the request will fail.
+// The profile photo must meet quality requirements for face recognition.
+//
+// Wraps the separate endpoints for internal and external users and requires exactly one of user_id or external_id.
+//
+// [Verkada API Docs - Enable Face Unlock with Profile Photo (External)]
+//
+// [Verkada API Docs - Enable Face Unlock with Profile Photo (Internal)]
+//
+// [Verkada API Docs - Enable Face Unlock with Profile Photo (External)]: https://apidocs.verkada.com/reference/postfaceunlockcopyuserphotoexternaluserviewv2
+// [Verkada API Docs - Enable Face Unlock with Profile Photo (Internal)]: https://apidocs.verkada.com/reference/postfaceunlockcopyuserphotoexternaluserviewv2
+func (c *AccessClient) EnableFaceUnlockProfilePhoto(external_id string, options *EnableFaceUnlockProfilePhotoOptions) (*EnableFaceUnlockProfilePhotoResponse, error) {
+	if options == nil || (options.User_id == "") == (options.External_id == "") {
+		return nil, fmt.Errorf("Disabling face unlock requires exactly one of user_id or external_id")
+	}
+	if options.User_id == "" {
+		if resp, err := c.enableFaceUnlockProfilePhotoExternal(options.External_id, &enableFaceUnlockProfilePhotoExternalBody{Overwrite: options.Overwrite}); err != nil {
+			return nil, err
+		} else {
+			ret := EnableFaceUnlockProfilePhotoResponse{
+				Identity_id: resp.Identity_id,
+				User_id:     resp.User_id,
+			}
+			return &ret, nil
+		}
+	} else {
+		if resp, err := c.enableFaceUnlockProfilePhotoInternal(options.User_id, &enableFaceUnlockProfilePhotoInternalBody{Overwrite: options.Overwrite}); err != nil {
+			return nil, err
+		} else {
+			ret := EnableFaceUnlockProfilePhotoResponse{
+				Identity_id: resp.Identity_id,
+				User_id:     resp.User_id,
+			}
+			return &ret, nil
+		}
+	}
+}
+
+// Enable face unlock for a user by sending them an invitation to enroll their face via mobile device. An email will be sent to the user with a link to complete the enrollment process.
+// If the user already has a face credential and overwrite is False, the request will fail. When overwrite is True, the invitation is sent and the user can upload a new photo which will replace the existing credential.
+//
+// Wraps the separate endpoints for internal and external users and requires exactly one of user_id or external_id.
+//
+// [Verkada API Docs - Enable Face Unlock with Mobile Enrollment Invitation (External)]
+//
+// [Verkada API Docs - Enable Face Unlock with Mobile Enrollment Invitation (Internal)]
+//
+// [Verkada API Docs - Enable Face Unlock with Mobile Enrollment Invitation (External)]: https://apidocs.verkada.com/reference/postfaceunlockinviteexternaluserviewv2
+// [Verkada API Docs - Enable Face Unlock with Mobile Enrollment Invitation (Internal)]: https://apidocs.verkada.com/reference/postfaceunlockinviteuserviewv2
+func (c *AccessClient) EnableFaceUnlockMobileInvite(user_id string, options *EnableFaceUnlockMobileInviteOptions) (*EnableFaceUnlockMobileInviteResponse, error) {
+	if options == nil || (options.User_id == "") == (options.External_id == "") {
+		return nil, fmt.Errorf("Disabling face unlock requires exactly one of user_id or external_id")
+	}
+	if options.User_id == "" {
+		if resp, err := c.EnableFaceUnlockMobileInviteExternal(options.External_id, &enableFaceUnlockMobileInviteExternalBody{Invitation_methods: options.Invitation_methods, Overwrite: options.Overwrite}); err != nil {
+			return nil, err
+		} else {
+			ret := EnableFaceUnlockMobileInviteResponse{
+				Invitations_failed: resp.Invitations_failed,
+				Invitations_sent:   resp.Invitations_sent,
+				Live_link_id:       resp.Live_link_id,
+				User_id:            resp.User_id,
+			}
+			return &ret, nil
+		}
+	} else {
+		if resp, err := c.enableFaceUnlockMobileInviteInternal(options.User_id, &enableFaceUnlockMobileInviteInternalBody{Invitation_methods: options.Invitation_methods, Overwrite: options.Overwrite}); err != nil {
+			return nil, err
+		} else {
+			ret := EnableFaceUnlockMobileInviteResponse{
+				Invitations_failed: resp.Invitations_failed,
+				Invitations_sent:   resp.Invitations_sent,
+				Live_link_id:       resp.Live_link_id,
+				User_id:            resp.User_id,
+			}
+			return &ret, nil
+		}
+	}
+}
+
+// Enable face unlock for a user by uploading a new photo. The photo must be provided as a multipart/form-data file.
+// If the user already has a face credential and overwrite is False, the request will fail. The uploaded photo must meet quality requirements for face recognition.
+//
+// Wraps the separate endpoints for internal and external users and requires exactly one of user_id or external_id.
+//
+// [Verkada API Docs - Enable Face Unlock with Uploaded Photo (External)]
+//
+// [Verkada API Docs - Enable Face Unlock with Uploaded Photo (Internal)]
+//
+// [Verkada API Docs - Enable Face Unlock with Uploaded Photo (External)]: https://apidocs.verkada.com/reference/postfaceunlockuploadphotoexternaluserviewv2
+// [Verkada API Docs - Enable Face Unlock with Uploaded Photo (Internal)]: https://apidocs.verkada.com/reference/postfaceunlockuploadphotoexternaluserviewv2
+func (c *AccessClient) EnableFaceUnlockUploadPhoto(filename string, options *EnableFaceUnlockUploadPhotoOptions) (*EnableFaceUnlockUploadPhotoResponse, error) {
+	if options == nil || (options.User_id == "") == (options.External_id == "") {
+		return nil, fmt.Errorf("Disabling face unlock requires exactly one of user_id or external_id")
+	}
+	if options.User_id == "" {
+		if resp, err := c.EnableFaceUnlockUploadPhotoExternal(options.External_id, filename, &enableFaceUnlockUploadPhotoExternalBody{Overwrite: options.Overwrite}); err != nil {
+			return nil, err
+		} else {
+			ret := EnableFaceUnlockUploadPhotoResponse{
+				Identity_id: resp.Identity_id,
+				User_id:     resp.User_id,
+			}
+			return &ret, nil
+		}
+	} else {
+		if resp, err := c.EnableFaceUnlockUploadPhotoInternal(options.User_id, filename, &enableFaceUnlockUploadPhotoInternalBody{Overwrite: options.Overwrite}); err != nil {
+			return nil, err
+		} else {
+			ret := EnableFaceUnlockUploadPhotoResponse{
+				Identity_id: resp.Identity_id,
+				User_id:     resp.User_id,
+			}
+			return &ret, nil
+		}
+	}
 }
 
 // Retrieves a list of all Access Levels that the API Token is authorized to access.

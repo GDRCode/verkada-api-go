@@ -185,30 +185,54 @@ type AddMFACodeOptions struct {
 	External_id string `name:"external_id"`
 }
 
-type EnableFaceUnlockExternalProfilePhotoBody struct {
+type enableFaceUnlockProfilePhotoExternalBody struct {
 	Overwrite bool `json:"overwrite,omitempty"`
 }
 
-type EnableFaceUnlockExternalMobileInviteBody struct {
+type enableFaceUnlockMobileInviteExternalBody struct {
 	Invitation_methods []string `json:"invitation_methods,omitempty"`
 	Overwrite          bool     `json:"overwrite,omitempty"`
 }
 
-type EnableFaceUnlockExternalUploadPhotoBody struct {
+type enableFaceUnlockUploadPhotoExternalBody struct {
 	Overwrite bool `json:"overwrite,omitempty"`
 }
 
-type EnableFaceUnlockInternalProfilePhotoBody struct {
+type enableFaceUnlockProfilePhotoInternalBody struct {
 	Overwrite bool `json:"overwrite,omitempty"`
 }
 
-type EnableFaceUnlockInternalMobileInviteBody struct {
+type enableFaceUnlockMobileInviteInternalBody struct {
 	Invitation_methods []string `json:"invitation_methods,omitempty"`
 	Overwrite          bool     `json:"overwrite,omitempty"`
 }
 
-type EnableFaceUnlockInternalUploadPhotoBody struct {
+type enableFaceUnlockUploadPhotoInternalBody struct {
 	Overwrite bool `json:"overwrite,omitempty"`
+}
+
+type DisableFaceUnlockOptions struct {
+	User_id     string
+	External_id string
+}
+
+type EnableFaceUnlockProfilePhotoOptions struct {
+	User_id     string
+	External_id string
+	Overwrite   bool
+}
+
+type EnableFaceUnlockMobileInviteOptions struct {
+	User_id            string
+	External_id        string
+	Invitation_methods []string
+	Overwrite          bool
+}
+
+type EnableFaceUnlockUploadPhotoOptions struct {
+	User_id     string
+	External_id string
+	Overwrite   bool
 }
 
 type UserUnlockDoorOptions struct {

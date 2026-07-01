@@ -35,44 +35,64 @@ type DeleteUserLicensePlateResponse struct {
 type DeleteMFACodeResponse struct {
 }
 
-type DisableFaceUnlockExternalResponse struct {
+type disableFaceUnlockExternalResponse struct {
 }
 
-type EnableFaceUnlockExternalProfilePhotoResponse struct {
+type enableFaceUnlockProfilePhotoExternalResponse struct {
 	Identity_id string `json:"identity_id"`
 	User_id     string `json:"user_id"`
 }
 
-type EnableFaceUnlockExternalMobileInviteResponse struct {
+type enableFaceUnlockMobileInviteExternalResponse struct {
 	Invitations_failed []string `json:"invitations_failed"`
 	Invitations_sent   []string `json:"invitations_sent"`
 	Live_link_id       string   `json:"live_link_id"`
 	User_id            string   `json:"user_id"`
 }
 
-type EnableFaceUnlockExternalUploadPhotoResponse struct {
+type enableFaceUnlockUploadPhotoExternalResponse struct {
 	Identity_id string `json:"identity_id"`
 	User_id     string `json:"user_id"`
 }
 
-type DisableFaceUnlockInternalResponse struct {
+type disableFaceUnlockInternalResponse struct {
 }
 
-type EnableFaceUnlockInternalProfilePhotoResponse struct {
+type enableFaceUnlockProfilePhotoInternalResponse struct {
 	Identity_id string `json:"identity_id"`
 	User_id     string `json:"user_id"`
 }
 
-type EnableFaceUnlockInternalMobileInviteResponse struct {
+type enableFaceUnlockMobileInviteInternalResponse struct {
 	Invitations_failed []string `json:"invitations_failed"`
 	Invitations_sent   []string `json:"invitations_sent"`
 	Live_link_id       string   `json:"live_link_id"`
 	User_id            string   `json:"user_id"`
 }
 
-type EnableFaceUnlockInternalUploadPhotoResponse struct {
+type enableFaceUnlockUploadPhotoInternalResponse struct {
 	Identity_id string `json:"identity_id"`
 	User_id     string `json:"user_id"`
+}
+
+type DisableFaceUnlockResponse struct {
+}
+
+type EnableFaceUnlockProfilePhotoResponse struct {
+	Identity_id string
+	User_id     string
+}
+
+type EnableFaceUnlockMobileInviteResponse struct {
+	Invitations_failed []string
+	Invitations_sent   []string
+	Live_link_id       string
+	User_id            string
+}
+
+type EnableFaceUnlockUploadPhotoResponse struct {
+	Identity_id string
+	User_id     string
 }
 
 type AddMFACodeResponse struct {
