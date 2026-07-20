@@ -271,3 +271,118 @@ type OcclusionDetectionDetails struct {
 
 type TamperDetectionDetails struct {
 }
+
+type AccessEventWebhookDetails struct {
+	Input_value string `json:"input_value"`
+	Door_id     string `json:"door_id"`
+	Direction   string `json:"direction"`
+	Aux_info    struct {
+		Aux_input_id   string `json:"aux_input_id"`
+		Aux_input_name string `json:"aux_input_name"`
+		Site           struct {
+			Name    string `json:"name"`
+			Site_id string `json:"site_id"`
+		} `json:"site"`
+	} `json:"aux_info"`
+	User_info struct {
+		User_id    string `json:"user_id"`
+		Name       string `json:"name"`
+		Email      string `json:"email"`
+		First_name string `json:"first_name"`
+		Last_name  string `json:"last_name"`
+		Phone      string `json:"phone"`
+	} `json:"user_info"`
+	Lockdown_info struct {
+		Lockdown_id   string `json:"lockdown_id"`
+		Lockdown_name string `json:"lockdown_name"`
+		Message       string `json:"message"`
+		Action        string `json:"action"`
+		Enabled       string `json:"enabled"`
+		Site          struct {
+			Name    string `json:"name"`
+			Site_id string `json:"site_id"`
+		} `json:"site"`
+	} `json:"lockdown_info"`
+	Door_info struct {
+		Acu_name string `json:"acu_name"`
+		Acu_id   string `json:"acu_id"`
+		Name     string `json:"name"`
+		Door_id  string `json:"door_id"`
+		Site     struct {
+			Name    string `json:"name"`
+			Site_id string `json:"site_id"`
+		} `json:"site"`
+		Api_control_enabled any `json:"api_control_enabled"`
+		Camera_info         any `json:"camera_info"`
+	} `json:"door_info"`
+}
+
+type PanelStatusDetails struct {
+	Status string `json:"status"`
+}
+
+type PanelPowerStatusDetails struct {
+	Power_source string `json:"power_source"`
+}
+
+type PanelCellModuleStatusDetails struct {
+	Connectivity_source string `json:"connectivity_source"`
+}
+
+type AlarmsDeviceStatusDetails struct {
+	Status string `json:"status"`
+}
+
+type WiredSensorProblemDetails struct {
+	Issue string `json:"issue"`
+}
+
+type PartitionStatusDetails struct {
+	Partition_status string `json:"partition_status"`
+	Partition_name   string `json:"partition_name"`
+	Partition_id     string `json:"partition_id"`
+}
+
+type MisconfiguredResponseDetails struct {
+	Issue string `json:"issue"`
+}
+
+type AlarmSensorEventDetails struct {
+	Trigger_device_id   string   `json:"trigger_device_id"`
+	Trigger_device_type string   `json:"trigger_device_type"`
+	Trigger_type        string   `json:"trigger_type"`
+	Trigger_device_name string   `json:"trigger_device_name"`
+	Partition_id        string   `json:"partition_id"`
+	Partition_name      string   `json:"partition_name"`
+	Site_name           string   `json:"site_name"`
+	Trigger_time        int      `json:"trigger_time"`
+	Context_camera_ids  []string `json:"context_camera_ids"`
+	Incident_link       string   `json:"incident_link"`
+}
+
+type SensorBatteryLowDetails struct {
+}
+
+type SensorTamperDetails struct {
+}
+
+type VLinkInterferenceDetails struct {
+}
+
+type GuestEventDetails struct {
+	Visit_id        string `json:"visit_id"`
+	Visit_type      string `json:"visit_type"`
+	Checked_in_time int    `json:"checked_in_time"`
+	Full_name       string `json:"full_name"`
+	Email           string `json:"email"`
+	Phone_number    string `json:"phone_number"`
+	Hosts           []struct {
+		Full_name      string `json:"full_name"`
+		Host_id        string `json:"host_id"`
+		Student_id     string `json:"student_id"`
+		Student_number string `json:"student_number"`
+	} `json:"hosts"`
+	Device_name    string `json:"device_name"`
+	Is_contactless bool   `json:"is_contactless"`
+	Site_id        string `json:"site_id"`
+}
