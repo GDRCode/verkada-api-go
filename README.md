@@ -7,15 +7,16 @@ Usage of Verkada's public API depends on a properly scoped API key generated wit
 
 ## Installation
 
-Download the latest version of this package using the 'go get' command:
+Download the latest version of the module using the 'go get' command:
 
 ```bash
 go get github.com/GDRCode/verkada-api-go
 ```
 
-Then, import the package for use in your source code
+Then, import the package(s) for use in your source code
 ```go
-import "github.com/GDRCode/verkada-api-go/pkg/client"
+import "github.com/GDRCode/verkada-api-go/client"
+import "github.com/GDRCode/verkada-api-go/auth"
 ```
 ## Usage/Examples
 
@@ -36,7 +37,7 @@ API_KEY=api-key-here
 
 ## Using the API
 
-Methods are organized on a per-product basis using the client's struct fields. Structs for query and body options used in method calls to provide type safety. Some input validation is performed based on requirements found in the API documentation, but "successful" requests from the package are not guaranteed to be valid for the API.
+Methods are organized on a per-product basis using the client's struct fields. Structs for query and body options are used in method calls to provide type safety. Some input validation is performed based on requirements found in the API documentation, but "successful" requests from the package are not guaranteed to be valid for the API.
 
 ```go
 res, err := client.Camera.GetCameraDevices(&GetCameraDevicesOptions{})
@@ -50,4 +51,4 @@ res4, err4 := client.Camera.GetLinkToFootage("(camera_id)", &GetLinkToFootageOpt
 
 ## Maintenance, Bug Fixes, and Feature Requests
 
-The client package implements all Verkada public API methods as of June 2025. It is a personal project and is not officially affiliated with, endorsed by, or supported by Verkada Inc. Tracking API updates and bug fixes will be done on a best-efforts basis.
+The client package implements all Verkada public API methods as of July 2026. It is a personal project and is not officially affiliated with, endorsed by, or supported by Verkada Inc. Tracking API updates and bug fixes will be done on a best-efforts basis.

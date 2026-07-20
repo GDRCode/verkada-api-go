@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/GDRCode/verkada-api-go/pkg/client/auth"
+	"github.com/GDRCode/verkada-api-go/auth"
 )
 
 // A Client contains the overarching information needed to make API calls.

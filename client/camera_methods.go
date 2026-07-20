@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/GDRCode/verkada-api-go/pkg/client/auth"
+	"github.com/GDRCode/verkada-api-go/auth"
 )
 
 // Returns alerts for an organization within a specified time range.
