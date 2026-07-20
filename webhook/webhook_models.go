@@ -224,3 +224,50 @@ type EventBasedWebhookObject struct {
 		Details      json.RawMessage `json:"details"`
 	} `json:"data"`
 }
+
+type AIPoweredAlertDetails struct {
+	Ai_query string `json:"ai_query"`
+}
+
+type ActivityDetectionDetails struct {
+	Activity_type string `json:"activity_type"`
+}
+
+type SmartListDetails struct {
+	Smart_list_name string `json:"smart_list_name"`
+	Person_type     string `json:"person_type"`
+}
+
+type MotionDetectionDetails struct {
+	Object_type string `json:"object_type"`
+}
+
+type LineCrossingDetectionDetails struct {
+	Object_type string `json:"object_type"`
+}
+
+type CrowdDetectionDetails struct {
+	Object_type string `json:"object_type"`
+}
+
+type LPOIDetectionDetails struct {
+	Plate_number    string `json:"plate_number"`
+	Lpr_capture_url string `json:"lpr_capture_url"`
+}
+
+type CameraStatusDetails struct {
+	Status string `json:"status"`
+}
+
+type AudioDetectionDetails struct {
+	Audio_type string `json:"audio_type"`
+}
+
+type POIDetectionDetails struct {
+}
+
+type OcclusionDetectionDetails struct {
+}
+
+type TamperDetectionDetails struct {
+}

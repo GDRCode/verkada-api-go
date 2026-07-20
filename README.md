@@ -17,10 +17,11 @@ Then, import the package(s) for use in your source code
 ```go
 import "github.com/GDRCode/verkada-api-go/client"
 import "github.com/GDRCode/verkada-api-go/auth"
+import "github.com/GDRCode/verkada-api-go/webhook"
 ```
 ## Usage/Examples
 
-All methods are scoped to the Client struct, which contains additional metadata like the API key and access tokens. Start by initializing a client and passing configuration options.
+All API methods are scoped to the Client struct, which contains additional metadata like the API key and access tokens. Start by initializing a client and passing configuration options.
 
 New() will attempt to gather an API key from a ".env" file from the program's working directory. If one is not found, it can be set directly from the Client struct after initialization.
 
