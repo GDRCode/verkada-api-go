@@ -427,6 +427,60 @@ func (c *CameraClient) GetLicensePlateTS(camera_id string, license_plate string,
 	return &ret, err
 }
 
+// Allows users to retrieve zone IDs and information for all LPR Zones in their Command organization.
+//
+// [Verkada API Docs - Get All LPR Zones]
+//
+// [Verkada API Docs - Get All LPR Zones]: https://apidocs.verkada.com/reference/getlprzoneviewv2
+func (c *CameraClient) GetLPRZones(options *GetLPRZonesOptions) (*GetLPRZonesResponse, error) {
+	if options == nil {
+		options = &GetLPRZonesOptions{}
+	}
+	var ret GetLPRZonesResponse
+	url := c.client.baseURL + "/v2/cameras/lpr/zones"
+	err := c.client.MakeVerkadaRequest("GET", url, *options, nil, &ret, 0)
+	return &ret, err
+}
+
+// Allows users to retrieve top-level metrics for their LPR Zones between the user-specified time ranges.
+//
+// [Verkada API Docs - Get LPR Zone Metrics]
+//
+// [Verkada API Docs - Get LPR Zone Metrics]: https://apidocs.verkada.com/reference/getlprzonemetricsviewv2
+func (c *CameraClient) GetLPRZoneMetrics(zone_id string, start_time string, end_time string) (*GetLPRZoneMetricsResponse, error) {
+	options := &GetLPRZoneMetricsOptions{
+		start_time: start_time,
+		end_time:   end_time,
+	}
+	var ret GetLPRZoneMetricsResponse
+	url := c.client.baseURL + "/v2/cameras/lpr/zones/" + zone_id + "/metrics"
+	err := c.client.MakeVerkadaRequest("GET", url, *options, nil, &ret, 0)
+	return &ret, err
+}
+
+// Returns all visit records for a single LPR Zone between the user-specified time range.
+//
+// [Verkada API Docs - Get LPR Zone Records]
+//
+// [Verkada API Docs - Get LPR Zone Records]: https://apidocs.verkada.com/reference/getlprzonerecordsviewv2
+func (c *CameraClient) GetLPRZoneRecords(zone_id string, options *GetLPRZoneRecordsOptions) (*GetLPRZoneRecordsResponse, error) {
+	if options == nil {
+		options = &GetLPRZoneRecordsOptions{}
+	}
+	// Notification type must be one of the following:
+	vehicle_status_validation := map[string]bool{
+		"still_in": true,
+		"departed": true,
+	}
+	if ok := vehicle_status_validation[options.Vehicle_status]; !ok {
+		return nil, fmt.Errorf("could not validate parameter in vehicle_status: %s", options.Vehicle_status)
+	}
+	var ret GetLPRZoneRecordsResponse
+	url := c.client.baseURL + "/v2/cameras/lpr/zones/" + zone_id + "/records"
+	err := c.client.MakeVerkadaRequest("GET", url, *options, nil, &ret, 0)
+	return &ret, err
+}
+
 // Return the software enabled status of the specified camera.
 //
 // [Verkada API Docs - Get Camera Audio Status]

@@ -85,6 +85,24 @@ type GetLicensePlateTSOptions struct {
 	Page_size     *int   `name:"page_size"`
 }
 
+type GetLPRZonesOptions struct {
+	Limit  *int   `name:"limit"`
+	Cursor string `name:"cursor"`
+}
+
+type GetLPRZoneMetricsOptions struct {
+	start_time string `name:"start_time"`
+	end_time   string `name:"end_time"`
+}
+
+type GetLPRZoneRecordsOptions struct {
+	Start_time     string `name:"start_time"`
+	End_time       string `name:"end_time"`
+	Vehicle_status string `name:"vehicle_status"`
+	Limit          *int   `name:"limit"`
+	Cursor         string `name:"cursor"`
+}
+
 type GetCameraAudioStatusOptions struct {
 	camera_id string `name:"camera_id"`
 }

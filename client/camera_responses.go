@@ -158,6 +158,44 @@ type GetLicensePlateTSResponse struct {
 	Next_page_token int    `json:"next_page_token"`
 }
 
+type GetLPRZonesResponse struct {
+	Cursor string `json:"cursor"`
+	Items  []struct {
+		Created_at        string `json:"created_at"`
+		Preview_camera_id string `json:"preview_camera_id"`
+		Updated_at        string `json:"updated_at"`
+		Zone_id           string `json:"zone_id"`
+		Zone_name         string `json:"zone_name"`
+	} `json:"items"`
+}
+
+type GetLPRZoneMetricsResponse struct {
+	Avg_time_in_zone    string `json:"avg_time_in_zone"`
+	Entries             int    `json:"entries"`
+	Exits               int    `json:"exits"`
+	Max_time_in_zone    string `json:"max_time_in_zone"`
+	Median_time_in_zone string `json:"median_time_in_zone"`
+	Occupancy           int    `json:"occupancy"`
+	Unique_visitors     int    `json:"unique_visitors"`
+}
+
+type GetLPRZoneRecordsResponse struct {
+	Cursor string `json:"cursor"`
+	Items  []struct {
+		Dwell_time            string `json:"dwell_time"`
+		Entry_camera_id       string `json:"entry_camera_id"`
+		Entry_time            string `json:"entry_time"`
+		Exit_camera_id        string `json:"exit_camera_id"`
+		Exit_time             string `json:"exit_time"`
+		Invalid               bool   `json:"invalid"`
+		Invalid_reason        string `json:"invalid_reason"`
+		License_plate         string `json:"license_plate"`
+		Plate_thumbnail_url   string `json:"plate_thumbnail_url"`
+		Vehicle_status        string `json:"vehicle_status"`
+		Vehicle_thumbnail_url string `json:"vehicle_thumbnail_url"`
+	} `json:"items"`
+}
+
 type GetCameraAudioStatusResponse struct {
 	Camera_id string `json:"camera_id"`
 	Enabled   bool   `json:"enabled"`
