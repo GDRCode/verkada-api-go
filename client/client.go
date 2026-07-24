@@ -322,7 +322,6 @@ func (c *Client) MakeVerkadaRequestForFile(method string, url string, params any
 	req.Header.Add("x-verkada-auth", c.TokenContainer.Token)
 
 	req.URL.RawQuery = assembleQueryParams(params)
-	fmt.Println(req.URL.RawQuery)
 
 	res, err := c.httpClient.Do(req)
 	if err != nil {
@@ -396,10 +395,12 @@ func assembleQueryParams(params any) string {
 				switch val.Field(i).Elem().Kind() {
 				case reflect.Bool:
 					fmt.Fprintf(&b, "%s=%t&", fld.Tag.Get("name"), val.Field(i).Elem().Bool())
-				case reflect.Int64:
+				case reflect.Int, reflect.Int64:
 					fmt.Fprintf(&b, "%s=%d&", fld.Tag.Get("name"), val.Field(i).Elem().Int())
 				case reflect.Float64:
 					fmt.Fprintf(&b, "%s=%f&", fld.Tag.Get("name"), val.Field(i).Elem().Float())
+				case reflect.Pointer:
+					fmt.Fprintf(&b, "%s=%v&", fld.Tag.Get("name"), val.Field(i).Elem().Interface())
 				}
 			}
 		}
