@@ -125,24 +125,28 @@ func New(options *ClientOptions) (*Client, error) {
 	return c, nil
 }
 
+// Deprecated: Use new(v) instead (Go 1.26+).
 // Helper function to one-line a bool to *bool conversion.
 // Required because a nullable value is needed to identify disincluded parameters in options structs.
 func Bool(b bool) *bool {
 	return &b
 }
 
+// Deprecated: Use new(v) instead (Go 1.26+).
 // Helper function to one-line a Int64 to *Int64 conversion.
 // Required because a nullable value is needed to identify disincluded parameters in options structs.
 func Int(i int) *int {
 	return &i
 }
 
+// Deprecated: Use new(v) instead (Go 1.26+).
 // Helper function to one-line a Int64 to *Int64 conversion.
 // Required because a nullable value is needed to identify disincluded parameters in options structs.
 func Float64(f float64) *float64 {
 	return &f
 }
 
+// Deprecated: Use new(v) instead (Go 1.26+).
 // Helper function to one-line get a pointer to any literal.
 // Required because a nullable value is needed to identify disincluded parameters in options structs.
 // Individual functions for bool, int64, and float64 are retained.
