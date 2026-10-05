@@ -2,16 +2,16 @@ package client
 
 type GetSensorAlertsResponse struct {
 	Alert_events []struct {
-		Alert_event_id     string `json:"alert_event_id"`
-		Device_id          string `json:"device_id"`
-		Device_name        string `json:"device_name"`
-		Device_serial      string `json:"device_serial"`
-		End_time           int    `json:"end_time"`
-		Is_above_max_event bool   `json:"is_above_max_event"`
-		Most_extreme_value int    `json:"most_extreme_value"`
-		Reading            string `json:"reading"`
-		Start_time         int    `json:"start_time"`
-		Threshold          int    `json:"threshold"`
+		Alert_event_id     string  `json:"alert_event_id"`
+		Device_id          string  `json:"device_id"`
+		Device_name        string  `json:"device_name"`
+		Device_serial      string  `json:"device_serial"`
+		End_time           int     `json:"end_time"`
+		Is_above_max_event bool    `json:"is_above_max_event"`
+		Most_extreme_value float64 `json:"most_extreme_value"`
+		Reading            string  `json:"reading"`
+		Start_time         int     `json:"start_time"`
+		Threshold          float64 `json:"threshold"`
 	} `json:"alert_events"`
 	Next_page_token string `json:"next_page_token"`
 }
