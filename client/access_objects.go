@@ -132,7 +132,7 @@ type RecurrenceRule struct {
 	Until          string   `json:"until"`
 }
 
-type AccessScenario struct {
+type ACOnlyAccessScenario struct {
 	Doors_to_lock                   []string `json:"doors_to_lock"`
 	Message                         string   `json:"message"`
 	Name                            string   `json:"name"`
@@ -146,31 +146,31 @@ type AccessScenario struct {
 	User_groups_with_enable_access  []string `json:"user_groups_with_enable_access"`
 }
 
-type DoorInfo struct {
+type ACOnlyDoorInfo struct {
 	Access_controller_id   string `json:"accessControllerId"`
 	Access_controller_name string `json:"accessControllerName"`
 	Name                   string `json:"name"`
 }
 
-type Floors struct {
+type ACOnlyFloors struct {
 	Door_id  string `json:"doorId"`
 	Floor_id string `json:"floorId"`
 	Uuid     string `json:"uuid"`
 }
 
-type Lockdown struct {
+type ACOnlyLockdown struct {
 	Enabled     bool   `json:"enabled"`
 	Lockdown_id string `json:"lockdownId"`
 	Message     string `json:"message"`
 	Name        string `json:"name"`
 }
 
-type LockdownInfo struct {
-	Action   string   `json:"action"`
-	Lockdown Lockdown `json:"lockdown"`
+type ACOnlyLockdownInfo struct {
+	Action   string         `json:"action"`
+	Lockdown ACOnlyLockdown `json:"lockdown"`
 }
 
-type UserInfo struct {
+type ACOnlyUserInfo struct {
 	Email           string `json:"email"`
 	First_name      string `json:"firstName"`
 	Last_name       string `json:"lastName"`
@@ -180,44 +180,44 @@ type UserInfo struct {
 	User_id         string `json:"userId"`
 }
 
-type EventInfo struct {
-	Accepted        bool         `json:"accepted"`
-	Aux_input_id    string       `json:"auxInputId"`
-	Aux_input_name  string       `json:"auxInputName"`
-	Building_id     string       `json:"buildingId"`
-	Building_name   string       `json:"buildingName"`
-	Direction       string       `json:"direction"`
-	Door_id         string       `json:"doorId"`
-	Door_info       DoorInfo     `json:"doorInfo"`
-	Entity_id       string       `json:"entityId"`
-	Entity_name     string       `json:"entityName"`
-	Entity_type     string       `json:"entityType"`
-	Event_type      string       `json:"eventType"`
-	Floor_id        string       `json:"floorId"`
-	Floor_name      string       `json:"floorName"`
-	Floors          []Floors     `json:"floors"`
-	Input_value     string       `json:"inputValue"`
-	Lockdown_info   LockdownInfo `json:"lockdownInfo"`
-	Message         string       `json:"message"`
-	Organization_id string       `json:"organizationId"`
-	Raw_card        string       `json:"rawCard"`
-	Site_id         string       `json:"siteId"`
-	Site_name       string       `json:"siteName"`
-	Type            string       `json:"type"`
-	User_id         string       `json:"userId"`
-	User_info       UserInfo     `json:"userInfo"`
-	User_name       string       `json:"userName"`
-	Uuid            string       `json:"uuid"`
+type ACOnlyAccessEventInfo struct {
+	Accepted        bool               `json:"accepted"`
+	Aux_input_id    string             `json:"auxInputId"`
+	Aux_input_name  string             `json:"auxInputName"`
+	Building_id     string             `json:"buildingId"`
+	Building_name   string             `json:"buildingName"`
+	Direction       string             `json:"direction"`
+	Door_id         string             `json:"doorId"`
+	Door_info       ACOnlyDoorInfo     `json:"doorInfo"`
+	Entity_id       string             `json:"entityId"`
+	Entity_name     string             `json:"entityName"`
+	Entity_type     string             `json:"entityType"`
+	Event_type      string             `json:"eventType"`
+	Floor_id        string             `json:"floorId"`
+	Floor_name      string             `json:"floorName"`
+	Floors          []ACOnlyFloors     `json:"floors"`
+	Input_value     string             `json:"inputValue"`
+	Lockdown_info   ACOnlyLockdownInfo `json:"lockdownInfo"`
+	Message         string             `json:"message"`
+	Organization_id string             `json:"organizationId"`
+	Raw_card        string             `json:"rawCard"`
+	Site_id         string             `json:"siteId"`
+	Site_name       string             `json:"siteName"`
+	Type            string             `json:"type"`
+	User_id         string             `json:"userId"`
+	User_info       ACOnlyUserInfo     `json:"userInfo"`
+	User_name       string             `json:"userName"`
+	Uuid            string             `json:"uuid"`
 }
 
-type Events struct {
-	Device_id       string    `json:"device_id"`
-	Device_type     string    `json:"device_type"`
-	End_timestamp   string    `json:"end_timestamp"`
-	Event_id        string    `json:"event_id"`
-	Event_info      EventInfo `json:"event_info"`
-	Event_type      string    `json:"event_type"`
-	Organization_id string    `json:"organization_id"`
-	Site_id         string    `json:"site_id"`
-	Timestamp       string    `json:"timestamp"`
+type ACOnlyAccessEvent struct {
+	Device_id       string                `json:"device_id"`
+	Device_type     string                `json:"device_type"`
+	End_timestamp   string                `json:"end_timestamp"`
+	Event_id        string                `json:"event_id"`
+	Event_info      ACOnlyAccessEventInfo `json:"event_info"`
+	Event_type      string                `json:"event_type"`
+	Organization_id string                `json:"organization_id"`
+	Site_id         string                `json:"site_id"`
+	Timestamp       string                `json:"timestamp"`
 }

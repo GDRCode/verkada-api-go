@@ -134,12 +134,12 @@ type DeleteExceptionFromCalendarResponse struct {
 }
 
 type GetAccessEventsResponse struct {
-	Events          []Events `json:"events"`
-	Next_page_token string   `json:"next_page_token"`
+	Events          []ACOnlyAccessEvent `json:"events"`
+	Next_page_token string              `json:"next_page_token"`
 }
 
 type GetAllAccessScenariosResponse struct {
-	Scenarios []AccessScenario `json:"scenarios"`
+	Scenarios []ACOnlyAccessScenario `json:"scenarios"`
 }
 
 type ActivateAccessScenarioResponse struct {

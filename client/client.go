@@ -35,6 +35,7 @@ type Client struct {
 	Access         *AccessClient
 	ClassicAlarms  *ClassicAlarmsClient
 	VX             *VXClient
+	Events         *EventsClient
 }
 
 type HelixClient struct {
@@ -66,6 +67,10 @@ type ClassicAlarmsClient struct {
 }
 
 type VXClient struct {
+	client *Client
+}
+
+type EventsClient struct {
 	client *Client
 }
 
@@ -106,6 +111,7 @@ func New(options *ClientOptions) (*Client, error) {
 	c.Access = &AccessClient{client: c}
 	c.ClassicAlarms = &ClassicAlarmsClient{client: c}
 	c.VX = &VXClient{client: c}
+	c.Events = &EventsClient{client: c}
 	switch options.Region {
 	case "prod1":
 		c.baseURL = "https://api.verkada.com"
