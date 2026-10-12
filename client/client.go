@@ -35,6 +35,7 @@ type Client struct {
 	Access         *AccessClient
 	ClassicAlarms  *ClassicAlarmsClient
 	VX             *VXClient
+	PassSDK        *PassSDKClient
 }
 
 type HelixClient struct {
@@ -66,6 +67,10 @@ type ClassicAlarmsClient struct {
 }
 
 type VXClient struct {
+	client *Client
+}
+
+type PassSDKClient struct {
 	client *Client
 }
 
@@ -106,6 +111,7 @@ func New(options *ClientOptions) (*Client, error) {
 	c.Access = &AccessClient{client: c}
 	c.ClassicAlarms = &ClassicAlarmsClient{client: c}
 	c.VX = &VXClient{client: c}
+	c.PassSDK = &PassSDKClient{client: c}
 	switch options.Region {
 	case "prod1":
 		c.baseURL = "https://api.verkada.com"
@@ -113,8 +119,12 @@ func New(options *ClientOptions) (*Client, error) {
 		c.baseURL = "https://api.eu.verkada.com"
 	case "au":
 		c.baseURL = "https://api.au.verkada.com"
+	case "ohio":
+		c.baseURL = "https://api.oh.verkada.com"
+	case "gov":
+		c.baseURL = "https://api.verkadagov.com"
 	default:
-		return nil, fmt.Errorf("error: invalid region/shard, must be \"prod1\", \"prod2\", or \"au\" - received %s", options.Region)
+		return nil, fmt.Errorf("error: invalid region/shard, must be \"prod1\", \"prod2\", \"au\", \"ohio\", or \"gov\" - received %s", options.Region)
 	}
 	tokenResponse, err := auth.GetAuthToken(envKey, c.baseURL)
 	if err != nil {
