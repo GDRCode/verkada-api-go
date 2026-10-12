@@ -776,7 +776,7 @@ func (c *AccessClient) enableFaceUnlockProfilePhotoExternal(external_id string, 
 // [Verkada API Docs - Enable Face Unlock with Mobile Enrollment Invitation]
 //
 // [Verkada API Docs - Enable Face Unlock with Mobile Enrollment Invitation]: https://apidocs.verkada.com/reference/postfaceunlockinviteexternaluserviewv2
-func (c *AccessClient) EnableFaceUnlockMobileInviteExternal(external_id string, body *enableFaceUnlockMobileInviteExternalBody) (*enableFaceUnlockMobileInviteExternalResponse, error) {
+func (c *AccessClient) enableFaceUnlockMobileInviteExternal(external_id string, body *enableFaceUnlockMobileInviteExternalBody) (*enableFaceUnlockMobileInviteExternalResponse, error) {
 	if body == nil {
 		body = &enableFaceUnlockMobileInviteExternalBody{}
 	}
@@ -802,7 +802,7 @@ func (c *AccessClient) EnableFaceUnlockMobileInviteExternal(external_id string, 
 // [Verkada API Docs - Enable Face Unlock with Uploaded Photo]
 //
 // [Verkada API Docs - Enable Face Unlock with Uploaded Photo]: https://apidocs.verkada.com/reference/postfaceunlockuploadphotoexternaluserviewv2
-func (c *AccessClient) EnableFaceUnlockUploadPhotoExternal(external_id string, filename string, body *enableFaceUnlockUploadPhotoExternalBody) (*enableFaceUnlockUploadPhotoExternalResponse, error) {
+func (c *AccessClient) enableFaceUnlockUploadPhotoExternal(external_id string, filename string, body *enableFaceUnlockUploadPhotoExternalBody) (*enableFaceUnlockUploadPhotoExternalResponse, error) {
 	if body == nil {
 		body = &enableFaceUnlockUploadPhotoExternalBody{}
 	}
@@ -873,7 +873,7 @@ func (c *AccessClient) enableFaceUnlockMobileInviteInternal(user_id string, body
 // [Verkada API Docs - Enable Face Unlock with Uploaded Photo]
 //
 // [Verkada API Docs - Enable Face Unlock with Uploaded Photo]: https://apidocs.verkada.com/reference/postfaceunlockuploadphotoexternaluserviewv2
-func (c *AccessClient) EnableFaceUnlockUploadPhotoInternal(user_id string, filename string, body *enableFaceUnlockUploadPhotoInternalBody) (*enableFaceUnlockUploadPhotoInternalResponse, error) {
+func (c *AccessClient) enableFaceUnlockUploadPhotoInternal(user_id string, filename string, body *enableFaceUnlockUploadPhotoInternalBody) (*enableFaceUnlockUploadPhotoInternalResponse, error) {
 	if body == nil {
 		body = &enableFaceUnlockUploadPhotoInternalBody{}
 	}
@@ -968,7 +968,7 @@ func (c *AccessClient) EnableFaceUnlockMobileInvite(user_id string, options *Ena
 		return nil, fmt.Errorf("Disabling face unlock requires exactly one of user_id or external_id")
 	}
 	if options.User_id == "" {
-		if resp, err := c.EnableFaceUnlockMobileInviteExternal(options.External_id, &enableFaceUnlockMobileInviteExternalBody{Invitation_methods: options.Invitation_methods, Overwrite: options.Overwrite}); err != nil {
+		if resp, err := c.enableFaceUnlockMobileInviteExternal(options.External_id, &enableFaceUnlockMobileInviteExternalBody{Invitation_methods: options.Invitation_methods, Overwrite: options.Overwrite}); err != nil {
 			return nil, err
 		} else {
 			ret := EnableFaceUnlockMobileInviteResponse{
@@ -1010,7 +1010,7 @@ func (c *AccessClient) EnableFaceUnlockUploadPhoto(filename string, options *Ena
 		return nil, fmt.Errorf("Disabling face unlock requires exactly one of user_id or external_id")
 	}
 	if options.User_id == "" {
-		if resp, err := c.EnableFaceUnlockUploadPhotoExternal(options.External_id, filename, &enableFaceUnlockUploadPhotoExternalBody{Overwrite: options.Overwrite}); err != nil {
+		if resp, err := c.enableFaceUnlockUploadPhotoExternal(options.External_id, filename, &enableFaceUnlockUploadPhotoExternalBody{Overwrite: options.Overwrite}); err != nil {
 			return nil, err
 		} else {
 			ret := EnableFaceUnlockUploadPhotoResponse{
@@ -1020,7 +1020,7 @@ func (c *AccessClient) EnableFaceUnlockUploadPhoto(filename string, options *Ena
 			return &ret, nil
 		}
 	} else {
-		if resp, err := c.EnableFaceUnlockUploadPhotoInternal(options.User_id, filename, &enableFaceUnlockUploadPhotoInternalBody{Overwrite: options.Overwrite}); err != nil {
+		if resp, err := c.enableFaceUnlockUploadPhotoInternal(options.User_id, filename, &enableFaceUnlockUploadPhotoInternalBody{Overwrite: options.Overwrite}); err != nil {
 			return nil, err
 		} else {
 			ret := EnableFaceUnlockUploadPhotoResponse{
