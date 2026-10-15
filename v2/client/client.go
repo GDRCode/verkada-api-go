@@ -80,10 +80,11 @@ type PassSDKClient struct {
 // Made into a type struct to allow for future non-breaking option additions.
 //
 // It is recommended to use a .env file for auth.GetEnvFromFile() or os.Setenv() for the API key.
-// The field here is provided in case environment variables are not provided.
+// The field here is provided in case environment variables are not used.
 type ClientOptions struct {
 	Region       string
 	AutoPaginate bool
+	KeyName      string
 	APIKey       string
 }
 
@@ -92,12 +93,15 @@ type ClientOptions struct {
 // Auto-pagination can be enabled so that paginated responses are combined into one response.
 func New(options *ClientOptions) (*Client, error) {
 	auth.GetEnvFromFile()
-	envKey := os.Getenv("API_KEY")
+	if options.KeyName == "" {
+		options.KeyName = "API_KEY"
+	}
+	envKey := os.Getenv(options.KeyName)
 	if envKey == "" {
 		if options.APIKey != "" {
 			envKey = options.APIKey
 		} else {
-			return nil, fmt.Errorf("error: no environment variable \"API_KEY\", either set in a .env file for auth.GetEnvFromFile() or set directly using os.SetEnv()")
+			return nil, fmt.Errorf("error: no environment variable \"%s\", either set in a .env file for auth.GetEnvFromFile() or set directly using os.SetEnv()", options.KeyName)
 		}
 	}
 	c := &Client{
