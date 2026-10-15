@@ -1,0 +1,57 @@
+
+# Verkada API v2 Go Client
+
+**v2 API endpoints are WIP**
+
+This module implements a Go wrapper for Verkada's public v2 API endpoints. Methods across the different product lines are provided as well as structs for query parameters, body parameters, and responses. The public API documentation can be found here: [https://apidocs.verkada.com/reference/introduction](https://apidocs.verkada.com/v2/reference/introduction)
+
+Usage of Verkada's public API depends on a properly scoped API key generated within the Command platform.
+
+## Installation
+
+Download the latest version of the module using the 'go get' command:
+
+```bash
+go get github.com/GDRCode/verkada-api-go/v2
+```
+
+Then, import the package(s) for use in your source code
+```go
+import "github.com/GDRCode/verkada-api-go/v2/client"
+import "github.com/GDRCode/verkada-api-go/v2/auth"
+import "github.com/GDRCode/verkada-api-go/v2/webhook"
+```
+## Usage/Examples
+
+All API methods are scoped to the Client struct, which contains additional metadata like the API key and access tokens. Start by initializing a client and passing configuration options.
+
+New() will attempt to gather an API key from a ".env" file from the program's working directory. If one is not found, it can be set directly from the Client struct after initialization.
+
+Initializing a client:
+```go
+c, err := client.New(&NewClientOptions{Region: "prod1", AutoPaginate: true})
+//if no .env file
+c.Key = "api-key-here"
+```
+(Optional) Contents of .env
+```
+API_KEY=api-key-here
+```
+
+## Using the API
+
+Methods are organized on a per-product basis using the client's struct fields. Structs for query and body options are used in method calls to provide type safety. Some input validation is performed based on requirements found in the API documentation, but "successful" requests from the package are not guaranteed to be valid for the API.
+
+```go
+res, err := client.Camera.GetCameraDevices(&GetCameraDevicesOptions{})
+
+res2, err2 := client.Access.GetAllAccessUsers()
+
+res3, err3 := client.Core.CreateUser(&CreateUserOptions{})
+
+res4, err4 := client.Camera.GetLinkToFootage("(camera_id)", &GetLinkToFootageOptions{})
+```
+
+## Maintenance, Bug Fixes, and Feature Requests
+
+The client package implements all Verkada public API methods as of October 2026. It is a personal project and is not officially affiliated with, endorsed by, or supported by Verkada Inc. Tracking API updates and bug fixes will be done on a best-efforts basis.
