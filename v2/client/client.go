@@ -141,6 +141,17 @@ func New(options *ClientOptions) (*Client, error) {
 	return c, nil
 }
 
+type APIError struct {
+	Id         string          `json:"id"`
+	Error_code string          `json:"error_code"`
+	Message    string          `json:"message"`
+	Data       json.RawMessage `json:"data"`
+}
+
+func (e *APIError) Error() string {
+	return fmt.Sprintf("API error %s: %s", e.Error_code, e.Message)
+}
+
 // Used by all methods that don't require file upload or download.
 // Handles auth token refresh automatically based on the Client's API key.
 //
@@ -188,7 +199,11 @@ func (c *Client) MakeVerkadaRequest(method string, url string, params any, body 
 	}
 
 	if res.StatusCode < 200 || res.StatusCode >= 300 {
-		return fmt.Errorf("request unsuccessful - %s, response: %s", res.Status, string(buf))
+		var apiErr APIError
+		if err := json.Unmarshal(buf, &apiErr); err != nil {
+			return fmt.Errorf("request unsuccessful - %s, response: %s", res.Status, string(buf))
+		}
+		return &apiErr
 	}
 
 	decode := json.NewDecoder(bytes.NewReader(buf))
@@ -290,7 +305,11 @@ func (c *Client) MakeVerkadaRequestWithFile(method string, url string, params an
 	}
 
 	if res.StatusCode < 200 || res.StatusCode >= 300 {
-		return fmt.Errorf("request unsuccessful - %s, response: %s", res.Status, string(buf))
+		var apiErr APIError
+		if err := json.Unmarshal(buf, &apiErr); err != nil {
+			return fmt.Errorf("request unsuccessful - %s, response: %s", res.Status, string(buf))
+		}
+		return &apiErr
 	}
 
 	decode := json.NewDecoder(bytes.NewReader(buf))
@@ -335,11 +354,19 @@ func (c *Client) MakeVerkadaRequestForFile(method string, url string, params any
 		c.MakeVerkadaRequestForFile(method, url, params, filename, retry+1)
 	}
 
+	defer res.Body.Close()
 	if res.StatusCode < 200 || res.StatusCode >= 300 {
-		return fmt.Errorf("request unsuccessful - %s", res.Status)
+		var apiErr APIError
+		buf, err := io.ReadAll(res.Body)
+		if err != nil {
+			return fmt.Errorf("error reading response body - %s", err.Error())
+		}
+		if err := json.Unmarshal(buf, &apiErr); err != nil {
+			return fmt.Errorf("request unsuccessful - %s, response: %s", res.Status, string(buf))
+		}
+		return &apiErr
 	}
 
-	defer res.Body.Close()
 	file, err := os.Create(filename)
 	if err != nil {
 		return err
