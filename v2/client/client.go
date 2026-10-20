@@ -152,11 +152,6 @@ func (e *APIError) Error() string {
 	return fmt.Sprintf("API error %s: %s", e.Error_code, e.Message)
 }
 
-type PaginatedFields struct {
-	Limit  *int   `name:"limit"`
-	Cursor string `name:"cursor"`
-}
-
 // Used by all methods that don't require file upload or download.
 // Handles auth token refresh automatically based on the Client's API key.
 //
@@ -521,7 +516,9 @@ func encodeQuery(src any) (string, error) {
 					return "", fmt.Errorf("%s[%d]: unsupported type %s", name, j, elem.Type())
 				}
 
-				items = append(items, s)
+				if s != "" {
+					items = append(items, s)
+				}
 			}
 
 			if len(items) > 0 {
@@ -545,7 +542,9 @@ func encodeQuery(src any) (string, error) {
 			return "", fmt.Errorf("%s: unsupported type %s", name, fv.Type())
 		}
 
-		values.Set(name, s)
+		if s != "" {
+			values.Set(name, s)
+		}
 	}
 
 	return values.Encode(), nil
