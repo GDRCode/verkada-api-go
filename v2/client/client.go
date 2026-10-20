@@ -152,6 +152,11 @@ func (e *APIError) Error() string {
 	return fmt.Sprintf("API error %s: %s", e.Error_code, e.Message)
 }
 
+type PaginatedFields struct {
+	Limit  *int   `name:"limit"`
+	Cursor string `name:"cursor"`
+}
+
 // Used by all methods that don't require file upload or download.
 // Handles auth token refresh automatically based on the Client's API key.
 //
