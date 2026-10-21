@@ -149,7 +149,7 @@ type APIError struct {
 }
 
 func (e *APIError) Error() string {
-	return fmt.Sprintf("API error %s: %s", e.Error_code, e.Message)
+	return fmt.Sprintf("Verkada Response Error - %s: %s - Data: %s", e.Error_code, e.Message, string(e.Data))
 }
 
 // Used by all methods that don't require file upload or download.
